@@ -9,7 +9,7 @@ export const DobrogeaCalling: React.FC = () => {
       <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/src/assets/dobrogea.jpg" 
+            src="/assets/dobrogea.jpg" 
             alt="Dobrogea landscapes" 
             className="w-full h-full object-cover trax-image opacity-50"
           />

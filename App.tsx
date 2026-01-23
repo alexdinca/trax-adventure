@@ -60,7 +60,7 @@ function App() {
       {/* Global Background Watermark */}
       <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
           <img 
-              src="/src/assets/trax-tyre-mark.png" 
+              src="/assets/trax-tyre-mark.png" 
               alt="" 
               className="w-[90vw] md:w-[1000px] object-contain max-h-[80vh]"
           />

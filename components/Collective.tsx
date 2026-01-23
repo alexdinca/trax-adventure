@@ -29,7 +29,7 @@ export const Collective: React.FC = () => {
           <div className="flex gap-6 mb-8">
              <img 
                 /* Replace with your local file */
-                src="/src/assets/alex.jpg" 
+                src="/assets/alex.jpg" 
                 alt="Portrait detail" 
                 className="w-16 h-16 rounded-full opacity-80 object-cover"
              />

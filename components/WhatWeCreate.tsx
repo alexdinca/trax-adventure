@@ -26,7 +26,7 @@ export const WhatWeCreate: React.FC = () => {
                  <h2 className="font-sans text-4xl md:text-5xl text-trax-white mb-12">What We Create</h2>
                  <img 
                     /* Replace with your local file */
-                    src="/src/assets/experiences.jpg" 
+                    src="/assets/experiences.jpg" 
                     alt="Climbing terrain" 
                     className="w-full h-[600px] object-cover trax-image opacity-90"
                 />

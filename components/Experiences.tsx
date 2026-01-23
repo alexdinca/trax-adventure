@@ -26,7 +26,7 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
-                        src="/src/assets/dobrogea.jpg" 
+                        src="/assets/dobrogea.jpg" 
                         alt="Dobrogea"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
                     />

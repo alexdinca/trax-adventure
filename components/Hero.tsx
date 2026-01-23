@@ -9,7 +9,7 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
          <img 
             /* Replace this src with your local file: e.g., "/images/hero-bg.jpg" */
-            src="/src/assets/hero-bg.jpg" 
+            src="/assets/hero-bg.jpg" 
             alt="Snowy mountain terrain" 
             className="w-full h-full object-cover trax-image opacity-90"
           />

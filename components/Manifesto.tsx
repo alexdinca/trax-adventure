@@ -10,7 +10,7 @@ export const Manifesto: React.FC = () => {
         <div className="mt-4 md:mt-24">
              <img 
                 /* Replace with your local file */
-                src="/src/assets/conditions.jpg" 
+                src="/assets/conditions.jpg" 
                 alt="Rider looking at landscape" 
                 className="w-full h-auto object-cover opacity-90 trax-image hidden md:block"
             />
