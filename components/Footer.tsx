@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
     <footer className="relative pt-32 pb-12 border-t border-trax-grey/10 bg-trax-black overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        className="absolute inset-0 bg-cover  bg-center bg-no-repeat opacity-10"
         style={{
           backgroundImage: 'url(/assets/hero-bg.jpg)'
         }}
