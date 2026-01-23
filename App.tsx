@@ -11,6 +11,7 @@ import { Logo } from './components/ui/Logo';
 import { Navigation } from './components/Navigation';
 import { Experiences } from './components/Experiences';
 import { DobrogeaCalling } from './components/DobrogeaCalling';
+import { Analytics } from '@vercel/analytics/vue';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
@@ -55,8 +56,8 @@ function App() {
     }
   };
   
-  return (
-    <div className="bg-trax-black min-h-screen w-full selection:bg-trax-red selection:text-trax-white relative">
+  return (    
+    <div className="bg-trax-black min-h-screen w-full selection:bg-trax-red selection:text-trax-white relative">      
       {/* Global Background Watermark */}
       <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
           <img 
@@ -81,6 +82,7 @@ function App() {
       {/* Main Content */}
       <div className="relative z-10">
         {renderContent()}
+        <Analytics />
       </div>
 
       <div id="footer" className="relative z-10">
