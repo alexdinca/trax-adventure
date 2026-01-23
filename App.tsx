@@ -11,7 +11,7 @@ import { Logo } from './components/ui/Logo';
 import { Navigation } from './components/Navigation';
 import { Experiences } from './components/Experiences';
 import { DobrogeaCalling } from './components/DobrogeaCalling';
-import { Analytics } from '@vercel/analytics/vue';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
