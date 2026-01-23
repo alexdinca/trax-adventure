@@ -17,7 +17,17 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-trax-black pt-32 pb-12 border-t border-trax-grey/10">
+    <footer className="relative pt-32 pb-12 border-t border-trax-grey/10 bg-trax-black overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+        style={{
+          backgroundImage: 'url(/assets/hero-bg.jpg)'
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10">
       <Container className="text-center mb-32">
         <p className="font-body text-trax-white/80 text-xl max-w-lg mx-auto mb-12">
             There is no funnel. No promises. Only an invitation. <br />
@@ -63,6 +73,7 @@ export const Footer: React.FC = () => {
             </div>
         </div>
       </Container>
+      </div>
     </footer>
   );
 };
