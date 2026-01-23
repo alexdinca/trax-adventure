@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { AptabaseProvider } from '@aptabase/react';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -10,6 +11,8 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <AptabaseProvider appKey="A-EU-3317515012">
+      <App />
+    </AptabaseProvider>
   </React.StrictMode>
 );
