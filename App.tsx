@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAptabase } from '@aptabase/react';
 import { Hero } from './components/Hero';
 import { Manifesto } from './components/Manifesto';
 import { WhatWeCreate } from './components/WhatWeCreate';
@@ -15,10 +16,23 @@ import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
+  const { trackEvent } = useAptabase();
+
+  // Track visitor on page load
+  useEffect(() => {
+    trackEvent('page_visit', {
+      view: 'home',
+      timestamp: new Date().toISOString()
+    });
+  }, [trackEvent]);
 
   // Simple scrollToTop on navigation change
   const handleNavigate = (view: string) => {
     setCurrentView(view);
+    trackEvent('navigation_click', {
+      view: view,
+      timestamp: new Date().toISOString()
+    });
     window.scrollTo(0, 0);
   };
 

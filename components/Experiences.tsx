@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAptabase } from '@aptabase/react';
 import { Container, Spacer } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
 
@@ -7,6 +8,23 @@ interface ExperiencesProps {
 }
 
 export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
+  const { trackEvent } = useAptabase();
+
+  // Track when user visits Experiences page
+  useEffect(() => {
+    trackEvent('experiences_page_visit', {
+      timestamp: new Date().toISOString()
+    });
+  }, [trackEvent]);
+
+  const handleExperienceClick = (experienceName: string) => {
+    trackEvent('experience_entry_click', {
+      experience: experienceName,
+      timestamp: new Date().toISOString()
+    });
+    onNavigate(experienceName.toLowerCase());
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-24 relative">
       <Container>
@@ -21,7 +39,7 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Experience Card */}
             <div 
-                onClick={() => onNavigate('dobrogea')}
+                onClick={() => handleExperienceClick('dobrogea')}
                 className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">

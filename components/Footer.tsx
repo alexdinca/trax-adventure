@@ -1,20 +1,32 @@
 import React from 'react';
+import { useAptabase } from '@aptabase/react';
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
 import { MonoLabel, Headline } from './ui/Typography';
 
 export const Footer: React.FC = () => {
+  const { trackEvent } = useAptabase();
+
+  const handleJoinClick = () => {
+    trackEvent('join_button_click', {
+      source: 'footer_button',
+      url: 'https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD',
+      timestamp: new Date().toISOString()
+    });
+    window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank');
+  };
+
   return (
     <footer className="bg-trax-black pt-32 pb-12 border-t border-trax-grey/10">
       <Container className="text-center mb-32">
         <p className="font-body text-trax-white/80 text-xl max-w-lg mx-auto mb-12">
             There is no funnel. No promises. Only an invitation. <br />
-            If this resonates, you’ll know.
+            If this resonates, you'll know.
         </p>
 
         <Button 
           className="mb-16"
-          onClick={() => window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank')}
+          onClick={handleJoinClick}
         >
           Join when ready
         </Button>   

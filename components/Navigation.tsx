@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAptabase } from '@aptabase/react';
 
 interface NavigationProps {
   currentView: string;
@@ -6,10 +7,20 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
+  const { trackEvent } = useAptabase();
+
+  const handleJoinClick = () => {
+    trackEvent('join_navigation_click', {
+      source: 'navigation_menu',
+      timestamp: new Date().toISOString()
+    });
+    onNavigate('contact');
+  };
+
   const links = [
     { id: 'home', label: 'Manifesto' },
     { id: 'experiences', label: 'Experiences' },
-    { id: 'contact', label: 'Join' },
+    { id: 'contact', label: 'Join', onClick: handleJoinClick },
   ];
 
   return (
@@ -18,7 +29,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate 
         {links.map((link) => (
           <li key={link.id}>
             <button
-              onClick={() => onNavigate(link.id)}
+              onClick={() => link.onClick ? link.onClick() : onNavigate(link.id)}
               className={`
                 font-mono text-xs md:text-sm uppercase tracking-widest transition-colors duration-300
                 ${currentView === link.id ? 'text-trax-red' : 'text-trax-white hover:text-trax-red'}
