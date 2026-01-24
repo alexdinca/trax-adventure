@@ -16,6 +16,7 @@ import { Experiences } from './components/Experiences';
 import { DobrogeaCalling } from './components/DobrogeaCalling';
 import { CarpathianRidge } from './components/CarpathianRidge';
 import { TheGround } from './components/TheGround';
+import { TheLongWayIn } from './components/TheLongWayIn';
 import { Analytics } from '@vercel/analytics/react';
 
 // Layout component that wraps all pages
@@ -118,6 +119,7 @@ function App() {
           <Route path="/dobrogea" element={<DobrogeaCalling />} />
           <Route path="/carpathian" element={<CarpathianRidge />} />
           <Route path="/ground" element={<TheGround />} />
+          <Route path="/long-way-in" element={<TheLongWayIn />} />
         </Routes>
       </Layout>
     </BrowserRouter>
