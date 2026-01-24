@@ -15,7 +15,7 @@ export const Collective: React.FC = () => {
             TRAX is not built around an audience. It’s built around a collective.
           </Body>
           <Body className="mb-6">
-             Riders, explorers and individuals who show up fully — for the terrain and for each other.
+             Riders, explorers and individuals who show up fully for the terrain, for each other and for themselves.
           </Body>
           <p className="font-sans text-xl text-trax-white mt-8">
             Earn the story. Share the effort. Leave changed.
