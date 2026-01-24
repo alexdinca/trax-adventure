@@ -86,8 +86,6 @@ npm run build
 
 If this resonates, you'll feel it.
 
-**hello@traxadventure.com**
-
 ---
 
 #OnTRAX
