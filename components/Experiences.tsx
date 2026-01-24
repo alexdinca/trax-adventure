@@ -52,7 +52,7 @@ export const Experiences: React.FC = () => {
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">1st – 3rd May</p>
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
-                    An exploration of ancient ground. Wide horizons, wind, and silent effort.
+                    650km across Dobrogea. Ancient terrain, quiet effort, shared discovery. No tour guides, no performance metrics.
                 </p>
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
                     View Experience
@@ -78,10 +78,10 @@ export const Experiences: React.FC = () => {
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">28th – 30th August</p>
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
-                    High altitude, ancient passes. Mountains as teachers.
+                    Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.
                 </p>
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    Coming Soon
+                    View Experience
                 </span>
             </Link>
 
@@ -100,14 +100,14 @@ export const Experiences: React.FC = () => {
                 </div>
                 <div className="flex justify-between items-start mb-4">
                     <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">The Ground</h3>
-                    <MonoLabel>Global</MonoLabel>
+                    <MonoLabel>Romania</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">14th November</p>
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
-                    The foundation. Essential conditions. Where it all begins.
+                    One year since the first TRAX gathering. A return to where it began. Open training day at TCS Racing Park.
                 </p>
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    Coming Soon
+                    View Experience
                 </span>
             </Link>
 
