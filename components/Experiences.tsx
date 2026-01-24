@@ -26,7 +26,7 @@ export const Experiences: React.FC = () => {
       <Container>
         <MonoLabel className="mb-8 block">The Index</MonoLabel>
         <Headline className="mb-12 max-w-3xl">
-          TRAX designs environments, not itineraries. 
+          TRAX designs experiences, not itineraries. 
           <span className="text-trax-grey block mt-2">These are the current open conditions.</span>
         </Headline>
 
@@ -67,7 +67,7 @@ export const Experiences: React.FC = () => {
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
-                        src="/assets/carpathian.jpg" 
+                        src="/assets/trax landscape.png" 
                         alt="Carpathian Ridge"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
                     />
@@ -93,7 +93,7 @@ export const Experiences: React.FC = () => {
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
-                        src="/assets/ground.jpg" 
+                        src="/assets/trax landscape.png" 
                         alt="The Ground"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
                     />
