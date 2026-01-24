@@ -1,11 +1,19 @@
 import React from 'react';
 import { useAptabase } from '@aptabase/react';
+import { useSEO } from '../hooks/useSEO';
 import { Container, Spacer } from './ui/Container';
 import { Button } from './ui/Button';
 import { Headline, SubHeadline, Body, MonoLabel, Divider } from './ui/Typography';
 
 export const TheGround: React.FC = () => {
   const { trackEvent } = useAptabase();
+
+  useSEO({
+    title: 'The Ground — TRAX Anniversary',
+    description: 'One year since TRAX began. An open training day at TCS Racing Park. Shared practice, learning, and community. 100 RON. November 14.',
+    ogTitle: 'The Ground — TRAX',
+    ogDescription: 'Join TRAX for its one-year anniversary. Open training day with shared practice and honest effort.',
+  });
 
   const handleJoinClick = () => {
     trackEvent('join_button_click', {

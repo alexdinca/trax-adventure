@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
+import { useSEO } from '../hooks/useSEO';
 import { Container, Spacer } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
 
 export const Experiences: React.FC = () => {
   const { trackEvent } = useAptabase();
+
+  useSEO({
+    title: 'Experiences — TRAX',
+    description: 'Explore three curated adventure motorcycling experiences. Dobrogea Calling, Carpathian Ridge, and The Ground. Real adventure in unexplored terrain.',
+  });
 
   // Track when user visits Experiences page
   useEffect(() => {

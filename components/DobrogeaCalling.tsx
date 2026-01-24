@@ -1,11 +1,19 @@
 import React from 'react';
 import { useAptabase } from '@aptabase/react';
+import { useSEO } from '../hooks/useSEO';
 import { Container, Spacer } from './ui/Container';
 import { Button } from './ui/Button';
 import { Headline, SubHeadline, Body, MonoLabel, Divider } from './ui/Typography';
 
 export const DobrogeaCalling: React.FC = () => {
   const { trackEvent } = useAptabase();
+
+  useSEO({
+    title: 'Dobrogea Calling — TRAX Adventure',
+    description: '650km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness, no tour guides, no performance metrics. An exploration, not an event.',
+    ogTitle: 'Dobrogea Calling — TRAX',
+    ogDescription: 'Join a 650km adventure across ancient Romanian terrain. 3 days, 12 points of interest, shared discovery.',
+  });
 
   const handleJoinClick = () => {
     trackEvent('join_button_click', {

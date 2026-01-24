@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
+import { useSEO } from './hooks/useSEO';
 import { Hero } from './components/Hero';
 import { Manifesto } from './components/Manifesto';
 import { WhatWeCreate } from './components/WhatWeCreate';
@@ -76,6 +77,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 // Home page component
 const HomePage: React.FC = () => {
+  useSEO({
+    title: 'TRAX — Real Adventure',
+    description: 'TRAX designs curated adventure motorcycling experiences in unexplored terrain. Terrain-led exploration, shared effort, and honest discovery.',
+  });
+
   return (
     <main>
       <Hero />

@@ -2,10 +2,18 @@ import React from 'react';
 import { Container, Spacer } from './ui/Container';
 import { Headline, SubHeadline, Body, MonoLabel, Divider } from './ui/Typography';
 import { useAptabase } from '@aptabase/react';
+import { useSEO } from '../hooks/useSEO';
 import { Button } from './ui/Button';
 
 export const CarpathianRidge: React.FC = () => {
     const { trackEvent } = useAptabase();
+
+    useSEO({
+      title: 'Carpathian Ridge — TRAX Adventure',
+      description: 'Three days of sustained mountain riding in the Carpathians. Technical terrain, fatigue as design, honest mountains. A test of skill and endurance.',
+      ogTitle: 'Carpathian Ridge — TRAX',
+      ogDescription: 'Challenge yourself with sustained mountain riding across technical Carpathian terrain.',
+    });
     
     const handleJoinClick = () => {
       trackEvent('join_button_click', {
