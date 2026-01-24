@@ -12,6 +12,8 @@ import { Logo } from './components/ui/Logo';
 import { Navigation } from './components/Navigation';
 import { Experiences } from './components/Experiences';
 import { DobrogeaCalling } from './components/DobrogeaCalling';
+import { CarpathianRidge } from './components/CarpathianRidge';
+import { TheGround } from './components/TheGround';
 import { Analytics } from '@vercel/analytics/react';
 
 function App() {
@@ -42,6 +44,10 @@ function App() {
         return <Experiences onNavigate={handleNavigate} />;
       case 'dobrogea':
         return <DobrogeaCalling />;
+      case 'carpathian':
+        return <CarpathianRidge />;
+      case 'ground':
+        return <TheGround />;
       case 'contact':
       case 'home':
       default:
