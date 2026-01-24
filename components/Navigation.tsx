@@ -1,26 +1,30 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
 
 interface NavigationProps {
   currentView: string;
-  onNavigate: (view: string) => void;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
+export const Navigation: React.FC<NavigationProps> = ({ currentView }) => {
   const { trackEvent } = useAptabase();
+  const navigate = useNavigate();
 
   const handleJoinClick = () => {
     trackEvent('join_navigation_click', {
       source: 'navigation_menu',
       timestamp: new Date().toISOString()
     });
-    onNavigate('contact');
+    // Scroll to footer
+    setTimeout(() => {
+      document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const links = [
-    { id: 'home', label: 'Manifesto' },
-    { id: 'experiences', label: 'Experiences' },
-    { id: 'contact', label: 'Join', onClick: handleJoinClick },
+    { id: 'home', label: 'Manifesto', path: '/' },
+    { id: 'experiences', label: 'Experiences', path: '/experiences' },
+    { id: 'contact', label: 'Join', isContact: true },
   ];
 
   return (
@@ -28,15 +32,27 @@ export const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate 
       <ul className="flex flex-col md:flex-row gap-2 md:gap-8 text-right">
         {links.map((link) => (
           <li key={link.id}>
-            <button
-              onClick={() => link.onClick ? link.onClick() : onNavigate(link.id)}
-              className={`
-                font-mono text-xs md:text-sm uppercase tracking-widest transition-colors duration-300
-                ${currentView === link.id ? 'text-trax-red' : 'text-trax-white hover:text-trax-red'}
-              `}
-            >
-              {link.label}
-            </button>
+            {link.isContact ? (
+              <button
+                onClick={handleJoinClick}
+                className={`
+                  font-mono text-xs md:text-sm uppercase tracking-widest transition-colors duration-300
+                  ${currentView === link.id ? 'text-trax-red' : 'text-trax-white hover:text-trax-red'}
+                `}
+              >
+                {link.label}
+              </button>
+            ) : (
+              <Link
+                to={link.path}
+                className={`
+                  font-mono text-xs md:text-sm uppercase tracking-widest transition-colors duration-300
+                  ${currentView === link.id ? 'text-trax-red' : 'text-trax-white hover:text-trax-red'}
+                `}
+              >
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

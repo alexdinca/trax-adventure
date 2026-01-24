@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
 import { Container, Spacer } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
 
-interface ExperiencesProps {
-  onNavigate: (view: string) => void;
-}
-
-export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
+export const Experiences: React.FC = () => {
   const { trackEvent } = useAptabase();
 
   // Track when user visits Experiences page
@@ -22,7 +19,6 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
       experience: experienceName,
       timestamp: new Date().toISOString()
     });
-    onNavigate(experienceName.toLowerCase());
   };
 
   return (
@@ -38,9 +34,10 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Experience Card - Dobrogea */}
-            <div 
+            <Link 
+                to="/dobrogea"
                 onClick={() => handleExperienceClick('dobrogea')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5"
+                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
@@ -60,16 +57,17 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
                     View Experience
                 </span>
-            </div>
+            </Link>
 
             {/* Experience Card - Carpathian Ridge */}
-            <div 
+            <Link 
+                to="/carpathian"
                 onClick={() => handleExperienceClick('carpathian')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5"
+                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
-                        src="/assets/trax landscape.png" 
+                        src="/assets/carpathian.jpg" 
                         alt="Carpathian Ridge"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
                     />
@@ -85,16 +83,17 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
                     Coming Soon
                 </span>
-            </div>
+            </Link>
 
             {/* Experience Card - The Ground */}
-            <div 
+            <Link 
+                to="/ground"
                 onClick={() => handleExperienceClick('ground')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5"
+                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
-                        src="/assets/trax landscape.png" 
+                        src="/assets/ground.jpg" 
                         alt="The Ground"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
                     />
@@ -110,7 +109,7 @@ export const Experiences: React.FC<ExperiencesProps> = ({ onNavigate }) => {
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
                     Coming Soon
                 </span>
-            </div>
+            </Link>
 
              {/* Placeholder for future */}
              <div className="border border-trax-grey/10 p-8 flex flex-col justify-center items-center opacity-50 select-none">
