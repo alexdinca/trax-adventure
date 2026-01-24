@@ -10,7 +10,7 @@ interface FeatureItemProps {
 
 const FeatureItem: React.FC<FeatureItemProps> = ({ title, children, subtitle }) => (
   <div className="border-l border-trax-grey/30 pl-8 py-2">
-    <SubHeadline className="mb-4">{title}</SubHeadline>
+    <SubHeadline className="mb-4 text-trax-red">{title}</SubHeadline>
     <Body className="mb-6">{children}</Body>
     {subtitle && <p className="font-sans text-trax-white italic opacity-80">{subtitle}</p>}
   </div>
@@ -23,7 +23,7 @@ export const WhatWeCreate: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
                  <MonoLabel className="mb-8 block">Our Output</MonoLabel>
-                 <h2 className="font-sans text-4xl md:text-5xl text-trax-white mb-12">What We Create</h2>
+                 <h2 className="font-sans text-4xl md:text-5xl text-trax-white mb-12">What <span className="text-trax-red">We Create</span></h2>
                  <img 
                     /* Replace with your local file */
                     src="/assets/experiences.jpg" 

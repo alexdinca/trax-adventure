@@ -11,10 +11,10 @@ export const Who: React.FC = () => {
         <SubHeadline className="text-3xl mb-8">Who TRAX Is For</SubHeadline>
         
         <ul className="space-y-6">
-            {[
+            {[              
+                "understand that discomfort reveals character",
                 "don’t need medals to validate effort",
                 "value presence over performance",
-                "understand that discomfort reveals character",
                 "want stories they don’t have to exaggerate"
             ].map((item, idx) => (
                 <li key={idx} className="flex items-start">
