@@ -24,8 +24,7 @@ export const WhatWeCreate: React.FC = () => {
             <div>
                  <MonoLabel className="mb-8 block">Our Output</MonoLabel>
                  <h2 className="font-sans text-4xl md:text-5xl text-trax-white mb-12">What <span className="text-trax-red">We Create</span></h2>
-                 <img 
-                    /* Replace with your local file */
+                 <img                     
                     src="/assets/experiences.jpg" 
                     alt="Climbing terrain" 
                     className="w-full h-[600px] object-cover trax-image opacity-90"

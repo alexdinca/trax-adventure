@@ -5,7 +5,8 @@ import { Body, Headline, MonoLabel, SubHeadline } from './ui/Typography';
 export const Manifesto: React.FC = () => {
   return (
     <Container className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
-      <div className="md:col-span-7 md:pl-12 pt-12 md:pt-0">        
+      <div className="md:col-span-7 md:pl-12 pt-12 md:pt-0">      
+        <MonoLabel>The Purpose</MonoLabel>  
         <SubHeadline className="text-trax-red">Why TRAX Exists</SubHeadline>
         
         <Headline className="mb-12">
@@ -31,14 +32,12 @@ export const Manifesto: React.FC = () => {
         </div>
       </div>
 
-      <div className="md:col-span-5">
-        <MonoLabel>The Purpose</MonoLabel>
+      <div className="md:col-span-5">        
         <div className="mt-5 md:mt-24">
-             <img 
-                /* Replace with your local file */
+             <img                 
                 src="/assets/conditions.jpg" 
                 alt="Rider looking at landscape" 
-                className="w-full h-auto object-cover opacity-90 trax-image hidden md:block"
+                className="w-full h-auto object-cover opacity-90 trax-image"
             />            
         </div>
       </div>
