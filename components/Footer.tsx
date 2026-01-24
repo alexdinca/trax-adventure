@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
     });
     window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank');
   };
-
+  
   return (
     <footer className="relative pt-32 pb-12 border-t border-trax-grey/10 bg-trax-black overflow-hidden">
       {/* Background Image */}

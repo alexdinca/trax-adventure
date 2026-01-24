@@ -1,8 +1,20 @@
 import React from 'react';
+import { useAptabase } from '@aptabase/react';
 import { Container, Spacer } from './ui/Container';
+import { Button } from './ui/Button';
 import { Headline, SubHeadline, Body, MonoLabel, Divider } from './ui/Typography';
 
 export const DobrogeaCalling: React.FC = () => {
+  const { trackEvent } = useAptabase();
+
+  const handleJoinClick = () => {
+    trackEvent('join_button_click', {
+      source: 'dobrogea_calling_page',
+      url: 'https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD',
+      timestamp: new Date().toISOString()
+    });
+    window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank');
+  };
   return (
     <div className="min-h-screen animate-fade-in pb-24 relative">
       {/* Hero Section */}
@@ -185,9 +197,12 @@ export const DobrogeaCalling: React.FC = () => {
             <Body className="mx-auto mb-8">
                 If this experience resonates, you’ll feel it. If it doesn’t, that’s fine.
             </Body>
-            <p className="font-sans text-trax-red tracking-widest uppercase text-sm cursor-pointer hover:text-white transition-colors">
-                Reach out when ready
-            </p>
+            <Button 
+                onClick={handleJoinClick}
+                className="mb-4"
+            >
+                Answer the Calling
+            </Button>
         </div>
 
         <div className="text-center mt-24 opacity-40">

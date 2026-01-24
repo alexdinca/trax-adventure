@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
 
 interface NavigationProps {
@@ -8,7 +8,6 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({ currentView }) => {
   const { trackEvent } = useAptabase();
-  const navigate = useNavigate();
 
   const handleJoinClick = () => {
     trackEvent('join_navigation_click', {
