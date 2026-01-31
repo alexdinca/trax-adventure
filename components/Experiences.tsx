@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAptabase } from '@aptabase/react';
 import { useSEO } from '../hooks/useSEO';
 import { Container, Spacer } from './ui/Container';
@@ -20,12 +19,7 @@ export const Experiences: React.FC = () => {
     });
   }, [trackEvent]);
 
-  const handleExperienceClick = (experienceName: string) => {
-    trackEvent('experience_entry_click', {
-      experience: experienceName,
-      timestamp: new Date().toISOString()
-    });
-  };
+
 
   return (
     <div className="min-h-screen pt-32 pb-24 relative">
@@ -39,11 +33,9 @@ export const Experiences: React.FC = () => {
         <Spacer size="md" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Experience Card - Dobrogea */}
-            <Link 
-                to="/dobrogea"
-                onClick={() => handleExperienceClick('dobrogea')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
+            {/* Experience Card - Dobrogea (Disabled) */}
+            <div 
+                className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
@@ -60,16 +52,14 @@ export const Experiences: React.FC = () => {
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
                     650km across Dobrogea. Ancient terrain, quiet effort, shared discovery. No tour guides, no performance metrics.
                 </p>
-                <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    View Experience
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
+                    Coming Soon
                 </span>
-            </Link>
+            </div>
 
-            {/* Experience Card - Carpathian Ridge */}
-            <Link 
-                to="/carpathian"
-                onClick={() => handleExperienceClick('carpathian')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
+            {/* Experience Card - Carpathian Ridge (Disabled) */}
+            <div 
+                className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
@@ -86,16 +76,14 @@ export const Experiences: React.FC = () => {
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
                     Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.
                 </p>
-                <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    View Experience
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
+                    Coming Soon
                 </span>
-            </Link>
+            </div>
 
-            {/* Experience Card - The Ground */}
-            <Link 
-                to="/ground"
-                onClick={() => handleExperienceClick('ground')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
+            {/* Experience Card - The Ground (Disabled) */}
+            <div 
+                className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
@@ -109,19 +97,17 @@ export const Experiences: React.FC = () => {
                     <MonoLabel>Romania</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">14th November</p>
-                <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+                <p className="font-body text-trax-grey transition-colors mb-6">
                     One year since the first TRAX gathering. A return to where it began. Open training day at TCS Racing Park.
                 </p>
-                <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    View Experience
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
+                    Coming Soon
                 </span>
-            </Link>
+            </div>
 
-            {/* Experience Card - The Long Way In */}
-            <Link 
-                to="/long-way-in"
-                onClick={() => handleExperienceClick('long_way_in')}
-                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red/50 hover:bg-trax-white/5 block"
+            {/* Experience Card - The Long Way In (Disabled) */}
+            <div 
+                className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
@@ -135,13 +121,13 @@ export const Experiences: React.FC = () => {
                     <MonoLabel>RO</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">5 Days / Advanced</p>
-                <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+                <p className="font-body text-trax-grey transition-colors mb-6">
                     1370km across ACT Romania. Maramureș to Transfăgărășan. 45% off-road. Self-supported. No shortcuts.
                 </p>
-                <span className="font-mono text-xs text-trax-red uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300 block">
-                    View Experience
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
+                    Coming Soon
                 </span>
-            </Link>
+            </div>
 
              {/* Placeholder for future */}
              <div className="border border-trax-grey/10 p-8 flex flex-col justify-center items-center opacity-50 select-none">
