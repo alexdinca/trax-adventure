@@ -18,6 +18,7 @@ import { CarpathianRidge } from './components/CarpathianRidge';
 import { TheGround } from './components/TheGround';
 import { TheLongWayIn } from './components/TheLongWayIn';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 // Layout component that wraps all pages
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -67,6 +68,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="relative z-10">
         {children}
         <Analytics />
+        <SpeedInsights />
       </div>
 
       <div id="footer" className="relative z-10">
