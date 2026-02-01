@@ -13,7 +13,7 @@ export const TheGround: React.FC = () => {
     description: 'One year since TRAX began. An open training day at TCS Racing Park. Shared practice, learning, and community. 100 RON. November 14.',
     ogTitle: 'The Ground — TRAX',
     ogDescription: 'Join TRAX for its one-year anniversary. Open training day with shared practice and honest effort.',
-    ogImage: 'https://ridetrax.eu/apple-touch-icon.png',
+    ogImage: 'https://ridetrax.eu/android-chrome-512x512.png',
   });
 
   const handleJoinClick = () => {

@@ -13,7 +13,7 @@ export const CarpathianRidge: React.FC = () => {
       description: 'Three days of sustained mountain riding in the Carpathians. Technical terrain, fatigue as design, honest mountains. A test of skill and endurance.',
       ogTitle: 'Carpathian Ridge — TRAX',
       ogDescription: 'Challenge yourself with sustained mountain riding across technical Carpathian terrain.',
-      ogImage: 'https://ridetrax.eu/apple-touch-icon.png',
+      ogImage: 'https://ridetrax.eu/android-chrome-512x512.png',
     });
     
     const handleJoinClick = () => {

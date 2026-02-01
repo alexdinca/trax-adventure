@@ -11,7 +11,7 @@ export const Experiences: React.FC = () => {
   useSEO({
     title: 'Experiences — TRAX',
     description: 'Explore three curated adventure motorcycling experiences. Dobrogea Calling, Carpathian Ridge, and The Ground. Real adventure in unexplored terrain.',
-    ogImage: 'https://ridetrax.eu/apple-touch-icon.png',
+    ogImage: 'https://ridetrax.eu/android-chrome-512x512.png',
   });
 
   // Track when user visits Experiences page
