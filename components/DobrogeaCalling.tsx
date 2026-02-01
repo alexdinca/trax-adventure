@@ -13,7 +13,7 @@ export const DobrogeaCalling: React.FC = () => {
     description: '650km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness, no tour guides, no performance metrics. An exploration, not an event.',
     ogTitle: 'Dobrogea Calling — TRAX',
     ogDescription: 'Join a 650km adventure across ancient Romanian terrain. 3 days, 12 points of interest, shared discovery.',
-    ogImage: 'https://ridetrax.eu/assets/dobrogea.jpg',
+    ogImage: 'https://ridetrax.eu/apple-touch-icon.png',
   });
 
   const handleJoinClick = () => {
