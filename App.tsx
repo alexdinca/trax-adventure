@@ -8,6 +8,7 @@ import { WhatWeCreate } from './components/WhatWeCreate';
 import { Who } from './components/Who';
 import { Ethos } from './components/Ethos';
 import { Collective } from './components/Collective';
+import { ExperiencesPreview } from './components/ExperiencesPreview';
 import { Footer } from './components/Footer';
 import { Spacer } from './components/ui/Container';
 import { Logo } from './components/ui/Logo';
@@ -97,6 +98,8 @@ const HomePage: React.FC = () => {
       <Ethos />
       <Spacer size="xl" />
       <Collective />
+      <Spacer size="xl" />
+      <ExperiencesPreview />
       <Spacer size="xl" />
     </main>
   );

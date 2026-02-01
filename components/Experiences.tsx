@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAptabase } from '@aptabase/react';
+import { Link } from 'react-router-dom';
 import { useSEO } from '../hooks/useSEO';
 import { Container, Spacer } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
@@ -33,15 +34,16 @@ export const Experiences: React.FC = () => {
         <Spacer size="md" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Experience Card - Dobrogea (Disabled) */}
-            <div 
-                className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
+            {/* Experience Card - Dobrogea */}
+            <Link 
+                to="/dobrogea"
+                className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
                         src="/assets/dobrogea.jpg" 
                         alt="Dobrogea"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
                     />
                 </div>
                 <div className="flex justify-between items-start mb-4">
@@ -52,81 +54,73 @@ export const Experiences: React.FC = () => {
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
                     650km across Dobrogea. Ancient terrain, quiet effort, shared discovery. No tour guides, no performance metrics.
                 </p>
-                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
-                    Coming Soon
-                </span>
-            </div>
+                <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
+            </Link>
 
-            {/* Experience Card - Carpathian Ridge (Disabled) */}
-            <div 
+            {/* Experience Card - Carpathian Ridge */}
+            <div
                 className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
                         src="/assets/trax landscape.png" 
                         alt="Carpathian Ridge"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-700 trax-image"
                     />
                 </div>
                 <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">Carpathian Ridge</h3>
+                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white">Carpathian Ridge</h3>
                     <MonoLabel>RO</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">28th – 30th August</p>
-                <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+                <p className="font-body text-trax-grey mb-6">
                     Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.
                 </p>
-                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
-                    Coming Soon
-                </span>
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest">Loading details...</span>
             </div>
 
-            {/* Experience Card - The Ground (Disabled) */}
-            <div 
+            {/* Experience Card - The Ground */}
+            <div
                 className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
                         src="/assets/trax landscape.png" 
                         alt="The Ground"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-700 trax-image"
                     />
                 </div>
                 <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">The Ground</h3>
-                    <MonoLabel>Romania</MonoLabel>
+                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white">The Ground</h3>
+                    <MonoLabel>RO</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">14th November</p>
-                <p className="font-body text-trax-grey transition-colors mb-6">
+                <p className="font-body text-trax-grey mb-6">
                     One year since the first TRAX gathering. A return to where it began. Open training day at TCS Racing Park.
                 </p>
-                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
-                    Coming Soon
-                </span>
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest">Loading details...</span>
             </div>
 
-            {/* Experience Card - The Long Way In (Disabled) */}
-            <div 
+            {/* Experience Card - The Long Way In */}
+            <div
                 className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
                     <img 
                         src="/assets/trax landscape.png" 
                         alt="The Long Way In"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image opacity-70 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-700 trax-image"
                     />
                 </div>
                 <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">The Long Way In</h3>
+                    <h3 className="font-sans text-2xl md:text-3xl text-trax-white">The Long Way In</h3>
                     <MonoLabel>RO</MonoLabel>
                 </div>
                 <p className="font-body text-trax-grey text-xs mb-2">5 Days / Advanced</p>
-                <p className="font-body text-trax-grey transition-colors mb-6">
+                <p className="font-body text-trax-grey mb-6">
                     1370km across ACT Romania. Maramureș to Transfăgărășan. 45% off-road. Self-supported. No shortcuts.
                 </p>
-                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest block">
-                    Coming Soon
-                </span>
+                <span className="font-mono text-xs text-trax-grey uppercase tracking-widest">Loading details...</span>
             </div>
 
              {/* Placeholder for future */}
