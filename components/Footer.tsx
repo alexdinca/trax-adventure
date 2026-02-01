@@ -15,6 +15,14 @@ export const Footer: React.FC = () => {
     });
     window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank');
   };
+
+  const handleSocialClick = (platform: string) => {
+    trackEvent('social_media_click', {
+      platform: platform,
+      source: 'footer',
+      timestamp: new Date().toISOString()
+    });
+  };
   
   return (
     <footer className="relative pt-32 pb-12 border-t border-trax-grey/10 bg-trax-black overflow-hidden">
@@ -43,15 +51,15 @@ export const Footer: React.FC = () => {
 
         {/* Social Media Links */}
         <div className="flex justify-center items-center gap-6 md:gap-10 mb-16">            
-            <a target="_blank" href="https://www.youtube.com/@ridetrax" className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
+            <a target="_blank" href="https://www.youtube.com/@ridetrax" onClick={() => handleSocialClick('youtube')} className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
                 YouTube
             </a>
             <span className="text-trax-grey/20 select-none">/</span>
-            <a target="_blank" href="https://www.instagram.com/ridetrax" className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
+            <a target="_blank" href="https://www.instagram.com/ridetrax" onClick={() => handleSocialClick('instagram')} className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
                 Instagram
             </a>
             <span className="text-trax-grey/20 select-none">/</span>
-            <a target="_blank" href="https://www.facebook.com/share/1DeGDZW2sc/?mibextid=wwXIfr" className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
+            <a target="_blank" href="https://www.facebook.com/share/1DeGDZW2sc/?mibextid=wwXIfr" onClick={() => handleSocialClick('facebook')} className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest">
                 Facebook
             </a>            
         </div>     

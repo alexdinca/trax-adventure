@@ -1,9 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAptabase } from '@aptabase/react';
 import { Container, Spacer } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
 
 export const ExperiencesPreview: React.FC = () => {
+  const { trackEvent } = useAptabase();
+
+  const handleExperienceClick = (experienceName: string) => {
+    trackEvent('experience_card_click', {
+      experience: experienceName,
+      source: 'experiences_preview',
+      timestamp: new Date().toISOString()
+    });
+  };
+
+  const handleViewAllClick = () => {
+    trackEvent('view_all_experiences_click', {
+      source: 'experiences_preview',
+      timestamp: new Date().toISOString()
+    });
+  };
+
   const experiences = [
     {
       name: 'Dobrogea Calling',
@@ -69,6 +87,7 @@ export const ExperiencesPreview: React.FC = () => {
               <Link
                 key={exp.route}
                 to={exp.route}
+                onClick={() => handleExperienceClick(exp.name.toLowerCase().replace(/ /g, '_'))}
                 className="group border border-trax-grey/20 p-6 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5"
               >
                 <div className="flex justify-between items-start mb-4">
@@ -91,6 +110,7 @@ export const ExperiencesPreview: React.FC = () => {
 
         <Link
           to="/experiences"
+          onClick={handleViewAllClick}
           className="inline-flex items-center gap-2 font-mono text-sm text-trax-white border-b border-trax-white/30 hover:border-trax-red hover:text-trax-red transition-colors pb-1"
         >
           View all experiences

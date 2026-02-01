@@ -21,6 +21,14 @@ export const Experiences: React.FC = () => {
     });
   }, [trackEvent]);
 
+  const handleExperienceClick = (experienceName: string) => {
+    trackEvent('experience_card_click', {
+      experience: experienceName,
+      source: 'experiences_page',
+      timestamp: new Date().toISOString()
+    });
+  };
+
 
 
   return (
@@ -38,6 +46,7 @@ export const Experiences: React.FC = () => {
             {/* Experience Card - Dobrogea */}
             <Link 
                 to="/dobrogea-calling"
+                onClick={() => handleExperienceClick('dobrogea_calling')}
                 className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
