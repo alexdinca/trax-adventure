@@ -10,7 +10,7 @@ export const ExperiencesPreview: React.FC = () => {
       date: '1st – 3rd May',
       location: 'RO',
       description: '650km across ancient terrain',
-      route: '/dobrogea',
+      route: '/dobrogea-calling',
       isComingSoon: false
     },
     {
@@ -18,7 +18,7 @@ export const ExperiencesPreview: React.FC = () => {
       date: '28th – 30th August',
       location: 'RO',
       description: 'Technical mountain riding',
-      route: '/carpathian',
+      route: '/carpathian-ridge',
       isComingSoon: true
     },
     {
@@ -26,7 +26,7 @@ export const ExperiencesPreview: React.FC = () => {
       date: '14th November',
       location: 'RO',
       description: 'One year anniversary gathering',
-      route: '/ground',
+      route: '/the-ground',
       isComingSoon: true
     }
   ];

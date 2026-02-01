@@ -121,9 +121,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/experiences" element={<Experiences />} />
-          <Route path="/dobrogea" element={<DobrogeaCalling />} />
-          <Route path="/carpathian" element={<CarpathianRidge />} />
-          <Route path="/ground" element={<TheGround />} />
+          <Route path="/dobrogea-calling" element={<DobrogeaCalling />} />
+          <Route path="/carpathian-ridge" element={<CarpathianRidge />} />
+          <Route path="/the-ground" element={<TheGround />} />
           <Route path="/long-way-in" element={<TheLongWayIn />} />
         </Routes>
       </Layout>

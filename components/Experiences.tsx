@@ -37,7 +37,7 @@ export const Experiences: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Experience Card - Dobrogea */}
             <Link 
-                to="/dobrogea"
+                to="/dobrogea-calling"
                 className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
             >
                 <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
