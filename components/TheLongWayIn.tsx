@@ -13,6 +13,7 @@ export const TheLongWayIn: React.FC = () => {
     description: 'Five days across ACT Romania. 1370km from Maramureș to the Transfăgărășan. Advanced adventure riding through tarmac, gravel, forest roads. Self-supported, group-limited, experience-filtered.',
     ogTitle: 'The Long Way In — TRAX',
     ogDescription: 'Join a five-day traversal of Romania\'s backbone. No shortcuts. No rush. No performance.',
+    ogImage: 'https://ridetrax.eu/assets/trax%20landscape.png',
   });
 
   const handleJoinClick = () => {

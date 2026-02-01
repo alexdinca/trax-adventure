@@ -29,12 +29,22 @@ export const useSEO = (config: SEOConfig) => {
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) {
       ogTitle.setAttribute('content', config.ogTitle || config.title);
+    } else {
+      ogTitle = document.createElement('meta');
+      ogTitle.setAttribute('property', 'og:title');
+      ogTitle.setAttribute('content', config.ogTitle || config.title);
+      document.head.appendChild(ogTitle);
     }
 
     // Update OG description
     let ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) {
       ogDescription.setAttribute('content', config.ogDescription || config.description);
+    } else {
+      ogDescription = document.createElement('meta');
+      ogDescription.setAttribute('property', 'og:description');
+      ogDescription.setAttribute('content', config.ogDescription || config.description);
+      document.head.appendChild(ogDescription);
     }
 
     // Update OG image if provided
