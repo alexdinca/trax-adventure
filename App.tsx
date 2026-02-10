@@ -18,6 +18,7 @@ import { DobrogeaCalling } from './components/DobrogeaCalling';
 import { CarpathianRidge } from './components/CarpathianRidge';
 import { TheGround } from './components/TheGround';
 import { TheLongWayIn } from './components/TheLongWayIn';
+import { OutThere } from './components/OutThere';
 import { Analytics } from '@vercel/analytics/react';
 
 
@@ -84,6 +85,38 @@ const HomePage: React.FC = () => {
   useSEO({
     title: 'TRAX — Real Adventure',
     description: 'TRAX designs curated adventure motorcycling experiences in unexplored terrain. Terrain-led exploration, shared effort, and honest discovery.',
+    keywords: [
+      'adventure motorcycling',
+      'motorcycle tours Romania',
+      'off-road riding experiences',
+      'Dobrogea exploration',
+      'Carpathian Mountains adventure',
+      'terrain-led travel',
+      'adventure travel company',
+      'generative engine optimization',
+    ],
+    author: 'TRAX',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      'name': 'TRAX',
+      'description': 'TRAX designs curated adventure motorcycling experiences in unexplored terrain.',
+      'url': 'https://ridetrax.eu',
+      'image': 'https://ridetrax.eu/android-chrome-512x512.png',
+      'sameAs': [],
+      'founder': {
+        '@type': 'Person',
+        'name': 'TRAX Team'
+      },
+      'areaServed': {
+        '@type': 'Place',
+        'name': 'Romania',
+        'geo': {
+          '@type': 'GeoShape',
+          'box': '43.618 20.263 48.268 29.644'
+        }
+      }
+    }
   });
 
   return (
@@ -125,6 +158,7 @@ function App() {
           <Route path="/carpathian-ridge" element={<CarpathianRidge />} />
           <Route path="/the-ground" element={<TheGround />} />
           <Route path="/long-way-in" element={<TheLongWayIn />} />
+          <Route path="/out-there" element={<OutThere />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -7,6 +7,9 @@ interface SEOConfig {
   ogDescription?: string;
   ogImage?: string;
   canonical?: string;
+  keywords?: string[];
+  author?: string;
+  structuredData?: Record<string, unknown>;
 }
 
 export const useSEO = (config: SEOConfig) => {
@@ -23,6 +26,33 @@ export const useSEO = (config: SEOConfig) => {
       metaDescription.setAttribute('name', 'description');
       metaDescription.setAttribute('content', config.description);
       document.head.appendChild(metaDescription);
+    }
+
+    // Update keywords for GEO/LLM optimization
+    if (config.keywords && config.keywords.length > 0) {
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      const keywordString = config.keywords.join(', ');
+      if (metaKeywords) {
+        metaKeywords.setAttribute('content', keywordString);
+      } else {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.setAttribute('name', 'keywords');
+        metaKeywords.setAttribute('content', keywordString);
+        document.head.appendChild(metaKeywords);
+      }
+    }
+
+    // Update author meta tag
+    if (config.author) {
+      let metaAuthor = document.querySelector('meta[name="author"]');
+      if (metaAuthor) {
+        metaAuthor.setAttribute('content', config.author);
+      } else {
+        metaAuthor = document.createElement('meta');
+        metaAuthor.setAttribute('name', 'author');
+        metaAuthor.setAttribute('content', config.author);
+        document.head.appendChild(metaAuthor);
+      }
     }
 
     // Update OG title
@@ -73,7 +103,18 @@ export const useSEO = (config: SEOConfig) => {
       }
     }
 
+    // Add structured data (JSON-LD) for GEO/LLM optimization
+    if (config.structuredData) {
+      let scriptTag = document.querySelector('script[type="application/ld+json"]');
+      if (!scriptTag) {
+        scriptTag = document.createElement('script');
+        scriptTag.setAttribute('type', 'application/ld+json');
+        document.head.appendChild(scriptTag);
+      }
+      scriptTag.textContent = JSON.stringify(config.structuredData);
+    }
+
     // Scroll to top on page change
     window.scrollTo(0, 0);
-  }, [config.title, config.description, config.ogTitle, config.ogDescription, config.ogImage, config.canonical]);
+  }, [config.title, config.description, config.ogTitle, config.ogDescription, config.ogImage, config.canonical, config.keywords, config.author, config.structuredData]);
 };
