@@ -37,7 +37,7 @@ export const ExperiencesPreview: React.FC = () => {
       location: 'RO',
       description: 'Self-supported remote camping adventure',
       route: '/out-there',
-      isComingSoon: false
+      isComingSoon: true
     },
     {
       name: 'Carpathian Ridge',
@@ -45,7 +45,7 @@ export const ExperiencesPreview: React.FC = () => {
       location: 'RO',
       description: 'Technical mountain riding',
       route: '/carpathian-ridge',
-      isComingSoon: false
+      isComingSoon: true
     },
     {
       name: 'The Ground',
@@ -53,7 +53,7 @@ export const ExperiencesPreview: React.FC = () => {
       location: 'RO',
       description: 'One year anniversary gathering',
       route: '/the-ground',
-      isComingSoon: false
+      isComingSoon: true
     },
     {
       name: 'The Long Way In',
@@ -61,7 +61,7 @@ export const ExperiencesPreview: React.FC = () => {
       location: 'RO',
       description: '1370km across ACT Romania',
       route: '/long-way-in',
-      isComingSoon: false
+      isComingSoon: true
     }
   ];
 
