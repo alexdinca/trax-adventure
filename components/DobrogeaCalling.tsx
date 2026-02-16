@@ -17,7 +17,7 @@ export const DobrogeaCalling: React.FC = () => {
   });
 
     const handleJoinClick = () => {
-        const whatsappUrl = 'https://wa.me/40721766484';
+        const whatsappUrl = 'https://wa.me/40721766484?text=Salut%2C%0AVreau%20s%C4%83%20m%C4%83%20al%C4%83tur%20experien%C8%9Bei%20din%20Dobrogea.%0A%C3%8Emi%20dai%20te%20rog%20mai%20multe%20detalii%3F';
     trackEvent('join_button_click', {
       source: 'dobrogea_calling_page',
             url: whatsappUrl,
