@@ -118,7 +118,7 @@ export const DobrogeaCalling: React.FC = () => {
                     <li className="flex items-center gap-3"><span className="w-1 h-1 bg-trax-red rounded-full"></span> Definetly not a retreat</li>                
                 </ul>
                 <p className="mt-8 font-body text-trax-white opacity-60 italic">
-                    If you’re looking for comfort or guarantees, this isn’t it.
+                    If you’re looking for comfort, this isn’t it.
                 </p>
             </div>
         </div>
