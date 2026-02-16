@@ -16,13 +16,14 @@ export const DobrogeaCalling: React.FC = () => {
     ogImage: 'https://ridetrax.eu/android-chrome-512x512.png',
   });
 
-  const handleJoinClick = () => {
+    const handleJoinClick = () => {
+        const whatsappUrl = 'https://wa.me/40721766484';
     trackEvent('join_button_click', {
       source: 'dobrogea_calling_page',
-      url: 'https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD',
+            url: whatsappUrl,
       timestamp: new Date().toISOString()
     });
-    window.open('https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD', '_blank');
+        window.open(whatsappUrl, '_blank');
   };
   return (
     <div className="min-h-screen animate-fade-in pb-24 relative">
