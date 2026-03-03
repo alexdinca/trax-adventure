@@ -14,8 +14,6 @@ TRAX is an off-road motorcycle collective based in Romania. We organize terrain-
 - [The Ground](https://ridetrax.eu/the-ground): Entry-level experience. Skills-focused, structured, supportive.
 - [Long Way In](https://ridetrax.eu/long-way-in): Distance and endurance. Days-long routes with minimal support.
 - [Manifesto](https://ridetrax.eu/manifesto): Our core beliefs about terrain, presence, and earned progression.
-- [Field Notes](https://ridetrax.eu/field-notes): Dispatches from the field. Short-form writing from TRAX experiences.
-- [About](https://ridetrax.eu/about): Who TRAX is and who it is for.
 
 ## Content Policy
 
