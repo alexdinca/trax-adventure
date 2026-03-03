@@ -19,10 +19,9 @@ export const Navigation: React.FC = () => {
   };
 
   const links = [
+    { label: 'Home', path: '/' },
     { label: 'Experiences', path: '/experiences' },
-    { label: 'Field Notes', path: '/field-notes' },
     { label: 'Manifesto', path: '/manifesto' },
-    { label: 'About', path: '/about' },
   ];
 
   const isActive = (path: string) => {
