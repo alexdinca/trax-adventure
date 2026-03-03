@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0E0F11;
+  --foreground: #F4F3EF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: #8C1D18;
+  color: #F4F3EF;
+}
+
+/* Brand image treatment — matches the Vite .trax-image filter */
+.trax-image {
+  filter: saturate(0.8) contrast(1.1) brightness(0.9);
+}
+
+/* Ensure next/image with fill maintains aspect ratios */
+.trax-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
