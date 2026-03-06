@@ -40,6 +40,7 @@ const calendar: MonthGroup[] = [
       { date: '1–3 May', name: 'Dobrogea Calling', location: 'Dobrogea, Romania', type: 'trax', href: '/dobrogea-calling' },
       { date: '8–10 May', name: 'MotoRide Expo', location: 'Motor Park', type: 'collective', href: 'https://fb.me/e/3rtJMLVM8', note: 'Ride tests from all major motorcycle distributors' },
       { date: '9–10 May', name: 'Adventure Riders Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://tcsracingpark.ro/calendar/#' },
+      { date: '29 May', name: 'Pîr - Pîr - Poc, ediția 2026', location: 'Corbu', type: 'radar', href: 'https://www.facebook.com/events/1606159840719049' },
     ],
   },
   {
