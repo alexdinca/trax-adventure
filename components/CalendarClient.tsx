@@ -41,6 +41,7 @@ const calendar: MonthGroup[] = [
       { date: '8–10 May', name: 'MotoRide Expo', location: 'Motor Park', type: 'radar', href: 'https://fb.me/e/3rtJMLVM8', note: 'Ride tests from all major motorcycle distributors' },
       { date: '9–10 May', name: 'Adventure Riders Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://tcsracingpark.ro/calendar/#' },
       { date: '17 May', name: 'Distinguished Gentleman\'s Ride', location: 'Bucharest', type: 'collective', href: 'https://www.gentlemansride.com/rides/romania/bucharest' },
+      { date: '21–24 May', name: 'Treasure Hunt Țara Călățelului, ediția 3', location: 'Sâncraiu, Cluj', type: 'radar', href: 'https://fb.me/e/edxx6q1Us' },
       { date: '29 May', name: 'Pîr - Pîr - Poc, ediția 2026', location: 'Corbu', type: 'radar', href: 'https://www.facebook.com/events/1606159840719049' },
     ],
   },
@@ -57,6 +58,7 @@ const calendar: MonthGroup[] = [
   {
     month: 'July',
     events: [
+      { date: '19 Jul', name: 'Romanian Camel Trophy — The Grand Tour', location: 'Vâlcea', type: 'radar', href: 'https://fb.me/e/3vHxXORAs' },
       { date: '28 Jul – 1 Aug', name: 'Red Bull Romaniacs', location: 'Sibiu', type: 'radar', href: 'https://www.redbullromaniacs.com/' },
     ],
   },
