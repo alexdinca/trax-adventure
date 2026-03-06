@@ -100,20 +100,14 @@ function EventLink({ event, children }: { event: CalendarEvent; children: React.
 
 function EventRow({ event }: { event: CalendarEvent }) {
   const isTrax = event.type === 'trax';
-  const isRadar = event.type === 'radar';
+  const isCollective = event.type === 'collective';
 
   const borderClass = isTrax
     ? 'border-l-trax-red hover:bg-trax-red/5'
-    : isRadar
-    ? 'border-l-trax-grey/40 hover:border-l-trax-grey/70'
     : 'border-l-trax-white/40 hover:border-l-trax-white/70';
-
-  const rowOpacity = isRadar ? 'opacity-70 hover:opacity-90 transition-opacity' : '';
 
   const nameClass = isTrax
     ? 'text-trax-white group-hover:text-trax-red'
-    : isRadar
-    ? 'text-trax-white/75 group-hover:text-trax-white'
     : 'text-trax-white group-hover:text-trax-white';
 
   const inner = (
@@ -122,7 +116,7 @@ function EventRow({ event }: { event: CalendarEvent }) {
         group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8
         py-6 border-b border-trax-grey/10 border-l-2 pl-6
         transition-all duration-300
-        ${borderClass} ${rowOpacity}
+        ${borderClass}
         ${event.href ? 'cursor-pointer' : 'cursor-default'}
       `}
     >
@@ -159,15 +153,11 @@ function EventRow({ event }: { event: CalendarEvent }) {
           <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-3 py-1">
             TRAX Experience
           </span>
-        ) : isRadar ? (
-          <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-white/70 border border-trax-white/30 px-3 py-1">
-            On the Radar
-          </span>
-        ) : (
+        ) : isCollective ? (
           <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-white border border-trax-white/50 px-3 py-1">
-            Collective Joins
+            TRAX Will Join
           </span>
-        )}
+        ) : null}
       </div>
     </div>
   );
@@ -211,16 +201,12 @@ export function CalendarClient() {
 
         <div className="space-y-6 mb-10 max-w-2xl">
           <div>
-            <p className="font-mono text-sm text-trax-red uppercase tracking-widest mb-1">TRAX Experiences</p>
+            <p className="font-mono text-sm text-trax-red uppercase tracking-widest mb-1">TRAX Experience</p>
             <p className="font-body text-trax-white/70 leading-relaxed">Experiences designed and led by TRAX.<br />Small groups. Intentional terrain. Shared effort.</p>
           </div>
           <div>
-            <p className="font-mono text-sm text-trax-white uppercase tracking-widest mb-1">Collective Joins</p>
+            <p className="font-mono text-sm text-trax-white uppercase tracking-widest mb-1">TRAX Will Join</p>
             <p className="font-body text-trax-white/70 leading-relaxed">Events organized by others where members of the TRAX collective ride alongside — as participants, observers, and culture carriers.</p>
-          </div>
-          <div>
-            <p className="font-mono text-sm text-trax-white/60 uppercase tracking-widest mb-1">On the Radar</p>
-            <p className="font-body text-trax-white/70 leading-relaxed">Events worth knowing about. Under our lookout, but not confirmed if attending.</p>
           </div>
         </div>
 
