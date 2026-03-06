@@ -21,6 +21,7 @@ export const Navigation: React.FC = () => {
   const links = [
     { label: 'Home', path: '/' },
     { label: 'Experiences', path: '/experiences' },
+    { label: 'Calendar', path: '/calendar' },
     { label: 'Manifesto', path: '/manifesto' },
   ];
 

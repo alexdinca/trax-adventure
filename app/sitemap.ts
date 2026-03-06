@@ -12,6 +12,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/long-way-in`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/out-there`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/manifesto`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.7 },
-    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.6 },
   ];
 }
