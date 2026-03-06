@@ -130,11 +130,16 @@ function generateICS(event: CalendarEvent): void {
   const blobUrl = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = blobUrl;
-  a.download = `${event.name.replace(/[^\w\s]/g, '').trim().replace(/\s+/g, '_')}.ics`;
+  // On iOS Safari, omitting download lets the browser hand off to Calendar directly.
+  // On other platforms, set download to trigger a file save.
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isIOS) {
+    a.download = `${event.name.replace(/[^\w\s]/g, '').trim().replace(/\s+/g, '_')}.ics`;
+  }
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(blobUrl);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
 }
 
 function googleCalendarUrl(event: CalendarEvent): string {
@@ -169,7 +174,7 @@ function AddToCalendar({ event }: { event: CalendarEvent }) {
     <div ref={ref} className="relative flex-shrink-0">
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen((o) => !o); }}
-        className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-trax-white/30 hover:text-trax-white/70 transition-colors px-2 py-1"
+        className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-trax-white/30 hover:text-trax-white/70 transition-all px-2 py-1 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100"
         title="Add to calendar"
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -196,6 +201,7 @@ function AddToCalendar({ event }: { event: CalendarEvent }) {
             className="w-full text-left px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-trax-white/70 hover:text-trax-white hover:bg-trax-white/5 transition-colors"
           >
             Apple / ICS
+            <span className="block normal-case tracking-normal text-trax-white/30 text-[10px] mt-0.5">Safari on iOS recommended</span>
           </button>
         </div>
       )}
