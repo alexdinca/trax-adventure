@@ -63,8 +63,8 @@ const calendar: MonthGroup[] = [
   {
     month: 'August',
     events: [
-      { date: '1–2 Aug', name: 'Aristhrottle', type: 'radar' },
-      { date: '5–10 Aug', name: 'Dusty Lizard', type: 'radar', href: 'https://moskomoto.eu/products/dusty-lizard-campout-romania' },
+      { date: '1–2 Aug', name: 'Aristhrottle', location: 'Iași', type: 'radar', href: 'https://www.aristhrottle.ro/evenimente/' },
+      { date: '5–10 Aug', name: 'Dusty Lizard', location: 'Apuseni', type: 'radar', href: 'https://moskomoto.eu/products/dusty-lizard-campout-romania' },
       { date: '14–16 Aug', name: 'Out There', location: 'Romania', type: 'trax', href: '/out-there' },
       { date: '28–30 Aug', name: 'Carpathian Ridge', location: 'Carpathians, Romania', type: 'trax', href: '/carpathian-ridge' },
     ],
