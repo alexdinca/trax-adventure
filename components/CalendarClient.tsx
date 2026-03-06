@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useAptabase } from '@aptabase/react';
 import { Container, Spacer } from '@/components/ui/Container';
 import { Headline, MonoLabel } from '@/components/ui/Typography';
 
@@ -160,6 +161,7 @@ function googleCalendarUrl(event: CalendarEvent): string {
 function AddToCalendar({ event }: { event: CalendarEvent }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { trackEvent } = useAptabase();
 
   useEffect(() => {
     if (!open) return;
@@ -191,13 +193,13 @@ function AddToCalendar({ event }: { event: CalendarEvent }) {
             href={googleCalendarUrl(event)}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
+            onClick={() => { trackEvent('calendar_save_google', { name: event.name, type: event.type }); setOpen(false); }}
             className="block px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-trax-white/70 hover:text-trax-white hover:bg-trax-white/5 transition-colors"
           >
             Google Calendar
           </a>
           <button
-            onClick={() => { generateICS(event); setOpen(false); }}
+            onClick={() => { trackEvent('calendar_save_ics', { name: event.name, type: event.type }); generateICS(event); setOpen(false); }}
             className="w-full text-left px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-trax-white/70 hover:text-trax-white hover:bg-trax-white/5 transition-colors"
           >
             Apple / ICS
@@ -210,8 +212,10 @@ function AddToCalendar({ event }: { event: CalendarEvent }) {
 }
 
 function EventRow({ event }: { event: CalendarEvent }) {
+  const { trackEvent } = useAptabase();
   const isTrax = event.type === 'trax';
   const isCollective = event.type === 'collective';
+  const handleClick = () => trackEvent('calendar_event_click', { name: event.name, type: event.type, date: event.startDate });
 
   const borderClass = isTrax
     ? 'border-l-trax-red hover:bg-trax-red/5'
@@ -278,11 +282,11 @@ function EventRow({ event }: { event: CalendarEvent }) {
     >
       {event.href ? (
         event.href.startsWith('http') ? (
-          <a href={event.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          <a href={event.href} target="_blank" rel="noopener noreferrer" className={linkClass} onClick={handleClick}>
             {content}
           </a>
         ) : (
-          <Link href={event.href} className={linkClass}>
+          <Link href={event.href} className={linkClass} onClick={handleClick}>
             {content}
           </Link>
         )
