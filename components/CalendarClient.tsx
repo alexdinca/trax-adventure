@@ -195,39 +195,31 @@ function ListView() {
   );
 }
 
-function Legend() {
-  return (
-    <div className="flex flex-wrap gap-6">
-      <div className="flex items-center gap-3">
-        <span className="w-4 h-[2px] bg-trax-red" />
-        <span className="font-mono text-sm text-trax-red uppercase tracking-widest">TRAX Experience</span>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="w-4 h-[2px] bg-trax-white/50" />
-        <span className="font-mono text-sm text-trax-white uppercase tracking-widest">Collective Joins</span>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="w-4 h-[2px] bg-trax-white/30" />
-        <span className="font-mono text-sm text-trax-white/60 uppercase tracking-widest">On the Radar</span>
-      </div>
-    </div>
-  );
-}
 
 export function CalendarClient() {
   return (
     <div className="min-h-screen pt-32 pb-24">
       <Container>
         <MonoLabel className="mb-8 block">2026 Season</MonoLabel>
-        <Headline className="mb-4 max-w-3xl">Where the Collective Will Be</Headline>
-        <p className="font-body text-trax-white/70 text-lg max-w-2xl mb-8 leading-relaxed">
-          Three kinds of entries. TRAX experiences are designed and led by TRAX.
-          Collective events are where we ride alongside — as participants, observers, and culture carriers.
-          On the Radar events are worth knowing about — under our lookout, not confirmed if attending at this time.
+        <Headline className="mb-6 max-w-3xl">Where the Collective Will Be</Headline>
+        <p className="font-body text-trax-white/70 text-lg max-w-2xl mb-10 leading-relaxed">
+          The season is not only about what we build —<br />
+          but also about where we show up.
         </p>
 
-        <div className="mb-2">
-          <Legend />
+        <div className="space-y-6 mb-10 max-w-2xl">
+          <div>
+            <p className="font-mono text-sm text-trax-red uppercase tracking-widest mb-1">TRAX Experiences</p>
+            <p className="font-body text-trax-white/70 leading-relaxed">Experiences designed and led by TRAX.<br />Small groups. Intentional terrain. Shared effort.</p>
+          </div>
+          <div>
+            <p className="font-mono text-sm text-trax-white uppercase tracking-widest mb-1">Collective Joins</p>
+            <p className="font-body text-trax-white/70 leading-relaxed">Events organized by others where members of the TRAX collective ride alongside — as participants, observers, and culture carriers.</p>
+          </div>
+          <div>
+            <p className="font-mono text-sm text-trax-white/60 uppercase tracking-widest mb-1">On the Radar</p>
+            <p className="font-body text-trax-white/70 leading-relaxed">Events worth knowing about. Under our lookout, but not confirmed if attending.</p>
+          </div>
         </div>
 
         <Spacer size="lg" />
