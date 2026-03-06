@@ -184,32 +184,6 @@ export default function LongWayInPage() {
       <Divider />
       <Spacer size="lg" />
 
-      {/* Rider Kit */}
-      <Container>
-        <Headline className="mb-12">What You Carry With You</Headline>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
-          {[
-            'Event-specific riding layer',
-            'Abstract route strip (north → south)',
-            'Field notebook (one page per day)',
-            'Low-key event mark',
-            'Final-day artifact (earned, not given)',
-          ].map((item) => (
-            <div key={item} className="border border-trax-grey/20 rounded-lg p-6 flex items-center justify-center text-center">
-              <Body className="text-lg">{item}</Body>
-            </div>
-          ))}
-        </div>
-        <div className="border-l-2 border-trax-red pl-6 py-4">
-          <MonoLabel className="text-sm text-trax-grey">Note</MonoLabel>
-          <Body className="text-sm text-trax-grey mt-2">The final item is handed out only at the end of Day 5.</Body>
-        </div>
-      </Container>
-
-      <Spacer size="lg" />
-      <Divider />
-      <Spacer size="lg" />
-
       {/* Logistics */}
       <Container>
         <div className="max-w-3xl">

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Container, Spacer } from '@/components/ui/Container';
 import { Headline, MonoLabel } from '@/components/ui/Typography';
@@ -20,16 +20,12 @@ interface MonthGroup {
   events: CalendarEvent[];
 }
 
-const MONTH_NAMES = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
-];
-
 const calendar: MonthGroup[] = [
   {
     month: 'March',
     events: [
       { date: '21 Mar', name: 'RAMS Fun Ride', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://tcsracingpark.ro/calendar/#' },
+      { date: '28–29 Mar', name: 'MX CB/CNIR et. I', location: 'Oltenia Racing Park, Balș', type: 'radar' },
     ],
   },
   {
@@ -92,24 +88,6 @@ const calendar: MonthGroup[] = [
   },
 ];
 
-// Extract the first day number from a date string
-function getStartDay(dateStr: string): number {
-  const m = dateStr.match(/\d+/);
-  return m ? parseInt(m[0]) : 1;
-}
-
-// Extract the last day number within the given month
-function getEndDay(dateStr: string, monthName: string): number {
-  const idx = MONTH_NAMES.indexOf(monthName);
-  const daysInMonth = new Date(2026, idx + 1, 0).getDate();
-  // Cross-month span e.g. "28 Jul – 1 Aug" — cap at month end
-  if (dateStr.includes(' – ')) return daysInMonth;
-  // Same-month range e.g. "18–19 Apr"
-  const rangeMatch = dateStr.match(/\d+[–-](\d+)/);
-  if (rangeMatch) return parseInt(rangeMatch[1]);
-  return getStartDay(dateStr);
-}
-
 function EventLink({ event, children }: { event: CalendarEvent; children: React.ReactNode }) {
   if (!event.href) return <>{children}</>;
   if (event.href.startsWith('http')) {
@@ -118,8 +96,6 @@ function EventLink({ event, children }: { event: CalendarEvent; children: React.
   return <Link href={event.href}>{children}</Link>;
 }
 
-// ─── LIST VIEW ────────────────────────────────────────────────────────────────
-
 function EventRow({ event }: { event: CalendarEvent }) {
   const isTrax = event.type === 'trax';
   const isRadar = event.type === 'radar';
@@ -127,15 +103,15 @@ function EventRow({ event }: { event: CalendarEvent }) {
   const borderClass = isTrax
     ? 'border-l-trax-red hover:bg-trax-red/5'
     : isRadar
-    ? 'border-l-trax-grey/25 hover:border-l-trax-grey/50'
-    : 'border-l-trax-grey/50 hover:border-l-trax-white/40';
+    ? 'border-l-trax-grey/40 hover:border-l-trax-grey/70'
+    : 'border-l-trax-white/40 hover:border-l-trax-white/70';
 
-  const rowOpacity = isRadar ? 'opacity-60 hover:opacity-85 transition-opacity' : '';
+  const rowOpacity = isRadar ? 'opacity-70 hover:opacity-90 transition-opacity' : '';
 
   const nameClass = isTrax
     ? 'text-trax-white group-hover:text-trax-red'
     : isRadar
-    ? 'text-trax-white/60 group-hover:text-trax-white/80'
+    ? 'text-trax-white/75 group-hover:text-trax-white'
     : 'text-trax-white group-hover:text-trax-white';
 
   const inner = (
@@ -150,7 +126,7 @@ function EventRow({ event }: { event: CalendarEvent }) {
     >
       {/* Date */}
       <div className="flex-shrink-0 sm:w-44">
-        <span className="font-mono text-sm text-trax-white/60 uppercase tracking-widest">
+        <span className="font-mono text-sm text-trax-white/80 uppercase tracking-widest">
           {event.date}
         </span>
       </div>
@@ -166,27 +142,27 @@ function EventRow({ event }: { event: CalendarEvent }) {
           )}
         </p>
         {event.location && (
-          <p className="font-mono text-xs text-trax-grey/50 uppercase tracking-widest mt-1">
+          <p className="font-mono text-xs text-trax-grey/75 uppercase tracking-widest mt-1">
             {event.location}
           </p>
         )}
         {event.note && (
-          <p className="font-body text-sm text-trax-grey/50 italic mt-1">{event.note}</p>
+          <p className="font-body text-sm text-trax-grey/70 italic mt-1">{event.note}</p>
         )}
       </div>
 
       {/* Badge */}
       <div className="flex-shrink-0">
         {isTrax ? (
-          <span className="inline-block font-mono text-[10px] uppercase tracking-widest text-trax-red border border-trax-red/40 px-2 py-1">
+          <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-3 py-1">
             TRAX Experience
           </span>
         ) : isRadar ? (
-          <span className="inline-block font-mono text-[10px] uppercase tracking-widest text-trax-grey/40 border border-trax-grey/15 px-2 py-1">
+          <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-white/70 border border-trax-white/30 px-3 py-1">
             On the Radar
           </span>
         ) : (
-          <span className="inline-block font-mono text-[10px] uppercase tracking-widest text-trax-grey/70 border border-trax-grey/30 px-2 py-1">
+          <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-white border border-trax-white/50 px-3 py-1">
             Collective Joins
           </span>
         )}
@@ -203,10 +179,10 @@ function ListView() {
       {calendar.map((group) => (
         <div key={group.month}>
           <div className="flex items-center gap-6 mb-1">
-            <h2 className="font-sans text-3xl md:text-4xl font-medium text-trax-white/20 select-none w-44 flex-shrink-0">
+            <h2 className="font-sans text-3xl md:text-4xl font-medium text-trax-white/40 select-none w-44 flex-shrink-0">
               {group.month}
             </h2>
-            <div className="flex-1 h-[1px] bg-trax-grey/10" />
+            <div className="flex-1 h-[1px] bg-trax-grey/25" />
           </div>
           <div>
             {group.events.map((event, idx) => (
@@ -219,176 +195,44 @@ function ListView() {
   );
 }
 
-// ─── GRID VIEW ────────────────────────────────────────────────────────────────
-
-function EventChip({ event, monthName }: { event: CalendarEvent; monthName: string }) {
-  const endDay = getEndDay(event.date, monthName);
-  const startDay = getStartDay(event.date);
-  const span = endDay - startDay + 1;
-
-  const chipClass =
-    event.type === 'trax'
-      ? 'bg-trax-red/20 text-trax-red border-l-2 border-trax-red'
-      : event.type === 'radar'
-      ? 'bg-trax-grey/5 text-trax-grey/40 border-l border-trax-grey/20'
-      : 'bg-trax-white/8 text-trax-white/70 border-l border-trax-grey/35';
-
-  const label = event.name.split(/\s+/).slice(0, 3).join(' ');
-
-  const chip = (
-    <div
-      className={`mt-[3px] px-1 py-[2px] text-[9px] font-mono truncate leading-tight rounded-[1px] ${chipClass} hover:opacity-80 transition-opacity`}
-      title={event.name}
-    >
-      {label}
-      {span > 1 && <span className="opacity-60 ml-1">+{span - 1}d</span>}
-    </div>
-  );
-
-  return <EventLink event={event}>{chip}</EventLink>;
-}
-
-function MonthGrid({ group }: { group: MonthGroup }) {
-  const monthIndex = MONTH_NAMES.indexOf(group.month);
-  const firstDayJs = new Date(2026, monthIndex, 1).getDay(); // 0=Sun
-  const firstDayMon = (firstDayJs + 6) % 7; // 0=Mon
-  const daysInMonth = new Date(2026, monthIndex + 1, 0).getDate();
-
-  const eventsByDay: Record<number, CalendarEvent[]> = {};
-  for (const event of group.events) {
-    const startDay = getStartDay(event.date);
-    if (!eventsByDay[startDay]) eventsByDay[startDay] = [];
-    eventsByDay[startDay].push(event);
-  }
-
-  return (
-    <div className="border border-trax-grey/15 p-4 md:p-5">
-      <h3 className="font-mono text-xs uppercase tracking-widest text-trax-white/40 mb-4">
-        {group.month} 2026
-      </h3>
-
-      {/* Day headers */}
-      <div className="grid grid-cols-7 mb-1">
-        {['Mo','Tu','We','Th','Fr','Sa','Su'].map((d, i) => (
-          <div key={i} className="text-center font-mono text-[9px] text-trax-grey/25 uppercase tracking-wider pb-2">
-            {d}
-          </div>
-        ))}
-      </div>
-
-      {/* Day cells */}
-      <div className="grid grid-cols-7">
-        {/* Empty cells before month start */}
-        {Array.from({ length: firstDayMon }).map((_, i) => (
-          <div key={`e-${i}`} className="min-h-[44px]" />
-        ))}
-
-        {/* Day cells */}
-        {Array.from({ length: daysInMonth }).map((_, i) => {
-          const day = i + 1;
-          const events = eventsByDay[day] ?? [];
-          const hasEvents = events.length > 0;
-
-          return (
-            <div
-              key={day}
-              className={`min-h-[44px] p-[3px] border-t border-trax-grey/8 ${hasEvents ? 'border-t-trax-grey/20' : ''}`}
-            >
-              <span
-                className={`block font-mono text-[11px] leading-none mb-[2px] ${
-                  hasEvents ? 'text-trax-white/80' : 'text-trax-grey/20'
-                }`}
-              >
-                {day}
-              </span>
-              {events.map((event, idx) => (
-                <EventChip key={idx} event={event} monthName={group.month} />
-              ))}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function GridView() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      {calendar.map((group) => (
-        <MonthGrid key={group.month} group={group} />
-      ))}
-    </div>
-  );
-}
-
-// ─── LEGEND ───────────────────────────────────────────────────────────────────
-
 function Legend() {
   return (
     <div className="flex flex-wrap gap-6">
       <div className="flex items-center gap-3">
         <span className="w-4 h-[2px] bg-trax-red" />
-        <span className="font-mono text-xs text-trax-red uppercase tracking-widest">TRAX Experience</span>
+        <span className="font-mono text-sm text-trax-red uppercase tracking-widest">TRAX Experience</span>
       </div>
       <div className="flex items-center gap-3">
-        <span className="w-4 h-[2px] bg-trax-grey/50" />
-        <span className="font-mono text-xs text-trax-grey/70 uppercase tracking-widest">Collective Joins</span>
+        <span className="w-4 h-[2px] bg-trax-white/50" />
+        <span className="font-mono text-sm text-trax-white uppercase tracking-widest">Collective Joins</span>
       </div>
       <div className="flex items-center gap-3">
-        <span className="w-4 h-[2px] bg-trax-grey/20" />
-        <span className="font-mono text-xs text-trax-grey/40 uppercase tracking-widest">On the Radar</span>
+        <span className="w-4 h-[2px] bg-trax-white/30" />
+        <span className="font-mono text-sm text-trax-white/60 uppercase tracking-widest">On the Radar</span>
       </div>
     </div>
   );
 }
 
-// ─── MAIN EXPORT ──────────────────────────────────────────────────────────────
-
 export function CalendarClient() {
-  const [view, setView] = useState<'list' | 'grid'>('list');
-
   return (
     <div className="min-h-screen pt-32 pb-24">
       <Container>
         <MonoLabel className="mb-8 block">2026 Season</MonoLabel>
         <Headline className="mb-4 max-w-3xl">Where the Collective Will Be</Headline>
-        <p className="font-body text-trax-grey text-lg max-w-2xl mb-8 leading-relaxed">
+        <p className="font-body text-trax-white/70 text-lg max-w-2xl mb-8 leading-relaxed">
           Three kinds of entries. TRAX experiences are designed and led by TRAX.
           Collective events are where we ride alongside — as participants, observers, and culture carriers.
-          On the Radar events are worth knowing about, but the Collective won't be there.
+          On the Radar events are worth knowing about — under our lookout, not confirmed if attending at this time.
         </p>
 
-        {/* View toggle + legend */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-2">
+        <div className="mb-2">
           <Legend />
-          <div className="flex border border-trax-grey/20 w-fit">
-            <button
-              onClick={() => setView('list')}
-              className={`font-mono text-xs uppercase tracking-widest px-5 py-2 transition-colors duration-200 ${
-                view === 'list'
-                  ? 'bg-trax-white text-trax-black'
-                  : 'text-trax-grey/60 hover:text-trax-white'
-              }`}
-            >
-              List
-            </button>
-            <button
-              onClick={() => setView('grid')}
-              className={`font-mono text-xs uppercase tracking-widest px-5 py-2 transition-colors duration-200 border-l border-trax-grey/20 ${
-                view === 'grid'
-                  ? 'bg-trax-white text-trax-black'
-                  : 'text-trax-grey/60 hover:text-trax-white'
-              }`}
-            >
-              Calendar
-            </button>
-          </div>
         </div>
 
         <Spacer size="lg" />
 
-        {view === 'list' ? <ListView /> : <GridView />}
+        <ListView />
 
         <Spacer size="xl" />
 

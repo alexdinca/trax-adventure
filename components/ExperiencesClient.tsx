@@ -27,7 +27,7 @@ export function ExperiencesClient() {
         <MonoLabel className="mb-8 block">The Index</MonoLabel>
         <Headline className="mb-12 max-w-3xl">
           TRAX designs experiences, not itineraries.{' '}
-          <span className="text-trax-grey block mt-2">These are the current open conditions.</span>
+          <span className="text-trax-grey block mt-2">Five levels. Each with a role. Each earned.</span>
         </Headline>
 
         <Spacer size="md" />
@@ -59,47 +59,112 @@ export function ExperiencesClient() {
             <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
           </Link>
 
-          {/* Out There — locked */}
-          <LockedCard title="Out There" date="14th – 16th August" description="Self-supported off-road riding and remote camping. Ride remote, camp without infrastructure, live intentionally off the bike." />
+          {/* Out There — active */}
+          <Link
+            href="/out-there"
+            onClick={() => handleExperienceClick('out_there')}
+            className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
+          >
+            <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
+              <Image
+                src="/assets/trax landscape.png"
+                alt="Out There"
+                width={700}
+                height={400}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
+              />
+            </div>
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">Out There</h3>
+              <MonoLabel>RO</MonoLabel>
+            </div>
+            <p className="font-body text-trax-grey text-xs mb-2">14th – 16th August</p>
+            <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+              Self-supported off-road riding and remote camping. Ride remote, camp without infrastructure, live intentionally off the bike.
+            </p>
+            <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
+          </Link>
 
-          {/* Carpathian Ridge — locked */}
-          <LockedCard title="Carpathian Ridge" date="28th – 30th August" description="Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains." />
+          {/* Carpathian Ridge — active */}
+          <Link
+            href="/carpathian-ridge"
+            onClick={() => handleExperienceClick('carpathian_ridge')}
+            className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
+          >
+            <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
+              <Image
+                src="/assets/trax landscape.png"
+                alt="Carpathian Ridge"
+                width={700}
+                height={400}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
+              />
+            </div>
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">Carpathian Ridge</h3>
+              <MonoLabel>RO</MonoLabel>
+            </div>
+            <p className="font-body text-trax-grey text-xs mb-2">28th – 30th August</p>
+            <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+              Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.
+            </p>
+            <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
+          </Link>
 
-          {/* The Ground — locked */}
-          <LockedCard title="The Ground" date="14th November" description="One year since the first TRAX gathering. A return to where it began. Open training day at TCS Racing Park." />
+          {/* The Ground — active */}
+          <Link
+            href="/the-ground"
+            onClick={() => handleExperienceClick('the_ground')}
+            className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
+          >
+            <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
+              <Image
+                src="/assets/trax landscape.png"
+                alt="The Ground"
+                width={700}
+                height={400}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
+              />
+            </div>
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">The Ground</h3>
+              <MonoLabel>RO</MonoLabel>
+            </div>
+            <p className="font-body text-trax-grey text-xs mb-2">14th November</p>
+            <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+              One year since the first TRAX gathering. A return to where it began. Open training day at TCS Racing Park.
+            </p>
+            <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
+          </Link>
 
-          {/* The Long Way In — locked */}
-          <LockedCard title="The Long Way In" date="5 Days / Advanced" description="1370km across ACT Romania. Maramureș to Transfăgărășan. 45% off-road. Self-supported. No shortcuts." />
-
-          <div>
-            <MonoLabel>Archive / Future</MonoLabel>
-            <p className="font-sans text-trax-grey mt-4">More conditions loading...</p>
-          </div>
+          {/* The Long Way In — active */}
+          <Link
+            href="/long-way-in"
+            onClick={() => handleExperienceClick('long_way_in')}
+            className="group cursor-pointer border border-trax-grey/20 p-8 transition-all duration-500 hover:border-trax-red hover:bg-trax-red/5 block"
+          >
+            <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
+              <Image
+                src="/assets/trax landscape.png"
+                alt="The Long Way In"
+                width={700}
+                height={400}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
+              />
+            </div>
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">The Long Way In</h3>
+              <MonoLabel>RO</MonoLabel>
+            </div>
+            <p className="font-body text-trax-grey text-xs mb-2">5 Days / Advanced</p>
+            <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
+              1370km across ACT Romania. Maramureș to Transfăgărășan. 45% off-road. Self-supported. No shortcuts.
+            </p>
+            <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
+          </Link>
         </div>
       </Container>
     </div>
   );
 }
 
-function LockedCard({ title, date, description }: { title: string; date: string; description: string }) {
-  return (
-    <div className="group cursor-not-allowed border border-trax-grey/20 p-8 transition-all duration-500 opacity-50 block">
-      <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
-        <Image
-          src="/assets/trax landscape.png"
-          alt={title}
-          width={700}
-          height={400}
-          className="w-full h-full object-cover trax-image"
-        />
-      </div>
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="font-sans text-2xl md:text-3xl text-trax-white">{title}</h3>
-        <MonoLabel>RO</MonoLabel>
-      </div>
-      <p className="font-body text-trax-grey text-xs mb-2">{date}</p>
-      <p className="font-body text-trax-grey mb-6">{description}</p>
-      <span className="font-mono text-xs text-trax-grey uppercase tracking-widest">Loading details...</span>
-    </div>
-  );
-}

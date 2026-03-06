@@ -7,10 +7,10 @@ import { Headline, Body, MonoLabel } from './ui/Typography';
 
 const experiences = [
   { name: 'Dobrogea Calling', date: '1st – 3rd May', location: 'RO', description: '650km across ancient terrain', route: '/dobrogea-calling', isComingSoon: false },
-  { name: 'Out There', date: '14th – 16th August', location: 'RO', description: 'Self-supported remote camping adventure', route: '/out-there', isComingSoon: true },
-  { name: 'Carpathian Ridge', date: '28th – 30th August', location: 'RO', description: 'Technical mountain riding', route: '/carpathian-ridge', isComingSoon: true },
-  { name: 'The Ground', date: '14th November', location: 'RO', description: 'One year anniversary gathering', route: '/the-ground', isComingSoon: true },
-  { name: 'The Long Way In', date: '5 Days / Advanced', location: 'RO', description: '1370km across ACT Romania', route: '/long-way-in', isComingSoon: true },
+  { name: 'Out There', date: '14th – 16th August', location: 'RO', description: 'Self-supported remote camping adventure', route: '/out-there', isComingSoon: false },
+  { name: 'Carpathian Ridge', date: '28th – 30th August', location: 'RO', description: 'Technical mountain riding', route: '/carpathian-ridge', isComingSoon: false },
+  { name: 'The Ground', date: '14th November', location: 'RO', description: 'One year anniversary gathering', route: '/the-ground', isComingSoon: false },
+  { name: 'The Long Way In', date: '5 Days / Advanced', location: 'RO', description: '1370km across ACT Romania', route: '/long-way-in', isComingSoon: false },
 ];
 
 export function ExperiencesPreviewClient() {

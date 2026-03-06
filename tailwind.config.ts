@@ -12,7 +12,7 @@ const config: Config = {
         trax: {
           black: '#0E0F11',
           white: '#F4F3EF',
-          red:   '#8C1D18',
+          red:   '#E03030',
           grey:  '#8E9196',
         },
       },
