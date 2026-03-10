@@ -43,6 +43,7 @@ const calendar: MonthGroup[] = [
       { date: '1–3 May', startDate: '2026-05-01', endDate: '2026-05-03', name: 'Dobrogea Calling', location: 'Dobrogea, Romania', type: 'trax', href: '/dobrogea-calling' },
       { date: '8–10 May', startDate: '2026-05-08', endDate: '2026-05-10', name: 'MotoRide Expo', location: 'Motor Park', type: 'radar', href: 'https://fb.me/e/3rtJMLVM8', note: 'Ride tests from all major motorcycle distributors' },
       { date: '9–10 May', startDate: '2026-05-09', endDate: '2026-05-10', name: 'Adventure Riders Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://tcsracingpark.ro/calendar/#' },
+      { date: '14–17 May', startDate: '2026-05-14', endDate: '2026-05-17', name: 'Trails Adventure Camp', location: 'Vatra Dornei, Romania', type: 'radar', href: 'https://www.facebook.com/events/1944537056152121' },
       { date: '17 May', startDate: '2026-05-17', name: "Distinguished Gentleman's Ride", location: 'Bucharest', type: 'collective', href: 'https://www.gentlemansride.com/rides/romania/bucharest' },
       { date: '21–24 May', startDate: '2026-05-21', endDate: '2026-05-24', name: 'Treasure Hunt Țara Călățelului, ediția 3', location: 'Sâncraiu, Cluj', type: 'radar', href: 'https://fb.me/e/edxx6q1Us' },
       { date: '29 May', startDate: '2026-05-29', name: 'Pîr - Pîr - Poc, ediția 2026', location: 'Corbu', type: 'radar', href: 'https://www.facebook.com/events/1606159840719049' },
