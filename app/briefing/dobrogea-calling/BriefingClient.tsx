@@ -177,7 +177,7 @@ export function BriefingClient() {
     <div className="min-h-screen animate-fade-in pb-24">
 
       {/* Access Bar */}
-      <div className="sticky top-0 z-[200] bg-trax-black/95 border-b border-trax-white/10 px-6 md:px-12 py-3 flex items-center justify-between backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 z-[200] bg-trax-black/95 border-t border-trax-white/10 px-6 md:px-12 py-3 flex items-center justify-between backdrop-blur-sm">
         <MonoLabel>TRAX Briefing Pack · Confirmed Riders Only</MonoLabel>
         <MonoLabel><span className="text-trax-red">#DobrogeaCalling</span> · You&apos;re In.</MonoLabel>
       </div>
