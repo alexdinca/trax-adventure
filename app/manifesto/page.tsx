@@ -30,7 +30,7 @@ export default function ManifestoPage() {
           </p>
 
           <p className="font-sans font-light text-lg md:text-2xl lg:text-3xl tracking-[0.08em] text-trax-white/80 leading-[1.6]">
-            WE GO WHERE MAPS BECOME SUGGESTIONS,
+            WE RIDE WHERE MAPS BECOME SUGGESTIONS,
             <br />
             WHERE EFFORT IS SHARED,
             <br />
