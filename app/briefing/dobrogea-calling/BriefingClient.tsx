@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import styles from './briefing.module.css';
+import { Container, Spacer } from '@/components/ui/Container';
+import { SubHeadline, Body, MonoLabel, Divider } from '@/components/ui/Typography';
 import { DAY_STATS, DAY_COLORS, ELEVATION_DATA } from './briefing-data';
 
 const LeafletMap = dynamic(() => import('@/components/LeafletMap'), { ssr: false });
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 interface CheckItem {
   id: string;
@@ -22,18 +24,11 @@ interface CheckGroup {
   disabled?: boolean;
 }
 
-interface MindsetBar {
-  label: string;
-  width: string;
-  left: string;
-  right: string;
-}
-
-// ── Data ─────────────────────────────────────────────────────────────────────
+// ── Data ──────────────────────────────────────────────────────────────────────
 
 const TARGET_DATE = new Date('2026-05-01T06:00:00+03:00');
 
-const MINDSET_BARS: MindsetBar[] = [
+const MINDSET_BARS = [
   { label: 'Speed',       width: '18%',  left: 'Not the goal',    right: 'Leave it at home' },
   { label: 'Rhythm',      width: '88%',  left: 'Inconsistent',    right: 'This is everything' },
   { label: 'Presence',    width: '95%',  left: 'Distracted',      right: "What we're after" },
@@ -45,31 +40,31 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Riding Gear',
     items: [
-      { id: 'helmet',     name: 'Helmet — off-road or ADV rated',             note: 'Full face. No exceptions.',                              essential: true },
-      { id: 'jacket',     name: 'Riding jacket — armoured, vented',           note: 'Mornings can be cold. Afternoons warm. Layer accordingly.', essential: true },
-      { id: 'trousers',   name: 'Riding trousers — armoured',                                                                                   essential: true },
-      { id: 'boots',      name: 'Boots — ankle protection, off-road grip',    note: 'Road boots will work. Off-road boots are better.',         essential: true },
-      { id: 'gloves',     name: 'Gloves — at least one pair, off-road preferred',                                                               essential: true },
-      { id: 'rain_layer', name: 'Rain layer — packable',                      note: 'Dobrogea weather changes without announcement.' },
+      { id: 'helmet',     name: 'Helmet — off-road or ADV rated',                note: 'Full face. No exceptions.',                                 essential: true },
+      { id: 'jacket',     name: 'Riding jacket — armoured, vented',              note: 'Mornings cold. Afternoons warm. Layer accordingly.',        essential: true },
+      { id: 'trousers',   name: 'Riding trousers — armoured',                                                                                       essential: true },
+      { id: 'boots',      name: 'Boots — ankle protection, off-road grip',       note: 'Road boots will work. Off-road boots are better.',          essential: true },
+      { id: 'gloves',     name: 'Gloves — at least one pair, off-road preferred',                                                                   essential: true },
+      { id: 'rain_layer', name: 'Rain layer — packable',                         note: 'Dobrogea weather changes without announcement.' },
     ],
   },
   {
     title: 'Bike Essentials',
     items: [
-      { id: 'full_tank',      name: 'Full tank at departure',                    note: 'Know your range. Some sections are far from fuel.',           essential: true },
-      { id: 'tyre_pressure',  name: 'Tyre pressure — checked and correct',       note: "Off-road terrain may require lower pressures. Know your bike's spec.", essential: true },
-      { id: 'tool_kit',       name: 'Basic tool kit — tyre plugs, levers, multi-tool' },
-      { id: 'compressor',     name: 'Mini compressor or CO₂ cartridges' },
-      { id: 'phone_mount',    name: 'Phone mount and offline maps loaded',        note: 'Signal will drop. Plan accordingly.' },
+      { id: 'full_tank',     name: 'Full tank at departure',                    note: 'Know your range. Some sections are far from fuel.',                        essential: true },
+      { id: 'tyre_pressure', name: 'Tyre pressure — checked and correct',       note: "Off-road terrain may require lower pressures. Know your bike's spec.",     essential: true },
+      { id: 'tool_kit',      name: 'Basic tool kit — tyre plugs, levers, multi-tool' },
+      { id: 'compressor',    name: 'Mini compressor or CO₂ cartridges' },
+      { id: 'phone_mount',   name: 'Phone mount and offline maps loaded',        note: 'Signal will drop. Plan accordingly.' },
     ],
   },
   {
     title: 'Personal & Camp',
     items: [
-      { id: 'cash',           name: 'Cash — Romanian lei',               note: 'Not all stops accept card. Fuel, food, accommodation.', essential: true },
-      { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                essential: true },
+      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, accommodation.', essential: true },
+      { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
       { id: 'sleeping_layer', name: 'Sleeping layer — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
-      { id: 'sunscreen',      name: 'Sunscreen + lip balm',              note: 'Open terrain, sustained exposure. Not optional.' },
+      { id: 'sunscreen',      name: 'Sunscreen + lip balm',                         note: 'Open terrain, sustained exposure. Not optional.' },
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
       { id: 'headlamp',       name: 'Headlamp / flashlight' },
       { id: 'power_bank',     name: 'Charging cable + power bank' },
@@ -105,20 +100,20 @@ function pad(n: number) {
   return String(n).padStart(2, '0');
 }
 
-// ── Sub-components ────────────────────────────────────────────────────────────
+// ── Elevation chart ───────────────────────────────────────────────────────────
 
 function ElevationChart({ data, color }: { data: number[]; color: string }) {
   if (!data.length) return null;
-  const W = 800, H = 80, pad4 = 4;
+  const W = 800, H = 80, p = 4;
   const mn = Math.min(...data);
   const mx = Math.max(...data);
   const pts = data.map((e, i) => {
-    const x = pad4 + (i / (data.length - 1)) * (W - 2 * pad4);
-    const y = H - pad4 - ((e - mn) / ((mx - mn) || 1)) * (H - 2 * pad4);
+    const x = p + (i / (data.length - 1)) * (W - 2 * p);
+    const y = H - p - ((e - mn) / ((mx - mn) || 1)) * (H - 2 * p);
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   });
   const linePts = pts.join(' ');
-  const fillPts = [...pts, `${W - pad4},${H - pad4}`, `${pad4},${H - pad4}`].join(' ');
+  const fillPts = [...pts, `${W - p},${H - p}`, `${p},${H - p}`].join(' ');
   return (
     <svg viewBox="0 0 800 80" preserveAspectRatio="none" style={{ width: '100%', height: 80, display: 'block' }}>
       <polygon points={fillPts} fill={`${color}33`} />
@@ -127,50 +122,15 @@ function ElevationChart({ data, color }: { data: number[]; color: string }) {
   );
 }
 
-interface SectionProps {
-  num: string;
-  title: string;
-  open: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-  noPadLeft?: boolean;
-}
-
-function Section({ num, title, open, onToggle, children, noPadLeft }: SectionProps) {
-  return (
-    <div className={styles.section}>
-      <div className={styles.sectionHeader} onClick={onToggle}>
-        <div className={styles.sectionMeta}>
-          <span className={styles.sectionNum}>{num}</span>
-          <span className={styles.sectionTitle}>{title}</span>
-        </div>
-        <div
-          className={styles.sectionToggle}
-          style={open ? { borderColor: '#C04A30', color: '#C04A30', transform: 'rotate(45deg)' } : {}}
-        >
-          +
-        </div>
-      </div>
-      <div className={styles.sectionBody} style={{ maxHeight: open ? '3000px' : '0' }}>
-        <div className={styles.sectionInner} style={noPadLeft ? { paddingLeft: 0 } : {}}>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function BriefingClient() {
   const [mounted, setMounted] = useState(false);
   const [countdown, setCountdown] = useState({ d: 0, h: 0, m: 0, s: 0 });
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set(['s1', 's1b']));
   const [activeDay, setActiveDay] = useState(1);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [barsAnimated, setBarsAnimated] = useState(false);
 
-  // Mount + countdown
   useEffect(() => {
     setMounted(true);
     const update = () => setCountdown(getTimeLeft(TARGET_DATE));
@@ -179,18 +139,9 @@ export function BriefingClient() {
     return () => clearInterval(t);
   }, []);
 
-  // Animate mindset bars after short delay
   useEffect(() => {
-    const t = setTimeout(() => setBarsAnimated(true), 800);
+    const t = setTimeout(() => setBarsAnimated(true), 600);
     return () => clearTimeout(t);
-  }, []);
-
-  const toggleSection = useCallback((id: string) => {
-    setOpenSections((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
   }, []);
 
   const toggleCheck = useCallback((id: string) => {
@@ -204,297 +155,395 @@ export function BriefingClient() {
   const checkedCount = checked.size;
   const progressPct = Math.round((checkedCount / TOTAL_CHECKABLE) * 100);
   const currentStats = DAY_STATS[activeDay];
-  const currentElevColor = activeDay === 0 ? '#d43220' : DAY_COLORS[activeDay];
+  const currentElevColor = activeDay === 0 ? '#E03030' : DAY_COLORS[activeDay];
   const currentElevData = activeDay === 0 ? [] : ELEVATION_DATA[activeDay];
 
-  const dayBtnClass = (d: number) => {
-    const base = styles.dayBtn;
-    if (activeDay !== d) return base;
-    if (d === 1) return `${base} ${styles.dayBtnD1}`;
-    if (d === 2) return `${base} ${styles.dayBtnD2}`;
-    if (d === 3) return `${base} ${styles.dayBtnD3}`;
-    return `${base} ${styles.dayBtnAll}`;
+  const dayBtnStyle = (d: number): React.CSSProperties => {
+    if (activeDay !== d) return {};
+    if (d === 1) return { background: 'rgba(180,40,20,0.15)', borderColor: '#b42814', color: '#e05040' };
+    if (d === 2) return { background: 'rgba(192,130,30,0.12)', borderColor: '#8a6010', color: '#d4a040' };
+    if (d === 3) return { background: 'rgba(40,100,160,0.12)', borderColor: '#185fa5', color: '#5a9cd5' };
+    return { background: 'rgba(180,40,20,0.15)', borderColor: '#b42814', color: '#e05040' };
   };
 
+  const countBlocks = [
+    { val: mounted ? pad(countdown.d) : '--', label: 'Days' },
+    { val: mounted ? pad(countdown.h) : '--', label: 'Hours' },
+    { val: mounted ? pad(countdown.m) : '--', label: 'Mins' },
+    { val: mounted ? pad(countdown.s) : '--', label: 'Secs' },
+  ];
+
   return (
-    <div className={styles.page}>
+    <div className="min-h-screen animate-fade-in pb-24">
+
       {/* Access Bar */}
-      <div className={styles.accessBar}>
-        <span>TRAX Briefing Pack · Confirmed Riders Only</span>
-        <span>#DobrogeaCalling · <span className={styles.accessName}>You&apos;re In.</span></span>
+      <div className="sticky top-0 z-[200] bg-trax-black/95 border-b border-trax-white/10 px-6 md:px-12 py-3 flex items-center justify-between backdrop-blur-sm">
+        <MonoLabel>TRAX Briefing Pack · Confirmed Riders Only</MonoLabel>
+        <MonoLabel><span className="text-trax-red">#DobrogeaCalling</span> · You&apos;re In.</MonoLabel>
       </div>
 
       {/* Hero */}
-      <div className={styles.hero}>
-        <div className={styles.heroLabel}>TRAX Experience · Briefing Pack · 2026</div>
-        <h1 className={styles.heroH1}>
-          Dobrogea<span className={styles.heroH1Span}>Calling.</span>
-        </h1>
-        <p className={styles.heroSub}>
-          This is not a route guide. It&apos;s what you need to know before the first engine starts.
-        </p>
-
-        {/* Countdown */}
-        <div className={styles.countdown}>
-          <div className={styles.countBlock}>
-            <span className={styles.countNum}>{mounted ? pad(countdown.d) : '--'}</span>
-            <span className={styles.countLabel}>Days</span>
-          </div>
-          <div className={styles.countSep}>:</div>
-          <div className={styles.countBlock}>
-            <span className={styles.countNum}>{mounted ? pad(countdown.h) : '--'}</span>
-            <span className={styles.countLabel}>Hours</span>
-          </div>
-          <div className={styles.countSep}>:</div>
-          <div className={styles.countBlock}>
-            <span className={styles.countNum}>{mounted ? pad(countdown.m) : '--'}</span>
-            <span className={styles.countLabel}>Mins</span>
-          </div>
-          <div className={styles.countSep}>:</div>
-          <div className={styles.countBlock}>
-            <span className={styles.countNum}>{mounted ? pad(countdown.s) : '--'}</span>
-            <span className={styles.countLabel}>Secs</span>
-          </div>
+      <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/dobrogea.jpg"
+            alt="Dobrogea landscapes"
+            fill
+            className="object-cover trax-image opacity-50"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-trax-black via-trax-black/30 to-transparent" />
         </div>
+        <Container className="relative z-10">
+          <MonoLabel className="mb-4 block">TRAX Experience · Briefing Pack · 2026</MonoLabel>
+          <h1 className="font-sans text-trax-white text-5xl md:text-7xl font-medium tracking-trax-wide leading-none mb-4">
+            Dobrogea Calling
+          </h1>
+          <p className="font-body text-trax-white/70 text-xl md:text-2xl font-light italic mb-8">
+            This is not a route guide. It&apos;s what you need to know before the first engine starts.
+          </p>
 
-        {/* Quick stats */}
-        <div className={styles.quickStats}>
-          <div className={styles.stat}><span className={styles.statVal}>3</span><span className={styles.statKey}>Days</span></div>
-          <div className={styles.stat}><span className={styles.statVal}>650km</span><span className={styles.statKey}>Distance</span></div>
-          <div className={styles.stat}><span className={styles.statVal}>~12</span><span className={styles.statKey}>Landmarks</span></div>
-        </div>
+          {/* Countdown */}
+          <div className="flex items-center gap-0.5">
+            {countBlocks.map((block, i, arr) => (
+              <React.Fragment key={block.label}>
+                <div className="bg-trax-white/10 border border-trax-white/10 backdrop-blur-sm p-3 md:p-4 text-center min-w-[68px] md:min-w-[80px]">
+                  <span className="font-sans text-2xl md:text-3xl font-medium text-trax-white leading-none block">{block.val}</span>
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-trax-white/50 mt-1 block">{block.label}</span>
+                </div>
+                {i < arr.length - 1 && (
+                  <div className="text-trax-red text-xl px-1 leading-none">:</div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </Container>
       </div>
 
-      {/* Sections */}
-      <div className={styles.main}>
+      <Container>
+        <Divider />
 
-        {/* 01 — Terrain & Route */}
-        <Section num="01" title="Terrain & Route" open={openSections.has('s1')} onToggle={() => toggleSection('s1')}>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>The Landscape</div>
-            <p>Dobrogea is Romania&apos;s oldest geological formation. It doesn&apos;t perform for you. There are no dramatic peaks, no obvious spectacle. What it offers instead is space — wide, horizontal, and deeply quiet.</p>
-            <p>Expect long sightlines, open gravel plateaus, ancient limestone ridges, and stretches where the only sound is wind and engine. That absence of noise is deliberate. It&apos;s where the experience actually begins.</p>
-          </div>
-          <div className={styles.callout}>
-            <p>&ldquo;Dobrogea is not dramatic at first glance. And that&apos;s exactly why it works.&rdquo;</p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>What the Terrain Asks of You</div>
-            <div className={styles.tags}>
-              {['Gravel roads', 'Forgotten tracks', 'Open field crossings'].map((t) => (
-                <span key={t} className={`${styles.tag} ${styles.tagEmber}`}>{t}</span>
-              ))}
-              {['Long sightlines', 'Limestone plateaus', 'Sand sections', 'Light technical'].map((t) => (
-                <span key={t} className={styles.tag}>{t}</span>
-              ))}
+        {/* Quick stats */}
+        <div className="grid grid-cols-3 gap-8 mb-16">
+          {[
+            { label: 'Duration',  value: '3 Days',  sub: 'May 1st – 3rd, 2026' },
+            { label: 'Distance',  value: '650km',   sub: 'Mixed terrain, all off-road' },
+            { label: 'Landmarks', value: '~12',     sub: 'Points of interest' },
+          ].map((s) => (
+            <div key={s.label} className="space-y-2">
+              <p className="font-sans text-trax-red text-sm tracking-widest uppercase">{s.label}</p>
+              <p className="font-sans text-trax-white text-2xl md:text-3xl font-medium">{s.value}</p>
+              <p className="font-sans text-trax-grey text-xs">{s.sub}</p>
             </div>
-            <p style={{ marginTop: '1rem' }}>
-              This is not a technical riding challenge. The difficulty in Dobrogea is navigational, physical, and rhythmic — sustained effort over distance, not hard sections. Consistent pace, good navigation habits, and fuel awareness matter more than skill level here.
-            </p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>Route Philosophy</div>
-            <p>Routes are flexible. Weather, terrain condition, and group energy determine how each day unfolds. There is a plan. It is not a contract. The terrain decides — we adapt.</p>
-            <p>There will be moments with no signal. Some sections are documented. Some are not. If you need a precise GPX loaded in advance, that instinct is worth examining before you arrive.</p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>Starting Point</div>
-            <p>Bucharest. Start and end point. Exact briefing location shared with confirmed riders 5 days before departure. Arrive with a full tank and a ready bike. Morning start.</p>
-          </div>
-        </Section>
+          ))}
+        </div>
 
-        {/* 01b — Route Map */}
-        <Section num="01b" title="Route Map" open={openSections.has('s1b')} onToggle={() => toggleSection('s1b')} noPadLeft>
+        {/* ── 01 — Terrain & Route ─────────────────────────────────────────── */}
+        <div className="border-t border-trax-grey/20 pt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div>
+              <MonoLabel className="mb-6 block">01 — Terrain &amp; Route</MonoLabel>
+              <SubHeadline>The Landscape</SubHeadline>
+              <Spacer size="sm" />
+              <Body>
+                Dobrogea is Romania&apos;s oldest geological formation. It doesn&apos;t perform for you. There are no dramatic peaks, no obvious spectacle. What it offers instead is space — wide, horizontal, and deeply quiet.
+              </Body>
+              <Spacer size="sm" />
+              <Body>
+                Expect long sightlines, open gravel plateaus, ancient limestone ridges, and stretches where the only sound is wind and engine. That absence of noise is deliberate. <span className="text-trax-red font-medium">It&apos;s where the experience actually begins.</span>
+              </Body>
+              <Spacer size="sm" />
+              <Body>
+                This is not a technical riding challenge. The difficulty in Dobrogea is navigational, physical, and rhythmic — <span className="text-trax-red font-medium">sustained effort over distance, not hard sections.</span> Consistent pace, good navigation habits, and fuel awareness matter more than skill level here.
+              </Body>
+            </div>
+
+            <div>
+              <div className="bg-trax-white/5 p-8 mb-8">
+                <p className="font-body text-xl text-trax-white/80 italic leading-relaxed">
+                  &ldquo;Dobrogea is not dramatic at first glance. And that&apos;s exactly why it works.&rdquo;
+                </p>
+              </div>
+
+              <h4 className="font-sans text-trax-red text-lg mb-4">What the Terrain Asks of You</h4>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {['Gravel roads', 'Forgotten tracks', 'Open field crossings'].map((t) => (
+                  <span key={t} className="font-mono text-[11px] tracking-[0.1em] uppercase text-trax-red border border-trax-red/40 px-2.5 py-1">{t}</span>
+                ))}
+                {['Long sightlines', 'Limestone plateaus', 'Sand sections', 'Light technical'].map((t) => (
+                  <span key={t} className="font-mono text-[11px] tracking-[0.1em] uppercase text-trax-grey border border-trax-grey/30 px-2.5 py-1">{t}</span>
+                ))}
+              </div>
+
+              <h4 className="font-sans text-trax-red text-lg mb-3">Route Philosophy</h4>
+              <Body>
+                Routes are flexible. Weather, terrain condition, and group energy determine how each day unfolds. There is a plan. It is not a contract. <span className="text-trax-red font-medium">The terrain decides — we adapt.</span>
+              </Body>
+              <Spacer size="sm" />
+              <Body>Starting point: <span className="text-trax-white font-medium">Bucharest.</span> Exact location shared 5 days before departure. Arrive with a full tank and a ready bike.</Body>
+            </div>
+          </div>
+        </div>
+
+        <Spacer size="lg" />
+
+        {/* ── Route Map ─────────────────────────────────────────────────────── */}
+        <div className="border-t border-trax-grey/20 pt-16">
+          <MonoLabel className="mb-6 block">01b — Route Map</MonoLabel>
+          <SubHeadline className="mb-8">Three Days Across Dobrogea</SubHeadline>
+
           {/* Day toggles */}
-          <div className={styles.dayToggles}>
-            <button className={dayBtnClass(1)} onClick={() => setActiveDay(1)}>Day 1 · 306km</button>
-            <button className={dayBtnClass(2)} onClick={() => setActiveDay(2)}>Day 2 · 218km</button>
-            <button className={dayBtnClass(3)} onClick={() => setActiveDay(3)}>Day 3 · 242km</button>
-            <button className={dayBtnClass(0)} onClick={() => setActiveDay(0)}>All Days</button>
+          <div className="flex gap-0.5 mb-4 flex-wrap">
+            {[
+              { d: 1, label: 'Day 1 · 306km' },
+              { d: 2, label: 'Day 2 · 218km' },
+              { d: 3, label: 'Day 3 · 242km' },
+              { d: 0, label: 'All Days' },
+            ].map(({ d, label }) => (
+              <button
+                key={d}
+                onClick={() => setActiveDay(d)}
+                className="font-mono text-[12px] tracking-[0.12em] uppercase px-4 py-2.5 bg-trax-white/5 border border-trax-white/15 text-trax-grey cursor-pointer transition-all duration-200 flex-1 text-center hover:text-trax-white hover:border-trax-white/30"
+                style={dayBtnStyle(d)}
+              >
+                {label}
+              </button>
+            ))}
           </div>
 
           {/* Day stats */}
-          <div className={styles.dayStatsRow}>
-            <div className={styles.dayStat}>
-              <span className={styles.dayStatVal}>{currentStats.dist}</span>
-              <span className={styles.dayStatKey}>Distance</span>
-            </div>
-            <div className={styles.dayStat}>
-              <span className={styles.dayStatVal}>{currentStats.gain}</span>
-              <span className={styles.dayStatKey}>Elevation Gain</span>
-            </div>
-            <div className={styles.dayStat}>
-              <span className={styles.dayStatVal}>{currentStats.max}</span>
-              <span className={styles.dayStatKey}>Max Elevation</span>
-            </div>
+          <div className="grid grid-cols-3 gap-[1px] bg-trax-white/10 mb-6">
+            {[
+              { val: currentStats.dist, key: 'Distance' },
+              { val: currentStats.gain, key: 'Elevation Gain' },
+              { val: currentStats.max,  key: 'Max Elevation' },
+            ].map((s) => (
+              <div key={s.key} className="bg-trax-black p-4 text-center">
+                <span className="font-sans text-xl md:text-2xl font-medium text-trax-white block leading-none">{s.val}</span>
+                <span className="font-mono text-[10px] tracking-widest uppercase text-trax-grey block mt-1">{s.key}</span>
+              </div>
+            ))}
           </div>
 
           {/* Map */}
-          <div className={styles.mapWrap}>
+          <div className="w-full h-[420px] md:h-[520px] relative border border-trax-white/10 mb-4 bg-[#111]">
             <LeafletMap activeDay={activeDay} />
           </div>
 
           {/* Elevation profile */}
-          <div className={styles.elevWrap}>
-            <div className={styles.elevLabel}>Elevation Profile</div>
+          <div>
+            <MonoLabel className="mb-2 block">Elevation Profile</MonoLabel>
             {currentElevData.length > 0
               ? <ElevationChart data={currentElevData} color={currentElevColor} />
-              : <div style={{ height: 80, display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: 12, color: 'var(--bone-dim)', fontFamily: 'var(--font-display)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Select a single day to view profile</span>
+              : <div className="h-20 flex items-center">
+                  <MonoLabel>Select a single day to view profile</MonoLabel>
                 </div>
             }
           </div>
-        </Section>
+        </div>
 
-        {/* 02 — Mental Prep */}
-        <Section num="02" title="Mental Prep" open={openSections.has('s2')} onToggle={() => toggleSection('s2')}>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>Where You Need to Be</div>
-            <p>Three days in Dobrogea won&apos;t break you physically. What it does is slow you down enough to notice things — about the terrain, about the group, and about yourself. That&apos;s worth preparing for.</p>
-            <p>The experience is designed to create friction. Not as a test. As a reset. Some of that will feel uncomfortable. That discomfort is the point.</p>
+        <Spacer size="lg" />
+
+        {/* ── 02 — Mental Prep ──────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-trax-grey/20 pt-16 items-start">
+          <div>
+            <MonoLabel className="mb-6 block">02 — Mental Prep</MonoLabel>
+            <SubHeadline>Where You Need to Be</SubHeadline>
+            <Spacer size="sm" />
+            <Body>
+              Three days in Dobrogea won&apos;t break you physically. What it does is slow you down enough to notice things — about the terrain, about the group, and about yourself.
+            </Body>
+            <Spacer size="sm" />
+            <Body>
+              The experience is designed to create friction. Not as a test. As a reset. <span className="text-trax-red font-medium">Some of that will feel uncomfortable. That discomfort is the point.</span>
+            </Body>
+
+            <Spacer size="sm" />
+            <h4 className="font-sans text-trax-red text-lg mb-6">What to Leave at Home</h4>
+            <div className="space-y-1">
+              {[
+                ['The need to be impressive.', "Nobody is watching. The group will respect you more for steady, reliable riding than for anything loud."],
+                ['Rigid plans.', "You will have a sense of the route. Conditions will revise it. This is not a failure. It's the terrain doing its job."],
+                ['Constant documentation mode.', "Phones mostly away. Some moments are intentionally undocumented. What you remember without a camera is often what actually matters."],
+                ['The pace of your regular week.', "Dobrogea doesn't reward urgency. Settle in early and let the horizon work on you."],
+              ].map(([strong, rest]) => (
+                <div key={String(strong)} className="flex gap-4 px-5 py-4 bg-trax-white/5">
+                  <span className="text-trax-red font-sans font-medium text-sm mt-0.5 flex-shrink-0">✕</span>
+                  <p className="font-body text-trax-white/80 text-sm leading-relaxed">
+                    <strong className="text-trax-white font-medium">{strong}</strong> {rest}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>Calibration</div>
-            <div className={styles.mindsetItems}>
+
+          <div>
+            <div className="bg-trax-white/5 p-8 mb-8">
+              <p className="font-body text-trax-white/80 italic">
+                If you arrive with an agenda, the terrain will dismantle it. That&apos;s not a problem to solve. It&apos;s the experience working correctly.
+              </p>
+            </div>
+
+            <h4 className="font-sans text-trax-red text-lg mb-6">Calibration</h4>
+            <div className="space-y-6">
               {MINDSET_BARS.map((bar) => (
                 <div key={bar.label}>
-                  <div className={styles.mindsetHeader}>
-                    <span className={styles.mindsetLabel}>{bar.label}</span>
-                  </div>
-                  <div className={styles.mindsetBarWrap}>
+                  <span className="font-mono text-[12px] tracking-widest uppercase text-trax-white block mb-2">{bar.label}</span>
+                  <div className="h-[2px] bg-trax-white/10 relative">
                     <div
-                      className={styles.mindsetBarFill}
+                      className="h-full bg-trax-red transition-[width] duration-1000 ease-out"
                       style={{ width: barsAnimated ? bar.width : '0%' }}
                     />
                   </div>
-                  <div className={styles.mindsetPoles}>
-                    <span className={styles.pole}>{bar.left}</span>
-                    <span className={styles.pole}>{bar.right}</span>
+                  <div className="flex justify-between mt-1.5">
+                    <span className="font-body text-[11px] text-trax-grey italic">{bar.left}</span>
+                    <span className="font-body text-[11px] text-trax-grey italic">{bar.right}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className={styles.callout}>
-            <p>If you arrive with an agenda, the terrain will dismantle it. That&apos;s not a problem to solve. It&apos;s the experience working correctly.</p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>What to Leave at Home</div>
-            <div className={styles.rulesList}>
-              {[
-                ['✕', 'The need to be impressive.', 'Nobody is watching. The group will respect you more for steady, reliable riding than for anything loud.'],
-                ['✕', 'Rigid plans.', 'You will have a sense of the route. Conditions will revise it. This is not a failure. It\'s the terrain doing its job.'],
-                ['✕', 'Constant documentation mode.', 'Phones mostly away. Some moments are intentionally undocumented. What you remember without a camera is often what actually matters.'],
-                ['✕', 'The pace of your regular week.', "Dobrogea doesn't reward urgency. Settle in early and let the horizon work on you."],
-              ].map(([num, strong, rest]) => (
-                <div key={strong} className={styles.ruleItem}>
-                  <span className={styles.ruleNum}>{num}</span>
-                  <span className={styles.ruleText}><strong>{strong}</strong> {rest}</span>
+        </div>
+
+        <Spacer size="lg" />
+
+        {/* ── 03 — Gear & Packing ───────────────────────────────────────────── */}
+        <div className="border-t border-trax-grey/20 pt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-12">
+            <div>
+              <MonoLabel className="mb-6 block">03 — Gear &amp; Packing</MonoLabel>
+              <SubHeadline>The Principle</SubHeadline>
+              <Spacer size="sm" />
+              <Body>
+                Pack for three days of real riding in variable conditions. Not for a camping expedition. Not for a hotel stay. Three days on the bike, evenings outdoors, practical simplicity.
+              </Body>
+              <Spacer size="sm" />
+              <Body>
+                <span className="text-trax-red font-medium">If you&apos;re questioning whether you need it — you don&apos;t.</span> Excess weight is honest feedback in Dobrogea.
+              </Body>
+            </div>
+
+            {/* Progress */}
+            <div className="bg-trax-white/5 p-8 h-fit">
+              <MonoLabel className="mb-4 block">Packing Progress</MonoLabel>
+              <div className="flex items-center gap-4 mb-3">
+                <span className="font-body text-trax-grey text-sm whitespace-nowrap">
+                  <span className="text-trax-red font-medium">{checkedCount}</span> / {TOTAL_CHECKABLE} items packed
+                </span>
+                <div className="flex-1 h-[2px] bg-trax-white/10">
+                  <div className="h-full bg-trax-red transition-[width] duration-300 ease-out" style={{ width: `${progressPct}%` }} />
                 </div>
-              ))}
+                <span className="font-mono text-[12px] text-trax-grey whitespace-nowrap">{progressPct}%</span>
+              </div>
+              {progressPct === 100 && (
+                <p className="font-body text-trax-red text-sm italic">You&apos;re ready.</p>
+              )}
             </div>
-          </div>
-        </Section>
-
-        {/* 03 — Gear & Packing */}
-        <Section num="03" title="Gear & Packing" open={openSections.has('s3')} onToggle={() => toggleSection('s3')}>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>The Principle</div>
-            <p>Pack for three days of real riding in variable conditions. Not for a camping expedition. Not for a hotel stay. Three days on the bike, evenings outdoors, practical simplicity.</p>
-            <p>If you&apos;re questioning whether you need it — you don&apos;t. Excess weight is honest feedback in Dobrogea.</p>
-          </div>
-
-          {/* Progress */}
-          <div className={styles.gearProgress}>
-            <span className={styles.progressText}>
-              Packed: <span className={styles.progressCount}>{checkedCount}</span> / {TOTAL_CHECKABLE} items
-            </span>
-            <div className={styles.progressBarWrap}>
-              <div className={styles.progressBarFill} style={{ width: `${progressPct}%` }} />
-            </div>
-            <span className={styles.progressText}>{progressPct}%</span>
           </div>
 
           {/* Checklist */}
-          <div className={styles.checklist}>
+          <div className="space-y-0">
             {CHECK_GROUPS.map((group) => (
               <React.Fragment key={group.title}>
-                <div className={styles.checkGroupTitle}>{group.title}</div>
-                {group.items.map((item) => {
-                  const isChecked = checked.has(item.id);
-                  const cls = [
-                    styles.checkItem,
-                    item.essential ? styles.checkItemEssential : '',
-                    isChecked ? styles.checkItemChecked : '',
-                    group.disabled ? styles.checkItemDisabled : '',
-                  ].filter(Boolean).join(' ');
-                  return (
-                    <div
-                      key={item.id}
-                      className={cls}
-                      onClick={group.disabled ? undefined : () => toggleCheck(item.id)}
-                    >
-                      <div className={styles.checkBox}>
-                        <div className={styles.checkTick} />
+                <div className="font-mono text-[11px] tracking-widest uppercase text-trax-grey pt-6 pb-3 flex items-center gap-3 border-t border-trax-grey/20">
+                  {group.title}
+                  {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">— don&apos;t bring</span>}
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  {group.items.map((item) => {
+                    const isChecked = checked.has(item.id);
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={group.disabled ? undefined : () => toggleCheck(item.id)}
+                        className={[
+                          'flex items-start gap-4 px-4 py-3 bg-trax-white/5 transition-all duration-150',
+                          item.essential && !group.disabled ? 'border-l-2 border-trax-red' : 'border-l-2 border-transparent',
+                          isChecked ? 'opacity-40' : '',
+                          group.disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer hover:bg-trax-white/[0.08]',
+                        ].filter(Boolean).join(' ')}
+                      >
+                        <div className={`w-4 h-4 border flex-shrink-0 mt-0.5 flex items-center justify-center transition-all duration-200 ${isChecked ? 'bg-trax-red/20 border-trax-red' : 'border-trax-grey/40'}`}>
+                          <div className={`w-2 h-[5px] border-l-[1.5px] border-b-[1.5px] border-trax-red -rotate-45 translate-x-[1px] -translate-y-[1px] transition-opacity duration-200 ${isChecked ? 'opacity-100' : 'opacity-0'}`} />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-body text-[14px] text-trax-white/90 leading-snug">{item.name}</div>
+                          {item.note && <div className="font-body text-[12px] text-trax-grey mt-0.5">{item.note}</div>}
+                        </div>
+                        {item.essential && !group.disabled && (
+                          <span className="font-mono text-[10px] tracking-widest uppercase text-trax-red flex-shrink-0 self-start pt-0.5">Essential</span>
+                        )}
                       </div>
-                      <div className={styles.checkText}>
-                        <div className={styles.checkName}>{item.name}</div>
-                        {item.note && <div className={styles.checkNote}>{item.note}</div>}
-                      </div>
-                      {item.essential && <span className={styles.essentialLabel}>Essential</span>}
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </React.Fragment>
             ))}
           </div>
-        </Section>
+        </div>
 
-        {/* 04 — Group Culture */}
-        <Section num="04" title="Group Culture" open={openSections.has('s4')} onToggle={() => toggleSection('s4')}>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>How TRAX Moves</div>
-            <p>There is no guide, no sweep, no instructor. Everyone is responsible for themselves and accountable to the group. Those two things are not in conflict — they define how we ride.</p>
-            <p>Ego doesn&apos;t survive long out here. Not because anyone polices it. Because the terrain makes it irrelevant.</p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>The Rules</div>
-            <div className={styles.rulesList}>
+        <Spacer size="lg" />
+
+        {/* ── 04 — Group Culture ────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-trax-grey/20 pt-16 items-start">
+          <div>
+            <MonoLabel className="mb-6 block">04 — Group Culture</MonoLabel>
+            <SubHeadline>How TRAX Moves</SubHeadline>
+            <Spacer size="sm" />
+            <Body>
+              There is no guide, no sweep, no instructor. Everyone is responsible for themselves and accountable to the group. Those two things are not in conflict — they define how we ride.
+            </Body>
+            <Spacer size="sm" />
+            <Body>
+              Ego doesn&apos;t survive long out here. Not because anyone polices it. <span className="text-trax-red font-medium">Because the terrain makes it irrelevant.</span>
+            </Body>
+            <Spacer size="sm" />
+
+            <h4 className="font-sans text-trax-red text-lg mb-6">The Rules</h4>
+            <div className="space-y-1">
               {[
-                ['01', 'We wait.', 'Faster riders wait at junctions. We arrive as a group or we\'re not doing it right. Speed is not the currency here.'],
-                ['02', 'We signal problems early.', 'If something is wrong — mechanically, physically, mentally — you say it. The group adjusts. Silence is the only thing that creates real problems.'],
-                ['03', "We don't perform for cameras.", 'Film what you genuinely want to remember. Don\'t stage it. Don\'t position for the shot. If something real happens, you\'ll know.'],
-                ['04', 'We leave terrain as we found it.', 'No shortcuts through private land. No fires without permission. No trace that says "a group was here."'],
-                ['05', 'Evenings are not programmed.', 'No schedule after sundown. Food, fire, conversation — whatever comes naturally. If the group goes quiet, let it go quiet. That\'s part of it too.'],
-                ['06', 'What happens on TRAX stays on TRAX.', "Stories told around the fire belong to the people who were there. Share your experience — not other people's moments."],
+                ['01', 'We wait.', "Faster riders wait at junctions. We arrive as a group or we're not doing it right."],
+                ['02', 'We signal problems early.', 'If something is wrong — mechanically, physically, mentally — you say it. Silence is the only thing that creates real problems.'],
+                ['03', "We don't perform for cameras.", "Phones mostly away. If something real happens, you'll know."],
+                ['04', 'We leave terrain as we found it.', 'No shortcuts through private land. No fires without permission. No trace.'],
+                ['05', 'Evenings are not programmed.', "Food, fire, conversation — whatever comes naturally. If the group goes quiet, let it go quiet."],
+                ['06', 'What happens on TRAX stays on TRAX.', "Share your experience — not other people's moments."],
               ].map(([num, strong, rest]) => (
-                <div key={num} className={styles.ruleItem}>
-                  <span className={styles.ruleNum}>{num}</span>
-                  <span className={styles.ruleText}><strong>{strong}</strong> {rest}</span>
+                <div key={num} className="flex gap-4 px-5 py-4 bg-trax-white/5">
+                  <span className="font-mono text-[11px] text-trax-red font-bold min-w-[24px] pt-0.5">{num}</span>
+                  <p className="font-body text-trax-white/80 text-sm leading-relaxed">
+                    <strong className="text-trax-white font-medium">{strong}</strong> {rest}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
-          <div className={styles.callout}>
-            <p>You were confirmed because your attitude aligned. That alignment is what keeps the Collective worth belonging to. Protect it.</p>
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.blockTitle}>Your Artifact</div>
-            <p>Every confirmed rider receives the Dobrogea Calling rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you showed up.</p>
-            <p>It will be distributed at the closing of the experience. Not before.</p>
-          </div>
-        </Section>
 
-      </div>
+          <div>
+            <div className="bg-trax-white/5 p-8 md:p-12 mb-8">
+              <p className="font-body text-xl text-trax-white/80 italic leading-relaxed">
+                You were confirmed because your attitude aligned. That alignment is what keeps the Collective worth belonging to. Protect it.
+              </p>
+            </div>
 
-      {/* Footer */}
-      <div className={styles.briefFooter}>
-        <div className={styles.footerBrand}>TRAX</div>
-        <div className={styles.footerCopy}>
-          Dobrogea Calling · May 1–3, 2026<br />
-          Confirmed access · Do not share or distribute
+            <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
+            <Body>
+              Every confirmed rider receives the Dobrogea Calling rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you showed up.
+            </Body>
+            <Spacer size="sm" />
+            <Body className="text-trax-grey">
+              It will be distributed at the closing of the experience. Not before.
+            </Body>
+          </div>
         </div>
-      </div>
+
+        <Spacer size="xl" />
+
+        <div className="text-center opacity-40">
+          <p className="font-sans text-sm tracking-widest text-trax-white">#DobrogeaCalling · Confirmed access only · Do not share or distribute</p>
+        </div>
+      </Container>
     </div>
   );
 }
