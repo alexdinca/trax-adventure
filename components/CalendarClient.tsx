@@ -46,6 +46,7 @@ const calendar: MonthGroup[] = [
       { date: '14–17 May', startDate: '2026-05-14', endDate: '2026-05-17', name: 'Trails Adventure Camp', location: 'Vatra Dornei, Romania', type: 'radar', href: 'https://www.facebook.com/events/1944537056152121' },
       { date: '17 May', startDate: '2026-05-17', name: "Distinguished Gentleman's Ride", location: 'Bucharest', type: 'collective', href: 'https://www.gentlemansride.com/rides/romania/bucharest' },
       { date: '21–24 May', startDate: '2026-05-21', endDate: '2026-05-24', name: 'Treasure Hunt Țara Călățelului, ediția 3', location: 'Sâncraiu, Cluj', type: 'radar', href: 'https://fb.me/e/edxx6q1Us' },
+      { date: '22 May', startDate: '2026-05-22', name: 'Moto24 Adventure Camp – Ride & Social 2026', location: 'Hotel TTS Covasna', type: 'radar', href: 'https://fb.me/e/5DIoTJCr7' },
       { date: '29 May', startDate: '2026-05-29', name: 'Pîr - Pîr - Poc, ediția 2026', location: 'Corbu', type: 'radar', href: 'https://www.facebook.com/events/1606159840719049' },
     ],
   },
