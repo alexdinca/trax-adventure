@@ -24,7 +24,6 @@ export const Navigation: React.FC = () => {
     { label: 'Home', path: '/' },
     { label: 'Experiences', path: '/experiences' },
     { label: 'Calendar', path: '/calendar' },
-    { label: 'Field Notes', path: '/field-notes' },
     { label: 'Manifesto', path: '/manifesto' },
   ];
 
