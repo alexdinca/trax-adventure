@@ -17,9 +17,17 @@ export function PublicChrome() {
       <div className="relative z-50">
         <Navigation />
       </div>
-      <div className="relative z-10">
-        <Footer />
-      </div>
     </>
+  );
+}
+
+export function PublicFooter() {
+  const pathname = usePathname();
+  if (pathname.startsWith('/briefing')) return null;
+
+  return (
+    <div className="relative z-10">
+      <Footer />
+    </div>
   );
 }

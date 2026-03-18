@@ -190,7 +190,7 @@ export function BriefingClient() {
 
       {/* Briefing Header */}
       <div className="fixed top-0 left-0 right-0 z-[200] bg-trax-black/95 border-b border-trax-white/10 px-6 md:px-12 py-4 flex items-center justify-between backdrop-blur-sm">
-        <span className="font-sans font-bold tracking-[0.2em] uppercase text-trax-white text-sm">TRAX</span>
+        <a href="/" className="font-sans font-bold tracking-[0.2em] uppercase text-trax-white text-sm hover:text-trax-red transition-colors duration-150">TRAX</a>
         <MonoLabel>Briefing Pack</MonoLabel>
       </div>
 
@@ -409,41 +409,34 @@ export function BriefingClient() {
 
         {/* ── 01c — Accommodation ───────────────────────────────────────────── */}
         <div className="border-t border-trax-grey/20 pt-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+          <MonoLabel className="mb-6 block">01c — Accommodation</MonoLabel>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-10">
             <div>
-              <MonoLabel className="mb-6 block">01c — Accommodation</MonoLabel>
               <SubHeadline>Where You Sleep</SubHeadline>
               <Spacer size="sm" />
               <Body>
-                Three nights. The format is a mix — guesthouses in small Dobrogean villages where they exist, wild camp where they don&apos;t. Exactly what is confirmed for each night will be communicated 5 days before departure alongside the start point.
-              </Body>
-              <Spacer size="sm" />
-              <Body>
-                Pack accordingly — sleeping bag liner or light bag, mat if you have one. <span className="text-trax-red font-medium">Do not assume a bed every night. Do not assume there is none.</span>
-              </Body>
-              <Spacer size="sm" />
-              <Body>
-                Food in the evenings is handled as a group. Local, simple, enough. There is no catering operation — there is a group that eats together.
+                Three days of riding, two nights of proper accommodation. You leave Bucharest Friday morning and return late Sunday evening. Exact locations confirmed 5 days before departure.
               </Body>
             </div>
-
-            <div className="space-y-1">
-              {[
-                { night: 'Night 1', where: 'Dobrogea — south', type: 'Guesthouse or camp', note: 'After the long plateau day. Rest is non-negotiable.' },
-                { night: 'Night 2', where: 'Măcin area', type: 'Guesthouse', note: 'Village. The kind with dogs and no WiFi.' },
-                { night: 'Night 3', where: 'Constanța surroundings', type: 'Guesthouse', note: 'Last night. Dinner out. Casino Constanța waterfront if the group is willing.' },
-              ].map((row) => (
-                <div key={row.night} className="flex gap-4 px-5 py-4 bg-trax-white/5">
-                  <span className="font-mono text-[11px] text-trax-red font-bold min-w-[60px] pt-0.5">{row.night}</span>
-                  <div>
-                    <p className="font-body text-trax-white/90 text-sm font-medium">{row.where} <span className="text-trax-grey font-normal">· {row.type}</span></p>
-                    <p className="font-body text-trax-grey text-xs mt-0.5">{row.note}</p>
-                  </div>
-                </div>
-              ))}
-              <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey/50 pt-3">Exact locations confirmed 5 days before departure</p>
-            </div>
+            <Body>
+              Food in the evenings is handled as a group. Local, simple, enough. There is no catering operation — there is a group that eats together.
+            </Body>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+            {[
+              { night: 'Night 1 — Friday', where: 'Dobrogea — south', type: 'Guesthouse', note: 'After the long plateau day. Rest is non-negotiable.' },
+              { night: 'Night 2 — Saturday', where: 'Constanța surroundings', type: 'Guesthouse', note: 'Last night. Dinner out. Casino Constanța waterfront if the group is willing.' },
+            ].map((row) => (
+              <div key={row.night} className="flex flex-col gap-2 px-5 py-5 bg-trax-white/5">
+                <span className="font-mono text-[11px] text-trax-red font-bold">{row.night}</span>
+                <p className="font-body text-trax-white/90 text-sm font-medium">{row.where}</p>
+                <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey">{row.type}</p>
+                <p className="font-body text-trax-grey text-xs leading-relaxed">{row.note}</p>
+              </div>
+            ))}
+          </div>
+          <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey/40 pt-4">Exact locations confirmed 5 days before departure</p>
         </div>
 
         <Spacer size="lg" />

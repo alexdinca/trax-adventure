@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { AptabaseProvider } from '@aptabase/react';
 import { Analytics } from '@/components/Analytics';
-import { PublicChrome } from '@/components/PublicChrome';
+import { PublicChrome, PublicFooter } from '@/components/PublicChrome';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -83,6 +83,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative z-10">
             {children}
           </div>
+
+          <PublicFooter />
         </AptabaseProvider>
       </body>
     </html>
