@@ -40,12 +40,14 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Riding Gear',
     items: [
-      { id: 'helmet',     name: 'Helmet — off-road or ADV rated',                note: 'Full face. No exceptions.',                                 essential: true },
+      { id: 'helmet',     name: 'Helmet — off-road or ADV rated',                note: 'Full face preferred.',                                 essential: true },
+      { id: 'googles',     name: 'Googles and visor cleaner',                                                 essential: true },
       { id: 'jacket',     name: 'Riding jacket — armoured, vented',              note: 'Mornings cold. Afternoons warm. Layer accordingly.',        essential: true },
-      { id: 'trousers',   name: 'Riding trousers — armoured',                                                                                       essential: true },
-      { id: 'boots',      name: 'Boots — ankle protection, off-road grip',       note: 'Road boots will work. Off-road boots are better.',          essential: true },
-      { id: 'gloves',     name: 'Gloves — at least one pair, off-road preferred',                                                                   essential: true },
-      { id: 'rain_layer', name: 'Rain layer — packable',                         note: 'Dobrogea weather changes without announcement.' },
+      { id: 'trousers',   name: 'Riding trousers — armoured',                    note: 'Knee braces preferred.',                                      essential: true },
+      { id: 'boots',      name: 'Enduro/MX Boots',                 essential: true },
+      { id: 'gloves',     name: 'Gloves — two pairs: off-road and waterproof',        note: 'Off-road for the trail, waterproof for when the sky decides otherwise.',  essential: true },
+      { id: 'rain_layer', name: 'Rain layer — packable',                         note: 'Dobrogea weather changes without announcement.', essential: true },
+      { id: 'socks',     name: 'MX socks',                                       note: 'Significantly increases riding comfort.'                            },
     ],
   },
   {
@@ -53,7 +55,7 @@ const CHECK_GROUPS: CheckGroup[] = [
     items: [
       { id: 'full_tank',     name: 'Full tank at departure',                    note: 'Know your range. Some sections are far from fuel.',                        essential: true },
       { id: 'tyre_pressure', name: 'Tyre pressure — checked and correct',       note: "Off-road terrain may require lower pressures. Know your bike's spec.",     essential: true },
-      { id: 'tool_kit',      name: 'Basic tool kit — tyre plugs, levers, multi-tool' },
+      { id: 'tool_kit',      name: 'Basic tool kit specific to your bike — tyre plugs, levers, multi-tool', essential: true },
       { id: 'compressor',    name: 'Mini compressor or CO₂ cartridges' },
       { id: 'phone_mount',   name: 'Phone mount and offline maps loaded',        note: 'Signal will drop. Plan accordingly.' },
     ],
@@ -61,13 +63,15 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Personal & Camp',
     items: [
-      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, accommodation.', essential: true },
+      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, local bribes.', essential: true },
       { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
+      { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
       { id: 'sleeping_layer', name: 'Sleeping layer — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
-      { id: 'sunscreen',      name: 'Sunscreen + lip balm',                         note: 'Open terrain, sustained exposure. Not optional.' },
+      { id: 'evening_clothes', name: 'Evening clothes — casual and presentable',    note: 'We may walk the Casino Constanța waterfront or sit down for dinner. Nothing fancy, but not riding gear.',  essential: true },
+      
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
-      { id: 'headlamp',       name: 'Headlamp / flashlight' },
-      { id: 'power_bank',     name: 'Charging cable + power bank' },
+      
+      { id: 'power_bank',     name: 'Phone charging cable' },
     ],
   },
   {
