@@ -133,7 +133,13 @@ export function BriefingClient() {
   const [mounted, setMounted] = useState(false);
   const [countdown, setCountdown] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [activeDay, setActiveDay] = useState(1);
-  const [checked, setChecked] = useState<Set<string>>(new Set());
+  const [checked, setChecked] = useState<Set<string>>(() => {
+    if (typeof window === 'undefined') return new Set();
+    try {
+      const saved = localStorage.getItem('trax-dc-packing');
+      return saved ? new Set(JSON.parse(saved) as string[]) : new Set();
+    } catch { return new Set(); }
+  });
   const [barsAnimated, setBarsAnimated] = useState(false);
 
   useEffect(() => {
@@ -153,6 +159,7 @@ export function BriefingClient() {
     setChecked((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
+      try { localStorage.setItem('trax-dc-packing', JSON.stringify(Array.from(next))); } catch { /* ignore */ }
       return next;
     });
   }, []);
@@ -415,7 +422,9 @@ export function BriefingClient() {
 
         {/* ── 03 — Gear & Packing ───────────────────────────────────────────── */}
         <div className="border-t border-trax-grey/20 pt-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-16 items-start">
+
+            {/* Left — intro + checklist */}
             <div>
               <MonoLabel className="mb-6 block">03 — Gear &amp; Packing</MonoLabel>
               <SubHeadline>The Principle</SubHeadline>
@@ -427,14 +436,56 @@ export function BriefingClient() {
               <Body>
                 <span className="text-trax-red font-medium">If you&apos;re questioning whether you need it — you don&apos;t.</span> Excess weight is honest feedback in Dobrogea.
               </Body>
+
+              <Spacer size="md" />
+
+              {/* Checklist */}
+              <div className="space-y-0">
+                {CHECK_GROUPS.map((group) => (
+                  <React.Fragment key={group.title}>
+                    <div className="font-mono text-[11px] tracking-widest uppercase text-trax-grey pt-6 pb-3 flex items-center gap-3 border-t border-trax-grey/20">
+                      {group.title}
+                      {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">— don&apos;t bring</span>}
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      {group.items.map((item) => {
+                        const isChecked = checked.has(item.id);
+                        return (
+                          <div
+                            key={item.id}
+                            onClick={group.disabled ? undefined : () => toggleCheck(item.id)}
+                            className={[
+                              'flex items-start gap-4 px-4 py-3 bg-trax-white/5 transition-all duration-150 active:scale-[0.995] active:bg-trax-white/[0.12]',
+                              item.essential && !group.disabled ? 'border-l-2 border-trax-red' : 'border-l-2 border-transparent',
+                              isChecked ? 'opacity-40' : '',
+                              group.disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer hover:bg-trax-white/[0.08]',
+                            ].filter(Boolean).join(' ')}
+                          >
+                            <div className={`w-4 h-4 border flex-shrink-0 mt-0.5 flex items-center justify-center transition-all duration-200 ${isChecked ? 'bg-trax-red/20 border-trax-red scale-110' : 'border-trax-grey/40 scale-100'}`}>
+                              <div className={`w-2 h-[5px] border-l-[1.5px] border-b-[1.5px] border-trax-red -rotate-45 translate-x-[1px] -translate-y-[1px] transition-opacity duration-200 ${isChecked ? 'opacity-100' : 'opacity-0'}`} />
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-body text-[14px] text-trax-white/90 leading-snug">{item.name}</div>
+                              {item.note && <div className="font-body text-[12px] text-trax-grey mt-0.5">{item.note}</div>}
+                            </div>
+                            {item.essential && !group.disabled && (
+                              <span className="font-mono text-[10px] tracking-widest uppercase text-trax-red flex-shrink-0 self-start pt-0.5">Essential</span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
 
-            {/* Progress */}
-            <div className="bg-trax-white/5 p-8 h-fit">
+            {/* Right — sticky progress */}
+            <div className="hidden md:block sticky top-[45vh] -translate-y-1/2 bg-trax-white/5 p-8 h-fit">
               <MonoLabel className="mb-4 block">Packing Progress</MonoLabel>
               <div className="flex items-center gap-4 mb-3">
                 <span className="font-body text-trax-grey text-sm whitespace-nowrap">
-                  <span className="text-trax-red font-medium">{checkedCount}</span> / {TOTAL_CHECKABLE} items packed
+                  <span className="text-trax-red font-medium">{checkedCount}</span> / {TOTAL_CHECKABLE}
                 </span>
                 <div className="flex-1 h-[2px] bg-trax-white/10">
                   <div className="h-full bg-trax-red transition-[width] duration-300 ease-out" style={{ width: `${progressPct}%` }} />
@@ -445,46 +496,7 @@ export function BriefingClient() {
                 <p className="font-body text-trax-red text-sm italic">You&apos;re ready.</p>
               )}
             </div>
-          </div>
 
-          {/* Checklist */}
-          <div className="space-y-0">
-            {CHECK_GROUPS.map((group) => (
-              <React.Fragment key={group.title}>
-                <div className="font-mono text-[11px] tracking-widest uppercase text-trax-grey pt-6 pb-3 flex items-center gap-3 border-t border-trax-grey/20">
-                  {group.title}
-                  {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">— don&apos;t bring</span>}
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  {group.items.map((item) => {
-                    const isChecked = checked.has(item.id);
-                    return (
-                      <div
-                        key={item.id}
-                        onClick={group.disabled ? undefined : () => toggleCheck(item.id)}
-                        className={[
-                          'flex items-start gap-4 px-4 py-3 bg-trax-white/5 transition-all duration-150',
-                          item.essential && !group.disabled ? 'border-l-2 border-trax-red' : 'border-l-2 border-transparent',
-                          isChecked ? 'opacity-40' : '',
-                          group.disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer hover:bg-trax-white/[0.08]',
-                        ].filter(Boolean).join(' ')}
-                      >
-                        <div className={`w-4 h-4 border flex-shrink-0 mt-0.5 flex items-center justify-center transition-all duration-200 ${isChecked ? 'bg-trax-red/20 border-trax-red' : 'border-trax-grey/40'}`}>
-                          <div className={`w-2 h-[5px] border-l-[1.5px] border-b-[1.5px] border-trax-red -rotate-45 translate-x-[1px] -translate-y-[1px] transition-opacity duration-200 ${isChecked ? 'opacity-100' : 'opacity-0'}`} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-body text-[14px] text-trax-white/90 leading-snug">{item.name}</div>
-                          {item.note && <div className="font-body text-[12px] text-trax-grey mt-0.5">{item.note}</div>}
-                        </div>
-                        {item.essential && !group.disabled && (
-                          <span className="font-mono text-[10px] tracking-widest uppercase text-trax-red flex-shrink-0 self-start pt-0.5">Essential</span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </React.Fragment>
-            ))}
           </div>
         </div>
 
@@ -503,26 +515,6 @@ export function BriefingClient() {
             <Body>
               Ego doesn&apos;t survive long out here. Not because anyone polices it. <span className="text-trax-red font-medium">Because the terrain makes it irrelevant.</span>
             </Body>
-            <Spacer size="sm" />
-
-            <h4 className="font-sans text-trax-red text-lg mb-6">The Rules</h4>
-            <div className="space-y-1">
-              {[
-                ['01', 'We wait.', "Faster riders wait at junctions. We arrive as a group or we're not doing it right."],
-                ['02', 'We signal problems early.', 'If something is wrong — mechanically, physically, mentally — you say it. Silence is the only thing that creates real problems.'],
-                ['03', "We don't perform for cameras.", "Phones mostly away. If something real happens, you'll know."],
-                ['04', 'We leave terrain as we found it.', 'No shortcuts through private land. No fires without permission. No trace.'],
-                ['05', 'Evenings are not programmed.', "Food, fire, conversation — whatever comes naturally. If the group goes quiet, let it go quiet."],
-                ['06', 'What happens on TRAX stays on TRAX.', "Share your experience — not other people's moments."],
-              ].map(([num, strong, rest]) => (
-                <div key={num} className="flex gap-4 px-5 py-4 bg-trax-white/5">
-                  <span className="font-mono text-[11px] text-trax-red font-bold min-w-[24px] pt-0.5">{num}</span>
-                  <p className="font-body text-trax-white/80 text-sm leading-relaxed">
-                    <strong className="text-trax-white font-medium">{strong}</strong> {rest}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div>
@@ -534,13 +526,30 @@ export function BriefingClient() {
 
             <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
             <Body>
-              Every confirmed rider receives the Dobrogea Calling rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you showed up.
-            </Body>
-            <Spacer size="sm" />
-            <Body className="text-trax-grey">
-              It will be distributed at the closing of the experience. Not before.
+              Every confirmed rider receives the Dobrogea Calling rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
             </Body>
           </div>
+        </div>
+
+        <Spacer size="lg" />
+
+        <h4 className="font-sans text-trax-red text-lg mb-6">The Rules</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+          {[
+            ['01', 'We wait.', "Faster riders wait at junctions. We arrive as a group or we're not doing it right."],
+            ['02', 'We signal problems early.', 'If something is wrong — mechanically, physically, mentally — you say it. Silence is the only thing that creates real problems.'],
+            ['03', "We don't perform for cameras.", "Phones mostly away. If something real happens, you'll know."],
+            ['04', 'We leave terrain as we found it.', 'No shortcuts through private land. No fires without permission. No trace.'],
+            ['05', 'Evenings are not programmed.', "Food, fire, conversation — whatever comes naturally. If the group goes quiet, let it go quiet."],
+            ['06', 'What happens on TRAX stays on TRAX.', "Share your experience — not other people's moments."],
+          ].map(([num, strong, rest]) => (
+            <div key={num} className="flex gap-4 px-5 py-4 bg-trax-white/5">
+              <span className="font-mono text-[11px] text-trax-red font-bold min-w-[24px] pt-0.5">{num}</span>
+              <p className="font-body text-trax-white/80 text-sm leading-relaxed">
+                <strong className="text-trax-white font-medium">{strong}</strong> {rest}
+              </p>
+            </div>
+          ))}
         </div>
 
         <Spacer size="xl" />
