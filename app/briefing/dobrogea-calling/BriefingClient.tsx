@@ -63,7 +63,7 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Personal & Camp',
     items: [
-      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, local bribes.', essential: true },
+      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, emergencies.', essential: true },
       { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
       { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
       { id: 'sleeping_layer', name: 'Warm layer for evenings — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
@@ -186,7 +186,13 @@ export function BriefingClient() {
   ];
 
   return (
-    <div className="min-h-screen animate-fade-in pb-24">
+    <div className="min-h-screen animate-fade-in pt-16 pb-24">
+
+      {/* Briefing Header */}
+      <div className="fixed top-0 left-0 right-0 z-[200] bg-trax-black/95 border-b border-trax-white/10 px-6 md:px-12 py-4 flex items-center justify-between backdrop-blur-sm">
+        <span className="font-sans font-bold tracking-[0.2em] uppercase text-trax-white text-sm">TRAX</span>
+        <MonoLabel>Briefing Pack</MonoLabel>
+      </div>
 
       {/* Access Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-[200] bg-trax-black/95 border-t border-trax-white/10 px-6 md:px-12 py-3 flex items-center justify-between backdrop-blur-sm">
@@ -240,7 +246,7 @@ export function BriefingClient() {
         <div className="grid grid-cols-3 gap-8 mb-16">
           {[
             { label: 'Duration',  value: '3 Days',  sub: 'May 1st – 3rd, 2026' },
-            { label: 'Distance',  value: '650km',   sub: 'Mixed terrain, all off-road' },
+            { label: 'Distance',  value: '650km',   sub: 'Mixed terrain, off-road focus' },
             { label: 'Landmarks', value: '~12',     sub: 'Points of interest' },
           ].map((s) => (
             <div key={s.label} className="space-y-2">
@@ -343,8 +349,52 @@ export function BriefingClient() {
             <LeafletMap activeDay={activeDay} />
           </div>
 
+          {/* Day narrative */}
+          {activeDay > 0 && (() => {
+            const narratives: Record<number, { title: string; lines: string[] }> = {
+              1: {
+                title: 'The Long Open',
+                lines: [
+                  'The longest day by distance — 306km of southern Dobrogea plateau. Flat, wide, and relentless. The terrain gives you almost nothing to react to, which is the point.',
+                  'Gravel roads and forgotten tracks across agricultural land. Occasional sand. Long sightlines with almost no shade. Fuel management starts here.',
+                  'The day ends deep in Dobrogea. The rhythm you build today carries the rest of the experience.',
+                ],
+              },
+              2: {
+                title: 'Into the Măcin',
+                lines: [
+                  'Shorter distance, different character. Day 2 climbs into the Munții Măcin — the oldest mountain range in Romania, worn down to ridges and stone. The landscape sharpens.',
+                  'Expect tighter tracks, more elevation change, and sections that require attention. The 332m max elevation sounds modest. The terrain around it does not feel modest.',
+                  'This is the pivot day. The group either finds its pace here or it doesn\'t.',
+                ],
+              },
+              3: {
+                title: 'The Return',
+                lines: [
+                  '242km back across terrain you\'ve started to understand differently. The coast appears. The Danube Delta is close enough to smell.',
+                  'Day 3 is looser. The hard work is done. What remains is distance, presence, and the slow realisation that it\'s ending.',
+                  'The group arrives together or not at all.',
+                ],
+              },
+            };
+            const n = narratives[activeDay];
+            return (
+              <div className="mt-6 border-t border-trax-white/10 pt-6 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 items-start">
+                <div className="md:w-48">
+                  <MonoLabel className="mb-1 block">Day {activeDay} — Character</MonoLabel>
+                  <p className="font-sans text-trax-white text-base font-medium">{n.title}</p>
+                </div>
+                <div className="space-y-2">
+                  {n.lines.map((line, i) => (
+                    <Body key={i}>{line}</Body>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
           {/* Elevation profile */}
-          <div>
+          <div className="mt-6">
             <MonoLabel className="mb-2 block">Elevation Profile</MonoLabel>
             {currentElevData.length > 0
               ? <ElevationChart data={currentElevData} color={currentElevColor} />
@@ -352,6 +402,47 @@ export function BriefingClient() {
                   <MonoLabel>Select a single day to view profile</MonoLabel>
                 </div>
             }
+          </div>
+        </div>
+
+        <Spacer size="lg" />
+
+        {/* ── 01c — Accommodation ───────────────────────────────────────────── */}
+        <div className="border-t border-trax-grey/20 pt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div>
+              <MonoLabel className="mb-6 block">01c — Accommodation</MonoLabel>
+              <SubHeadline>Where You Sleep</SubHeadline>
+              <Spacer size="sm" />
+              <Body>
+                Three nights. The format is a mix — guesthouses in small Dobrogean villages where they exist, wild camp where they don&apos;t. Exactly what is confirmed for each night will be communicated 5 days before departure alongside the start point.
+              </Body>
+              <Spacer size="sm" />
+              <Body>
+                Pack accordingly — sleeping bag liner or light bag, mat if you have one. <span className="text-trax-red font-medium">Do not assume a bed every night. Do not assume there is none.</span>
+              </Body>
+              <Spacer size="sm" />
+              <Body>
+                Food in the evenings is handled as a group. Local, simple, enough. There is no catering operation — there is a group that eats together.
+              </Body>
+            </div>
+
+            <div className="space-y-1">
+              {[
+                { night: 'Night 1', where: 'Dobrogea — south', type: 'Guesthouse or camp', note: 'After the long plateau day. Rest is non-negotiable.' },
+                { night: 'Night 2', where: 'Măcin area', type: 'Guesthouse', note: 'Village. The kind with dogs and no WiFi.' },
+                { night: 'Night 3', where: 'Constanța surroundings', type: 'Guesthouse', note: 'Last night. Dinner out. Casino Constanța waterfront if the group is willing.' },
+              ].map((row) => (
+                <div key={row.night} className="flex gap-4 px-5 py-4 bg-trax-white/5">
+                  <span className="font-mono text-[11px] text-trax-red font-bold min-w-[60px] pt-0.5">{row.night}</span>
+                  <div>
+                    <p className="font-body text-trax-white/90 text-sm font-medium">{row.where} <span className="text-trax-grey font-normal">· {row.type}</span></p>
+                    <p className="font-body text-trax-grey text-xs mt-0.5">{row.note}</p>
+                  </div>
+                </div>
+              ))}
+              <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey/50 pt-3">Exact locations confirmed 5 days before departure</p>
+            </div>
           </div>
         </div>
 

@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { AptabaseProvider } from '@aptabase/react';
 import { Analytics } from '@/components/Analytics';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
-import { Logo } from '@/components/ui/Logo';
+import { PublicChrome } from '@/components/PublicChrome';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -76,15 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
           </div>
 
-          {/* Fixed header logo */}
-          <div className="fixed top-8 left-6 md:left-12 z-50 mix-blend-difference">
-            <Logo />
-          </div>
-
-          {/* Navigation */}
-          <div className="relative z-50">
-            <Navigation />
-          </div>
+          <PublicChrome />
 
           {/* Analytics — fires page_visit on every route change */}
           <Analytics />
@@ -92,11 +82,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* Main content */}
           <div className="relative z-10">
             {children}
-          </div>
-
-          {/* Footer */}
-          <div className="relative z-10">
-            <Footer />
           </div>
         </AptabaseProvider>
       </body>
