@@ -66,7 +66,8 @@ const CHECK_GROUPS: CheckGroup[] = [
       { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, local bribes.', essential: true },
       { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
       { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
-      { id: 'sleeping_layer', name: 'Sleeping layer — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
+      { id: 'sleeping_layer', name: 'Warm layer for evenings — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
+      { id: 'sleepwear',      name: 'Sleepwear' },
       { id: 'evening_clothes', name: 'Evening clothes — something to change into',  note: 'We may walk the Casino Constanța waterfront or sit down for dinner. Casual is fine, riding gear is not.',  essential: true },
       
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
