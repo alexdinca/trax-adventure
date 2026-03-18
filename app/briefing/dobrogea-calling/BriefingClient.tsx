@@ -67,7 +67,7 @@ const CHECK_GROUPS: CheckGroup[] = [
       { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
       { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
       { id: 'sleeping_layer', name: 'Sleeping layer — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
-      { id: 'evening_clothes', name: 'Evening clothes — casual and presentable',    note: 'We may walk the Casino Constanța waterfront or sit down for dinner. Nothing fancy, but not riding gear.',  essential: true },
+      { id: 'evening_clothes', name: 'Evening clothes — something to change into',  note: 'We may walk the Casino Constanța waterfront or sit down for dinner. Casual is fine, riding gear is not.',  essential: true },
       
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
       
