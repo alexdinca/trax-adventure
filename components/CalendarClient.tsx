@@ -64,7 +64,7 @@ const calendar: MonthGroup[] = [
     month: 'July',
     events: [
       { date: '10–18 Jul', startDate: '2026-07-10', endDate: '2026-07-18', name: 'RoRallyMarathon', location: 'Râmnicu Sărat, Romania', type: 'radar', href: 'https://www.facebook.com/RoRallyMarathon' },
-      { date: '18–19 Jul', startDate: '2026-07-18', endDate: '2026-07-19', name: 'Touratech Rally Romania 2025', location: 'Cheile Grădiștei', type: 'radar', href: 'https://fb.me/e/aPpmzzVS6' },
+      { date: '18–19 Jul', startDate: '2026-07-18', endDate: '2026-07-19', name: 'Touratech Rally Romania', location: 'Cheile Grădiștei', type: 'radar', href: 'https://fb.me/e/aPpmzzVS6' },
       { date: '28 Jul – 1 Aug', startDate: '2026-07-28', endDate: '2026-08-01', name: 'Red Bull Romaniacs', location: 'Sibiu', type: 'radar', href: 'https://www.redbullromaniacs.com/' },
     ],
   },
