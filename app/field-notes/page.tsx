@@ -5,12 +5,12 @@ import { Container, Spacer } from '@/components/ui/Container';
 import { Headline, MonoLabel } from '@/components/ui/Typography';
 
 export const metadata: Metadata = {
-  title: 'Field Notes — TRAX',
-  description: 'Dispatches from the terrain. Writing from TRAX riders.',
+  title: 'Field Notes',
+  description: 'Writing from TRAX riders. Dispatches from the terrain — accounts of rides, places, and what stays after the experience.',
   alternates: { canonical: 'https://ridetrax.eu/field-notes' },
   openGraph: {
     title: 'Field Notes — TRAX',
-    description: 'Dispatches from the terrain. Writing from TRAX riders.',
+    description: 'Writing from TRAX riders. Dispatches from the terrain — accounts of rides, places, and what stays after the experience.',
     url: 'https://ridetrax.eu/field-notes',
   },
 };

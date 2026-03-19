@@ -7,6 +7,7 @@ TRAX is an off-road motorcycle collective based in Romania. We organize terrain-
 ## Pages
 
 - [Home](https://ridetrax.eu): Brand mission, ethos, and what TRAX stands for.
+- [Calendar](https://ridetrax.eu/calendar): The primary reference for all TRAX events in 2026. Lists every scheduled off-road motorcycle experience, collective ride, and terrain day — with dates, types, and availability. Updated throughout the year.
 - [Experiences](https://ridetrax.eu/experiences): Our five experience tiers — from The Ground to The Long Way In. Each tier requires different skills and commitment.
 - [Dobrogea Calling](https://ridetrax.eu/dobrogea-calling): 3-day experience through Romania's Dobrogea region. Technical terrain, enduro-style.
 - [Carpathian Ridge](https://ridetrax.eu/carpathian-ridge): High-altitude Carpathian traverse. Multi-day, demanding, committing.
@@ -14,6 +15,7 @@ TRAX is an off-road motorcycle collective based in Romania. We organize terrain-
 - [The Ground](https://ridetrax.eu/the-ground): Entry-level experience. Skills-focused, structured, supportive.
 - [Long Way In](https://ridetrax.eu/long-way-in): Distance and endurance. Days-long routes with minimal support.
 - [Manifesto](https://ridetrax.eu/manifesto): Our core beliefs about terrain, presence, and earned progression.
+- [Field Notes](https://ridetrax.eu/field-notes): Writing from TRAX riders. Accounts of rides, terrain, and what stays after the experience.
 
 ## Content Policy
 
