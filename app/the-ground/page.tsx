@@ -6,7 +6,7 @@ import { WhatsAppCTA } from '@/components/WhatsAppCTA';
 
 export const metadata: Metadata = {
   title: 'The Ground — TRAX Anniversary',
-  description: 'One year since TRAX began. An open training day at TCS Racing Park. Shared practice, learning, and community. 100 RON. November 14.',
+  description: 'One year since TRAX began. An open training day at TCS Racing Park. Shared practice, learning, and community. November 14.',
   alternates: { canonical: 'https://ridetrax.eu/the-ground' },
   openGraph: {
     title: 'The Ground — TRAX',
@@ -108,7 +108,7 @@ export default function TheGroundPage() {
               {[
                 { label: 'Date', value: '14 November 2026' },
                 { label: 'Location', value: 'TCS Racing Park · Romania' },
-                { label: 'Access', value: 'Circuit access fee: 100 RON / motorcycle (paid on-site)' },
+                { label: 'Access', value: 'Circuit access fee: TBD — to be confirmed closer to the date' },
               ].map((item) => (
                 <div key={item.label} className="mb-8">
                   <p className="font-sans text-trax-red text-sm tracking-widest uppercase mb-2">{item.label}</p>
