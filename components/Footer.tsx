@@ -78,6 +78,17 @@ export const Footer: React.FC = () => {
             >
               Facebook
             </a>
+            <span className="text-trax-grey/20 select-none" aria-hidden="true">/</span>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://open.spotify.com/show/2dp5GRvXCGcLs81O7MYwP9?si=f1784cd5d59242f9"
+              aria-label="Listen to TRAX on Spotify (opens in new tab)"
+              onClick={() => handleSocialClick('spotify')}
+              className="text-trax-grey hover:text-trax-red transition-colors duration-300 font-mono text-xs md:text-sm uppercase tracking-widest"
+            >
+              Spotify
+            </a>
           </div>
 
           <p className="text-trax-grey font-sans text-2xl tracking-widest opacity-50">#OnTRAX</p>
