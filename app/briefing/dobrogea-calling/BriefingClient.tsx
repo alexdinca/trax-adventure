@@ -246,7 +246,7 @@ export function BriefingClient() {
         <div className="grid grid-cols-3 gap-8 mb-16">
           {[
             { label: 'Duration',  value: '3 Days',  sub: 'May 1st – 3rd, 2026' },
-            { label: 'Distance',  value: '650km',   sub: 'Mixed terrain, off-road focus' },
+            { label: 'Distance',  value: '766km',   sub: 'Mixed terrain, off-road focus' },
             { label: 'Landmarks', value: '~12',     sub: 'Points of interest' },
           ].map((s) => (
             <div key={s.label} className="space-y-2">

@@ -71,6 +71,8 @@ export default function LeafletRouteMap({ activeDay }: Props) {
       if (map.hasLayer(layers[n])) map.removeLayer(layers[n]);
     });
 
+    map.stop();
+
     if (activeDay === 0) {
       [1, 2, 3].forEach((n) => layers[n].addTo(map));
       const allBounds = layers[1]
