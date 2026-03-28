@@ -728,7 +728,16 @@ export function BriefingClient() {
 
             <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
             <Body>
-              Every confirmed rider receives the Dobrogea Calling rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
+              In TRAX, artifacts are not merchandise. They are not available for purchase, not offered as incentives, and not given without corresponding effort. Every artifact is tied to a specific experience — earned by the riders who were there, in that terrain, in that year.
+            </Body>
+            <Body className="mt-4">
+              Each TRAX experience carries its own artifact. Different material. Different form. Same principle: if you weren't there, it doesn't exist for you.
+            </Body>
+            <Body className="mt-4">
+              The Dobrogea Calling artifact is a rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
+            </Body>
+            <Body className="mt-4">
+              What you carry out of a TRAX experience should remind you of what it cost — not what it's worth.
             </Body>
           </div>
         </div>
