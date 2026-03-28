@@ -24,9 +24,9 @@ export const DAY_STATS: Record<number, { dist: string; gain: string; max: string
 };
 
 export const DAY_COLORS: Record<number, string> = {
-  1: '#d43220',
+  1: '#3a8fd4',
   2: '#c8921a',
-  3: '#3a8fd4',
+  3: '#d43220',
 };
 
 export const ELEVATION_DATA: Record<number, number[]> = { 1: E1, 2: E2, 3: E3 };

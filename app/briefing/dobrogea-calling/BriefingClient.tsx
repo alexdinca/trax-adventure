@@ -467,6 +467,98 @@ export function BriefingClient() {
 
         <Spacer size="lg" />
 
+        {/* ── 01d — What You'll Pass ────────────────────────────────────────── */}
+        <div className="border-t border-trax-grey/20 pt-16">
+          <MonoLabel className="mb-6 block">01d — What You&apos;ll Pass</MonoLabel>
+          <SubHeadline className="mb-3">What You&apos;ll Pass</SubHeadline>
+          <Body className="mb-10 text-trax-grey/60">Not all of these are stops. Some are detours. Some you&apos;ll just see from the trail. All of them are real.</Body>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-trax-white/10">
+            {([
+              {
+                day: 1 as const,
+                title: 'The Long Open',
+                landmarks: [
+                  'Canaraua Fetei-Băneasa Quarry',
+                  'Canaraua Fetii',
+                  'Rezervație de Mufloni',
+                  'Old Water Station',
+                  'Peștera — Wind Turbines',
+                  'Monumentul Tropaeum Traiani',
+                  'Archaeological Museum of Adamclisi',
+                  'Cișmeaua turcească Zorile',
+                  'Pereții calcaroși de la Petroșani',
+                  'Geamia turcească Fântâna Mare',
+                  'Fortificația Romano-Bizantină Plopeni',
+                  'NirSum — Pitstop',
+                  'The Monument of Youth',
+                  'View Point Murfatlar',
+                ],
+              },
+              {
+                day: 2 as const,
+                title: 'Into the Gorges',
+                landmarks: [
+                  'Career Nicolae Bălcescu',
+                  'La Adam Cave',
+                  'The Medieval City of Ester',
+                  "Dobrogea's Mouth Natural Reservation",
+                  'Podul Casimcei',
+                  'Grota Haiducilor Camena',
+                  'Cape Doloșman',
+                  'Bujorii de la Enisala',
+                  'The Enisala Fortress',
+                ],
+              },
+              {
+                day: 3 as const,
+                title: 'The Old Mountains',
+                landmarks: [
+                  'The Ancient Town of Ibida',
+                  'The Stone Quarry Fântâna Mare',
+                  'Fântâna Mare Lilac Nature Preserve',
+                  'Poiana cu Bujori',
+                  'Yellow Bench',
+                  'Bașchioi Quarry',
+                  'Codrul Tăcut',
+                  'Monumentul parașutistelor',
+                  'The Fortress of Flowers',
+                  'Sfinxul Dobrogean',
+                  'Cetatea de Vest',
+                  'The Fortress of Troesmis',
+                  'Lacul Iacobdeal',
+                  'Cerna Wind Farm',
+                  'Colina Doihia',
+                ],
+              },
+            ] as const).map(({ day, title, landmarks }) => (
+              <div key={day} className="bg-trax-black p-6 md:p-8">
+                <div className="flex items-baseline justify-between mb-5 pb-3 border-b border-trax-white/10">
+                  <span
+                    className="font-mono text-[11px] tracking-[0.12em] uppercase"
+                    style={{ color: DAY_COLORS[day] }}
+                  >
+                    Day {day} — {title}
+                  </span>
+                  <span className="font-mono text-[11px] text-trax-grey/40">{landmarks.length}</span>
+                </div>
+                <div className="flex flex-col">
+                  {landmarks.map((name) => (
+                    <span
+                      key={name}
+                      className="font-body text-[13px] text-trax-grey/70 py-1.5 border-b border-trax-white/[0.04] last:border-b-0 leading-snug"
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Spacer size="lg" />
+
         {/* ── 02 — Mental Prep ──────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-trax-grey/20 pt-16 items-start">
           <div>
