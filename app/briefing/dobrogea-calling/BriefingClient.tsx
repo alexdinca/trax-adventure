@@ -717,16 +717,29 @@ export function BriefingClient() {
             <Body>
               Ego doesn&apos;t survive long out here. Not because anyone polices it. <span className="text-trax-red font-medium">Because the terrain makes it irrelevant.</span>
             </Body>
+
+            <Spacer size="md" />
+
+            <div className="relative w-full aspect-[4/5] overflow-hidden">
+              <Image
+                src="/assets/dc-rally-jacket.jpg"
+                alt="Dobrogea Calling rally jacket"
+                fill
+                className="object-cover"
+              />
+            </div>
+            
           </div>
 
           <div>
+            <Spacer size="md" />
             <div className="bg-trax-white/5 p-8 md:p-12 mb-8">
               <p className="font-body text-xl text-trax-white/80 italic leading-relaxed">
                 You were confirmed because your attitude aligned. That alignment is what keeps the Collective worth belonging to. Protect it.
               </p>
             </div>
-
-            <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
+              <Spacer size="md" />
+              <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
             <Body>
               In TRAX, artifacts are not merchandise. They are not available for purchase, not offered as incentives, and not given without corresponding effort. Every artifact is tied to a specific experience — earned by the riders who were there, in that terrain, in that year.
             </Body>
