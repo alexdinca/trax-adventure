@@ -173,9 +173,9 @@ export function BriefingClient() {
 
   const dayBtnStyle = (d: number): React.CSSProperties => {
     if (activeDay !== d) return {};
-    if (d === 1) return { background: 'rgba(180,40,20,0.15)', borderColor: '#b42814', color: '#e05040' };
+    if (d === 1) return { background: 'rgba(180,40,20,0.15)', borderColor:  '#185fa5', color: '#5a9cd5' };
     if (d === 2) return { background: 'rgba(192,130,30,0.12)', borderColor: '#8a6010', color: '#d4a040' };
-    if (d === 3) return { background: 'rgba(40,100,160,0.12)', borderColor: '#185fa5', color: '#5a9cd5' };
+    if (d === 3) return { background: 'rgba(40,100,160,0.12)', borderColor: '#b42814', color: '#e05040' };
     return { background: 'rgba(180,40,20,0.15)', borderColor: '#b42814', color: '#e05040' };
   };
 
