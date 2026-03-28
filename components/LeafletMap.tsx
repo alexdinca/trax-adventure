@@ -7,9 +7,10 @@ import { DAY1, DAY2, DAY3, DAY_COLORS } from '@/app/briefing/dobrogea-calling/br
 
 interface Props {
   activeDay: number;
+  fitKey: number;
 }
 
-export default function LeafletRouteMap({ activeDay }: Props) {
+export default function LeafletRouteMap({ activeDay, fitKey }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const layersRef = useRef<Record<number, Polyline>>({});
@@ -61,7 +62,7 @@ export default function LeafletRouteMap({ activeDay }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update layers when activeDay changes
+  // Update layers and zoom whenever activeDay or fitKey changes
   useEffect(() => {
     const map = mapRef.current;
     const layers = layersRef.current;
@@ -72,6 +73,7 @@ export default function LeafletRouteMap({ activeDay }: Props) {
     });
 
     map.stop();
+    map.invalidateSize();
 
     if (activeDay === 0) {
       [1, 2, 3].forEach((n) => layers[n].addTo(map));
@@ -84,7 +86,8 @@ export default function LeafletRouteMap({ activeDay }: Props) {
       layers[activeDay].addTo(map);
       map.fitBounds(layers[activeDay].getBounds(), { padding: [20, 20] });
     }
-  }, [activeDay]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeDay, fitKey]);
 
   return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
 }

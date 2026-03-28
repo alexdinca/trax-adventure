@@ -133,6 +133,7 @@ export function BriefingClient() {
   const [mounted, setMounted] = useState(false);
   const [countdown, setCountdown] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [activeDay, setActiveDay] = useState(1);
+  const [fitKey, setFitKey] = useState(0);
   const [checked, setChecked] = useState<Set<string>>(() => {
     if (typeof window === 'undefined') return new Set();
     try {
@@ -246,8 +247,8 @@ export function BriefingClient() {
         <div className="grid grid-cols-3 gap-8 mb-16">
           {[
             { label: 'Duration',  value: '3 Days',  sub: 'May 1st – 3rd, 2026' },
-            { label: 'Distance',  value: '766km',   sub: 'Mixed terrain, off-road focus' },
-            { label: 'Landmarks', value: '~12',     sub: 'Points of interest' },
+            { label: 'Distance',  value: '~640km',  sub: 'Mixed terrain, off-road focus' },
+            { label: 'Landmarks', value: '38',      sub: 'Points of interest' },
           ].map((s) => (
             <div key={s.label} className="space-y-2">
               <p className="font-sans text-trax-red text-sm tracking-widest uppercase">{s.label}</p>
@@ -314,14 +315,14 @@ export function BriefingClient() {
           {/* Day toggles */}
           <div className="flex gap-0.5 mb-4 flex-wrap">
             {[
-              { d: 1, label: 'Day 1 · 306km' },
-              { d: 2, label: 'Day 2 · 218km' },
-              { d: 3, label: 'Day 3 · 242km' },
+              { d: 1, label: 'Day 1 · 254km' },
+              { d: 2, label: 'Day 2 · 186km' },
+              { d: 3, label: 'Day 3 · 200km' },
               { d: 0, label: 'All Days' },
             ].map(({ d, label }) => (
               <button
                 key={d}
-                onClick={() => setActiveDay(d)}
+                onClick={() => { setActiveDay(d); setFitKey((k) => k + 1); }}
                 className="font-mono text-[12px] tracking-[0.12em] uppercase px-4 py-2.5 bg-trax-white/5 border border-trax-white/15 text-trax-grey cursor-pointer transition-all duration-200 flex-1 text-center hover:text-trax-white hover:border-trax-white/30"
                 style={dayBtnStyle(d)}
               >
@@ -346,7 +347,7 @@ export function BriefingClient() {
 
           {/* Map */}
           <div className="w-full h-[420px] md:h-[520px] relative border border-trax-white/10 mb-4 bg-[#111]">
-            <LeafletMap activeDay={activeDay} />
+            <LeafletMap activeDay={activeDay} fitKey={fitKey} />
           </div>
 
           {/* Day narrative */}
@@ -355,24 +356,24 @@ export function BriefingClient() {
               1: {
                 title: 'The Long Open',
                 lines: [
-                  'The longest day by distance — 306km of southern Dobrogea plateau. Flat, wide, and relentless. The terrain gives you almost nothing to react to, which is the point.',
-                  'Gravel roads and forgotten tracks across agricultural land. Occasional sand. Long sightlines with almost no shade. Fuel management starts here.',
-                  'The day ends deep in Dobrogea. The rhythm you build today carries the rest of the experience.',
+                  'The longest day by distance — 254 km across southern Dobrogea. Flat, wide, and relentless. The terrain gives you almost nothing to react to, which is the point.',
+                  'Ancient quarries and mouflon reserves near the Bulgarian border. Ottoman fountains in villages with no signal. Roman ruins at Adamclisi. Then the limestone plateau opens up and doesn\'t close for hours. Gravel roads, forgotten tracks, long sightlines with almost no shade.',
+                  'Fuel management starts here. The rhythm you build today carries the rest of the experience.',
                 ],
               },
               2: {
-                title: 'Into the Măcin',
+                title: 'Into the Gorges',
                 lines: [
-                  'Shorter distance, different character. Day 2 climbs into the Munții Măcin — the oldest mountain range in Romania, worn down to ridges and stone. The landscape sharpens.',
-                  'Expect tighter tracks, more elevation change, and sections that require attention. The 332m max elevation sounds modest. The terrain around it does not feel modest.',
+                  'Shorter distance, different character. 186 km through the heart of Dobrogea — the Casimcea valley, the gorges at Gura Dobrogei, the caves and medieval ruins that most people drive past on the highway without knowing.',
+                  'The landscape sharpens. Limestone walls rise. The route swings east toward the coast — Cape Doloșman, the peonies at Enisala, the fortress on the hill where the Danube Delta begins to appear on the horizon.',
                   'This is the pivot day. The group either finds its pace here or it doesn\'t.',
                 ],
               },
               3: {
-                title: 'The Return',
+                title: 'The Old Mountains',
                 lines: [
-                  '242km back across terrain you\'ve started to understand differently. The coast appears. The Danube Delta is close enough to smell.',
-                  'Day 3 is looser. The hard work is done. What remains is distance, presence, and the slow realisation that it\'s ending.',
+                  '200 km through northern Dobrogea and into the Măcin range — the oldest mountains in Romania, worn down to ridges and granite. The landscape changes completely.',
+                  'Babadag forest. Abandoned quarries. Wind farms on bare hills. Then the terrain lifts — Troesmis fortress overlooking the Danube, Lacul Iacobdeal carved into rock, and the Dobrogean Sphinx waiting at the top of Pricopan. The 350 m max elevation sounds modest. The terrain around it does not feel modest.',
                   'The group arrives together or not at all.',
                 ],
               },
@@ -402,6 +403,31 @@ export function BriefingClient() {
                   <MonoLabel>Select a single day to view profile</MonoLabel>
                 </div>
             }
+          </div>
+
+          {/* GPX Downloads */}
+          <div className="mt-8 border-t border-trax-white/10 pt-6">
+            <MonoLabel className="mb-4 block">Download GPX</MonoLabel>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { day: 1, label: 'Day 1 — The Long Open',    file: 'TRAX_Dobrogea_Calling_Day1_SingleTrack.gpx' },
+                { day: 2, label: 'Day 2 — Into the Gorges',  file: 'TRAX_Dobrogea_Calling_Day2_SingleTrack.gpx' },
+                { day: 3, label: 'Day 3 — The Old Mountains', file: 'TRAX_Dobrogea_Calling_Day3_SingleTrack.gpx' },
+              ].map(({ day, label, file }) => (
+                <a
+                  key={day}
+                  href={`/assets/gpx/${file}`}
+                  download
+                  className="font-mono text-[11px] tracking-[0.1em] uppercase px-4 py-2.5 bg-trax-white/5 border border-trax-white/15 text-trax-grey hover:text-trax-white hover:border-trax-white/30 transition-all duration-200 flex items-center gap-2"
+                  style={activeDay === day ? { borderColor: DAY_COLORS[day] + '80', color: DAY_COLORS[day] } : {}}
+                >
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
