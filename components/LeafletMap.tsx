@@ -72,8 +72,11 @@ export default function LeafletRouteMap({ activeDay, fitKey }: Props) {
       if (map.hasLayer(layers[n])) map.removeLayer(layers[n]);
     });
 
-    map.stop();
-    map.invalidateSize();
+    // Clear _animatingZoom before calling fitBounds — Leaflet's _tryAnimatedZoom
+    // silently returns without zooming if _animatingZoom is true (set for 250ms
+    // after any zoom animation starts), so any quick day-switch would silently fail.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (map as any)._animatingZoom = false;
 
     if (activeDay === 0) {
       [1, 2, 3].forEach((n) => layers[n].addTo(map));

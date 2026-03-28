@@ -68,7 +68,7 @@ const CHECK_GROUPS: CheckGroup[] = [
       { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
       { id: 'sleeping_layer', name: 'Warm layer for evenings — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
       { id: 'sleepwear',      name: 'Sleepwear' },
-      { id: 'evening_clothes', name: 'Evening clothes — something to change into',  note: 'We may walk the Casino Constanța waterfront or sit down for dinner. Casual is fine, riding gear is not.',  essential: true },
+      { id: 'evening_clothes', name: 'Evening clothes',  note: 'Something casual to sit down for dinner.',  essential: true },
       
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
       
@@ -452,7 +452,7 @@ export function BriefingClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             {[
               { night: 'Night 1 — Friday', where: 'Dobrogea — south', type: 'Guesthouse', note: 'After the long plateau day. Rest is non-negotiable.' },
-              { night: 'Night 2 — Saturday', where: 'Constanța surroundings', type: 'Guesthouse', note: 'Last night. Dinner out. Casino Constanța waterfront if the group is willing.' },
+              { night: 'Night 2 — Saturday', where: 'Enisala surroundings', type: 'Guesthouse', note: 'Near the fortress, near the Delta. The landscape shifts from riding to stillness. Last night together.' },
             ].map((row) => (
               <div key={row.night} className="flex flex-col gap-2 px-5 py-5 bg-trax-white/5">
                 <span className="font-mono text-[11px] text-trax-red font-bold">{row.night}</span>
