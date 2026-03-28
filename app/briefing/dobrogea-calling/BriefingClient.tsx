@@ -41,7 +41,7 @@ const CHECK_GROUPS: CheckGroup[] = [
     title: 'Riding Gear',
     items: [
       { id: 'helmet',     name: 'Helmet — off-road or ADV rated',                note: 'Full face preferred.',                                 essential: true },
-      { id: 'googles',     name: 'Googles and visor cleaner',                                                 essential: true },
+      { id: 'goggles',     name: 'Goggles and visor cleaner',                                                 essential: true },
       { id: 'jacket',     name: 'Riding jacket — armoured, vented',              note: 'Mornings cold. Afternoons warm. Layer accordingly.',        essential: true },
       { id: 'trousers',   name: 'Riding trousers — armoured',                    note: 'Knee braces preferred.',                                      essential: true },
       { id: 'boots',      name: 'Enduro/MX Boots',                 essential: true },
