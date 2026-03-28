@@ -70,6 +70,7 @@ const CHECK_GROUPS: CheckGroup[] = [
       { id: 'sleepwear',      name: 'Sleepwear' },
       { id: 'evening_clothes', name: 'Evening clothes',  note: 'Something casual to sit down for dinner.',  essential: true },
       
+      { id: 'cap',            name: 'Cap or hat — sun protection',               note: 'Dobrogea sun is relentless. Protect your head the moment the helmet comes off.', essential: true },
       { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
       
       { id: 'power_bank',     name: 'Phone charging cable' },
