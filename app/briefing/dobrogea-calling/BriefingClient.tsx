@@ -248,7 +248,7 @@ export function BriefingClient() {
         <div className="grid grid-cols-3 gap-8 mb-16">
           {[
             { label: 'Duration',  value: '3 Days',  sub: 'May 1st – 3rd, 2026' },
-            { label: 'Distance',  value: '~640km',  sub: 'Mixed terrain, off-road focus' },
+            { label: 'Distance',  value: '~738km',  sub: 'Mixed terrain, off-road focus' },
             { label: 'Landmarks', value: '38',      sub: 'Points of interest' },
           ].map((s) => (
             <div key={s.label} className="space-y-2">
@@ -317,8 +317,8 @@ export function BriefingClient() {
           <div className="flex gap-0.5 mb-4 flex-wrap">
             {[
               { d: 1, label: 'Day 1 · 254km' },
-              { d: 2, label: 'Day 2 · 186km' },
-              { d: 3, label: 'Day 3 · 200km' },
+              { d: 2, label: 'Day 2 · 230km' },
+              { d: 3, label: 'Day 3 · 254km' },
               { d: 0, label: 'All Days' },
             ].map(({ d, label }) => (
               <button
@@ -357,7 +357,7 @@ export function BriefingClient() {
               1: {
                 title: 'The Long Open',
                 lines: [
-                  'The longest day by distance — 254 km across southern Dobrogea. Flat, wide, and relentless. The terrain gives you almost nothing to react to, which is the point.',
+                  '254 km across southern Dobrogea. Flat, wide, and relentless. The terrain gives you almost nothing to react to, which is the point.',
                   'Ancient quarries and mouflon reserves near the Bulgarian border. Ottoman fountains in villages with no signal. Roman ruins at Adamclisi. Then the limestone plateau opens up and doesn\'t close for hours. Gravel roads, forgotten tracks, long sightlines with almost no shade.',
                   'Fuel management starts here. The rhythm you build today carries the rest of the experience.',
                 ],
@@ -365,7 +365,7 @@ export function BriefingClient() {
               2: {
                 title: 'Into the Gorges',
                 lines: [
-                  'Shorter distance, different character. 186 km through the heart of Dobrogea — the Casimcea valley, the gorges at Gura Dobrogei, the caves and medieval ruins that most people drive past on the highway without knowing.',
+                  '230 km through the heart of Dobrogea — the Casimcea valley, the gorges at Gura Dobrogei, the caves and medieval ruins that most people drive past on the highway without knowing.',
                   'The landscape sharpens. Limestone walls rise. The route swings east toward the coast — Cape Doloșman, the peonies at Enisala, the fortress on the hill where the Danube Delta begins to appear on the horizon.',
                   'This is the pivot day. The group either finds its pace here or it doesn\'t.',
                 ],
@@ -373,7 +373,7 @@ export function BriefingClient() {
               3: {
                 title: 'The Old Mountains',
                 lines: [
-                  '200 km through northern Dobrogea and into the Măcin range — the oldest mountains in Romania, worn down to ridges and granite. The landscape changes completely.',
+                  '254 km through northern Dobrogea and into the Măcin range — the oldest mountains in Romania, worn down to ridges and granite. The landscape changes completely.',
                   'Babadag forest. Abandoned quarries. Wind farms on bare hills. Then the terrain lifts — Troesmis fortress overlooking the Danube, Lacul Iacobdeal carved into rock, and the Dobrogean Sphinx waiting at the top of Pricopan. The 350 m max elevation sounds modest. The terrain around it does not feel modest.',
                   'The group arrives together or not at all.',
                 ],
@@ -453,7 +453,7 @@ export function BriefingClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             {[
               { night: 'Night 1 — Friday', where: 'Dobrogea — south', type: 'Guesthouse', note: 'After the long plateau day. Rest is non-negotiable.' },
-              { night: 'Night 2 — Saturday', where: 'Enisala surroundings', type: 'Guesthouse', note: 'Near the fortress, near the Delta. The landscape shifts from riding to stillness. Last night together.' },
+              { night: 'Night 2 — Saturday', where: 'Murighiol surroundings', type: 'Guesthouse', note: 'Where the land ends and the water begins. Sleep well. Tomorrow starts before the engines do.' },
             ].map((row) => (
               <div key={row.night} className="flex flex-col gap-2 px-5 py-5 bg-trax-white/5">
                 <span className="font-mono text-[11px] text-trax-red font-bold">{row.night}</span>

@@ -1,7 +1,11 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://gpx.studio">
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="https://gpx.studio" schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2/gpx_style.xsd" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2/gpx_style.xsd" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1" xmlns:gpx_style="http://www.topografix.com/GPX/gpx_style/0/2">
   <metadata>
     <name>TRAX - Dobrogea Calling Day 1</name>
+    <author>
+      <name>gpx.studio</name>
+      <link href="https://gpx.studio"/>
+    </author>
   </metadata>
   <wpt lat="44.0781138" lon="27.6432274">
     <name>Canaraua Fetei-Băneasa Quarry</name>
@@ -58,6 +62,22 @@
   <wpt lat="44.1674334" lon="28.4094697">
     <name>View Point Murfatlar</name>
     <sym>Flag, Blue</sym>
+  </wpt>
+  <wpt lat="44.0684" lon="27.693045">
+    <ele>78.58588661868156</ele>
+    <name>PETROM</name>
+    <cmt>benzinarie</cmt>
+    <desc>benzinarie</desc>
+    <link href="https://maps.app.goo.gl/gUhPyD5cT41Zbo1k8"/>
+    <sym>Gas Station</sym>
+  </wpt>
+  <wpt lat="44.071868" lon="28.234313">
+    <ele>130.4311757725434</ele>
+    <name>Rompetrol</name>
+    <cmt>benzinarie</cmt>
+    <desc>benzinarie</desc>
+    <link href="https://maps.app.goo.gl/LzUHygA7LNCqbrG27"/>
+    <sym>Gas Station</sym>
   </wpt>
   <trk>
     <name>Dobrogea Calling Day 1 — Calarasi to Murfatlar</name>

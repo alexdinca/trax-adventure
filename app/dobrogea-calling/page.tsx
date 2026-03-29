@@ -6,11 +6,11 @@ import { DobrogeaCallingCTA } from '@/components/DobrogeaCallingCTA';
 
 export const metadata: Metadata = {
   title: 'Dobrogea Calling — TRAX Adventure',
-  description: '~640km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness, no tour guides, no performance metrics. An exploration, not an event.',
+  description: '~738km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness, no tour guides, no performance metrics. An exploration, not an event.',
   alternates: { canonical: 'https://ridetrax.eu/dobrogea-calling' },
   openGraph: {
     title: 'Dobrogea Calling — TRAX',
-    description: 'Join a ~640km adventure across ancient Romanian terrain. 3 days, 38 points of interest, shared discovery.',
+    description: 'Join a ~738km adventure across ancient Romanian terrain. 3 days, 38 points of interest, shared discovery.',
     url: 'https://ridetrax.eu/dobrogea-calling',
     images: [{ url: '/android-chrome-512x512.png' }],
   },
@@ -20,7 +20,7 @@ const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Event',
   name: 'Dobrogea Calling',
-  description: '~640km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness. No tour guides, no performance metrics. An exploration, not an event.',
+  description: '~738km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness. No tour guides, no performance metrics. An exploration, not an event.',
   startDate: '2026-05-01',
   endDate: '2026-05-03',
   eventStatus: 'https://schema.org/EventScheduled',
@@ -149,7 +149,7 @@ export default function DobrogeaCallingPage() {
               {[
                 { label: 'Duration', value: '3 days', sub: 'May 1st – 3rd 2026' },
                 { label: 'Location', value: 'Bucharest', sub: 'Start & End Point' },
-                { label: 'Distance', value: '~640km', sub: 'Off-Road Exploration' },
+                { label: 'Distance', value: '~738km', sub: 'Off-Road Exploration' },
                 { label: 'Points of Interest', value: '38', sub: 'Ancient Landmarks' },
               ].map((item) => (
                 <div key={item.label} className="space-y-2">
