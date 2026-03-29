@@ -28,7 +28,7 @@ const calendar: MonthGroup[] = [
     month: 'March',
     events: [
       { date: '21 Mar', startDate: '2026-03-21', name: 'RAMS Fun Ride', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://www.facebook.com/events/2382350788899928' },
-      { date: '28–29 Mar', startDate: '2026-03-28', endDate: '2026-03-29', name: 'MX CB/CNIR et. I', location: 'Oltenia Racing Park, Balș', type: 'collective', href: 'https://www.facebook.com/events/1071308521695584' },
+      { date: '28–29 Mar', startDate: '2026-03-28', endDate: '2026-03-29', name: 'MX CB/CNIR et. I', location: 'Oltenia Racing Park, Balș', type: 'radar', href: 'https://www.facebook.com/events/1071308521695584' },
     ],
   },
   {
