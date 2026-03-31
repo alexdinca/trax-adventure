@@ -34,7 +34,7 @@ const calendar: MonthGroup[] = [
   {
     month: 'April',
     events: [
-      { date: '17–19 Apr', startDate: '2026-04-17', endDate: '2026-04-19', name: 'Ténéré Event', location: 'Merei, Buzău', type: 'radar', href: 'https://www.facebook.com/YamahaMotorRomania/posts/1336124351880792' },
+      { date: '17–19 Apr', startDate: '2026-04-17', endDate: '2026-04-19', name: 'Ténéré Event', location: 'Merei, Buzău', type: 'collective', href: 'https://www.facebook.com/YamahaMotorRomania/posts/1336124351880792' },
       { date: '18–19 Apr', startDate: '2026-04-18', endDate: '2026-04-19', name: 'Mixed Terrain Adventure Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge — Stage 1' },
     ],
   },
