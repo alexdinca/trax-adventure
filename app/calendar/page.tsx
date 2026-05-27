@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { CalendarClient } from '@/components/CalendarClient';
+import { getAllEvents } from '@/lib/calendar-data';
 
 export const metadata: Metadata = {
   title: 'Calendar 2026',
@@ -13,6 +14,45 @@ export const metadata: Metadata = {
   },
 };
 
+function buildCalendarSchema() {
+  const events = getAllEvents();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'TRAX 2026 Calendar — Off-Road Motorcycle Events Romania',
+    description: 'All TRAX experiences, collective rides, and radar events for the 2026 season.',
+    url: 'https://ridetrax.eu/calendar',
+    numberOfItems: events.length,
+    itemListElement: events.map((e, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'SportsEvent',
+        name: e.name,
+        startDate: e.startDate,
+        ...(e.endDate ? { endDate: e.endDate } : {}),
+        ...(e.location ? { location: { '@type': 'Place', name: e.location } } : {}),
+        url: e.href
+          ? e.href.startsWith('http') ? e.href : `https://ridetrax.eu${e.href}`
+          : 'https://ridetrax.eu/calendar',
+        ...(e.type === 'trax' ? {
+          organizer: { '@type': 'Organization', name: 'TRAX', url: 'https://ridetrax.eu' },
+        } : {}),
+        sport: 'Motorcycle off-road / Enduro',
+        eventStatus: 'https://schema.org/EventScheduled',
+      },
+    })),
+  };
+}
+
 export default function CalendarPage() {
-  return <CalendarClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildCalendarSchema()) }}
+      />
+      <CalendarClient />
+    </>
+  );
 }

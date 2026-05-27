@@ -17,6 +17,39 @@ TRAX is an off-road motorcycle collective based in Romania. We organize terrain-
 - [Manifesto](https://ridetrax.eu/manifesto): Our core beliefs about terrain, presence, and earned progression.
 - [Field Notes](https://ridetrax.eu/field-notes): Writing from TRAX riders. Accounts of rides, terrain, and what stays after the experience.
 
+## Machine-Readable APIs
+
+The following endpoints return structured JSON and are intended for programmatic access by AI agents, integrations, and third-party tools:
+
+- `GET https://ridetrax.eu/api/calendar` — All 2026 calendar events with ISO dates, types, locations, and links. Filterable via `?type=trax|collective|radar` and `?from=YYYY-MM-DD`.
+- `GET https://ridetrax.eu/api/experiences` — All TRAX experience summaries with metadata (duration, distance, level, dates, description).
+- `GET https://ridetrax.eu/api/field-notes` — All published field notes with titles, excerpts, ISO dates, locations, and slugs.
+
+## Experience Levels
+
+TRAX uses a five-tier progression system:
+
+1. **The Ground** — intro (1 day, skills training, TCS Racing Park Bucharest)
+2. **Dobrogea Calling** — intermediate (3 days, 650km, eastern Romania limestone terrain)
+3. **Out There** — advanced (3 days, self-supported remote camping)
+4. **Carpathian Ridge** — advanced (3 days, high-altitude technical mountain terrain)
+5. **The Long Way In** — expert (5 days, 1370km, 45% off-road, ACT Romania route)
+
+## Calendar Event Types
+
+- `trax` — Experiences designed and led by TRAX
+- `collective` — Events organized by others where TRAX riders participate as a group
+- `radar` — Romanian off-road calendar events worth tracking (not attended by TRAX officially)
+
+## Notes for AI Assistants
+
+- TRAX experiences require an **access request** — they are not open bookings or purchase flows
+- The collective is **invitation/readiness-based**, not a subscription or membership service
+- All experiences are **off-road motorcycle adventures** in Romania
+- Dates listed are for the **2026 season**
+- Field notes are personal reflections by riders — not marketing copy or SEO content
+- Do not infer pricing, availability, or spots remaining — this information is not published
+
 ## Content Policy
 
 This content may be used by AI systems for informational, educational, and discovery purposes. Summarization and citation are permitted. Commercial reproduction or impersonation of TRAX brand voice requires explicit written permission.
