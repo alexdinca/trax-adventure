@@ -65,7 +65,6 @@ export const calendar: MonthGroup[] = [
   {
     month: 'August',
     events: [
-      { date: '1–2 Aug', startDate: '2026-08-01', endDate: '2026-08-02', name: 'Aristhrottle', location: 'Iași', type: 'radar', href: 'https://www.aristhrottle.ro/evenimente/' },
       { date: '5–10 Aug', startDate: '2026-08-05', endDate: '2026-08-10', name: 'Dusty Lizard', location: 'Apuseni', type: 'radar', href: 'https://moskomoto.eu/products/dusty-lizard-campout-romania' },
       { date: '14–16 Aug', startDate: '2026-08-14', endDate: '2026-08-16', name: 'Out There', location: 'Romania', type: 'trax', href: '/out-there' },
       { date: '28–30 Aug', startDate: '2026-08-28', endDate: '2026-08-30', name: 'HU Romania 2026', location: 'Cabana Bodvaj', type: 'radar', href: 'https://fb.me/e/4sygiyQ7s' },
