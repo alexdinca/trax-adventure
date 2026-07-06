@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Container, Spacer } from '@/components/ui/Container';
 import { Headline, SubHeadline, Body, MonoLabel, Divider } from '@/components/ui/Typography';
 import { WhatsAppCTA } from '@/components/WhatsAppCTA';
+import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
   title: 'The Long Way In — TRAX Adventure',
@@ -27,7 +28,7 @@ export default function LongWayInPage() {
             <SubHeadline className="text-2xl md:text-3xl text-trax-grey max-w-3xl">A five-day TRAX experience across ACT Romania</SubHeadline>
             <Body className="text-lg text-trax-grey max-w-2xl mt-4">Five days. One country. No shortcuts.</Body>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <WhatsAppCTA label="Request Access" source="the_long_way_in_page" />
+              <WhatsAppCTA label="Request Access" source="the_long_way_in_page" href={whatsappLink('Salut,\nVreau să mă alătur experienței The Long Way In.\nÎmi dai te rog mai multe detalii?')} />
             </div>
           </div>
         </Container>
@@ -217,7 +218,7 @@ export default function LongWayInPage() {
             <p>The Long Way In is not a mass experience.</p>
             <p>Participation is limited to preserve pace, safety, and group dynamic. Access is granted based on experience and alignment — not speed or status.</p>
           </Body>
-          <WhatsAppCTA label="Request Access" source="the_long_way_in_page" />
+          <WhatsAppCTA label="Request Access" source="the_long_way_in_page" href={whatsappLink('Salut,\nVreau să mă alătur experienței The Long Way In.\nÎmi dai te rog mai multe detalii?')} />
         </div>
       </Container>
 

@@ -1,23 +1,24 @@
 'use client';
 import { useAptabase } from '@aptabase/react';
-import { Button } from './ui/Button';
+import { BUTTON_CLASSES } from './ui/Button';
 
 interface WhatsAppCTAProps {
   label: string;
   source: string;
+  href: string;
   eventName?: string;
-  url?: string;
 }
 
-const DEFAULT_URL = 'https://chat.whatsapp.com/IYnaKYKJsS2DgMljmyMRWD';
-
-export function WhatsAppCTA({ label, source, eventName = 'join_button_click', url = DEFAULT_URL }: WhatsAppCTAProps) {
+export function WhatsAppCTA({ label, source, href, eventName = 'join_button_click' }: WhatsAppCTAProps) {
   const { trackEvent } = useAptabase();
 
   const handleClick = () => {
-    trackEvent(eventName, { source, url, timestamp: new Date().toISOString() });
-    window.open(url, '_blank');
+    trackEvent(eventName, { source, url: href, timestamp: new Date().toISOString() });
   };
 
-  return <Button onClick={handleClick}>{label}</Button>;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" onClick={handleClick} className={BUTTON_CLASSES}>
+      {label}
+    </a>
+  );
 }
