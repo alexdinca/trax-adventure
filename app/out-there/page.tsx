@@ -26,7 +26,7 @@ export default function OutTherePage() {
       {/* Hero */}
       <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
         <div className="absolute inset-0 z-0">
-          <Image src="/assets/out-there/bliss-there.jpg" alt="Loaded adventure motorcycle on a remote Romanian trail" fill className="object-cover trax-image opacity-50" sizes="100vw" priority />
+          <Image src="/assets/out-there/bliss-there.jpg" alt="Loaded adventure motorcycle on a remote Romanian trail" fill className="object-cover trax-image" sizes="100vw" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-trax-black via-transparent to-transparent" />
         </div>
         <Container className="relative z-10">

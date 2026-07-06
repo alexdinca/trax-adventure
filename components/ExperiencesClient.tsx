@@ -67,7 +67,7 @@ export function ExperiencesClient() {
           >
             <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
               <Image
-                src="/assets/trax landscape.png"
+                src="/assets/out-there/bliss-there.jpg"
                 alt="Out There"
                 width={700}
                 height={400}
