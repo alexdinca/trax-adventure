@@ -3,14 +3,15 @@ import Image from 'next/image';
 import { Container, Spacer } from '@/components/ui/Container';
 import { SubHeadline, Body, MonoLabel, Divider } from '@/components/ui/Typography';
 import { WhatsAppCTA } from '@/components/WhatsAppCTA';
+import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
   title: 'Out There — TRAX',
-  description: 'Three days, two nights. A self-supported off-road ride from Bucharest to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
+  description: 'Three days, two nights. A self-supported ride through Carpathian trails to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
   alternates: { canonical: 'https://ridetrax.eu/out-there' },
   openGraph: {
     title: 'Out There — TRAX',
-    description: 'Three days, two nights. A self-supported off-road ride from Bucharest to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
+    description: 'Three days, two nights. A self-supported ride through Carpathian trails to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
     url: 'https://ridetrax.eu/out-there',
     images: [{ url: '/assets/out-there/bliss-there.jpg' }],
   },
@@ -66,7 +67,7 @@ export default function OutTherePage() {
             {[
               { title: 'Self-Supported', body: "Everything you need comes on the bike. Everything you don't stays home. Packing is the first test, and it starts before the engine does." },
               { title: 'The Moving Camp', body: 'No base camp. No returning to the same spot. Each night you sleep somewhere new, and each morning the camp folds back onto the bike.' },
-              { title: 'Loaded Riding', body: 'Forest roads, gravel, light technical sections. Enough to challenge a loaded bike without overwhelming the rider on it.' },
+              { title: 'Loaded Riding', body: 'Carpathian trails with real climbs, rocks and loose surfaces. Medium technical terrain that gets a full vote on how your bike is packed.' },
             ].map((pillar) => (
               <div key={pillar.title} className="bg-trax-white/5 p-6 md:p-8">
                 <h4 className="font-sans text-trax-red text-lg mb-3">{pillar.title}</h4>
@@ -96,9 +97,9 @@ export default function OutTherePage() {
           <Spacer size="lg" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-trax-white/10">
             {[
-              { day: 1, title: 'The Ride In', body: 'Bucharest fades behind you. Asphalt turns to gravel, gravel turns to trail. You arrive with daylight to spare. Tents up. Fire lit. The first night teaches you what you forgot to pack.' },
+              { day: 1, title: 'The Ride In', body: 'Bucharest fades behind you. Asphalt turns to trail, and the trail starts asking questions early. You arrive with daylight to spare. Tents up. Fire lit. The first night teaches you what you forgot to pack.' },
               { day: 2, title: 'Up There', body: 'Morning coffee, then the camp disappears into the bags. A full day of trails, and by evening you climb. The second camp sits at the top of the wilderness. Away from roads, signal and noise. This is the night the experience is named after.' },
-              { day: 3, title: 'The Way Back', body: "No alarm. Slow coffee, cold hands. Some easy exploration on the descent, nothing that fights you. Then the trail becomes gravel, the gravel becomes asphalt, and Bucharest returns. The ride back always feels different. That's the point." },
+              { day: 3, title: 'The Way Back', body: "No alarm. Slow coffee, cold hands. Some exploration on the descent, easier than what you climbed, but still the Carpathians. Then the trail becomes asphalt and Bucharest returns. The ride back always feels different. That's the point." },
             ].map(({ day, title, body }) => (
               <div key={day} className="bg-trax-black p-6 md:p-8">
                 <div className="flex items-baseline justify-between mb-5 pb-3 border-b border-trax-white/10">
@@ -136,14 +137,16 @@ export default function OutTherePage() {
         <div className="border-t border-trax-grey/20 pt-16">
           <MonoLabel className="mb-6 block">The Filter</MonoLabel>
           <SubHeadline>Who This Is For</SubHeadline>
+          <Body className="mb-6">Out There is a first night in the wild, not a first ride off-road.</Body>
+          <Body className="mb-6">For riders who:</Body>
           <ul className="space-y-4 font-body text-trax-white/80 mt-6 max-w-2xl">
-            {['are curious about life off the bike', 'want their first nights in wild terrain done right', 'value simplicity over equipment', 'can carry their own weight, literally'].map((item) => (
+            {['have solid off-road fundamentals and want to add the overnight', 'can handle climbs, rocks and loose terrain on a loaded bike', 'value simplicity over equipment', 'can carry their own weight, literally'].map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <span className="w-1 h-1 bg-trax-red rounded-full mt-2 flex-shrink-0"></span><span>{item}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-6 max-w-2xl text-trax-grey text-sm">Skill matters less than <span className="text-trax-red">readiness</span>. Access is granted on mindset, not experience level alone.</p>
+          <p className="mt-6 max-w-2xl text-trax-grey text-sm">The camping is the threshold. The riding is not. <span className="text-trax-red">Access is granted on mindset and ability, both.</span></p>
         </div>
 
         <Spacer size="lg" />
@@ -167,7 +170,7 @@ export default function OutTherePage() {
             {[
               { label: 'Duration', value: '3 Days / 2 Nights', sub: '14th – 16th August 2026' },
               { label: 'Route', value: 'Bucharest & Back', sub: 'Self-supported, loaded' },
-              { label: 'Terrain', value: 'Forest & Gravel', sub: 'Light technical' },
+              { label: 'Terrain', value: 'Carpathian Trails', sub: 'Medium technical, loaded' },
               { label: 'Camps', value: 'Two, Wild', sub: 'The second one, up there' },
             ].map((item) => (
               <div key={item.label} className="space-y-2">
@@ -191,7 +194,7 @@ export default function OutTherePage() {
             <Spacer size="md" />
             <Body className="text-xl md:text-2xl leading-relaxed mb-6">Out There runs with a small group to protect safety, silence and flow.</Body>
             <Body className="mb-8">If this resonates, you&apos;ll know it.</Body>
-            <WhatsAppCTA label="Request Access" source="out_there_page" eventName="access_request_click" />
+            <WhatsAppCTA label="Request Access" source="out_there_page" eventName="access_request_click" href={whatsappLink('Salut,\nVreau să mă alătur experienței Out There.\nÎmi dai te rog mai multe detalii?')} />
           </div>
         </div>
 
