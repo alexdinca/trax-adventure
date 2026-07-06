@@ -93,11 +93,11 @@ export function ExperiencesClient() {
           >
             <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
               <Image
-                src="/assets/trax landscape.png"
+                src="/assets/carpathian-ridge/IMG_6451.jpg"
                 alt="Carpathian Ridge"
                 width={700}
                 height={400}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 trax-image"
+                className="w-full h-full object-cover object-bottom transition-transform duration-700 group-hover:scale-105 trax-image"
               />
             </div>
             <div className="flex justify-between items-start mb-4">
@@ -119,7 +119,7 @@ export function ExperiencesClient() {
           >
             <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
               <Image
-                src="/assets/trax landscape.png"
+                src="/assets/the-ground/IMG_3217.jpg"
                 alt="The Ground"
                 width={700}
                 height={400}
