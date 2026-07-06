@@ -39,7 +39,7 @@ export default function DobrogeaCallingPage() {
       {/* Hero */}
       <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
         <div className="absolute inset-0 z-0">
-          <Image src="/assets/dobrogea.jpg" alt="Dobrogea landscapes" fill className="object-cover trax-image opacity-50" sizes="100vw" />
+          <Image src="/assets/dobrogea/dobrogea.jpg" alt="Dobrogea landscapes" fill className="object-cover trax-image opacity-50" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-trax-black via-transparent to-transparent" />
         </div>
         <Container className="relative z-10">
@@ -57,7 +57,7 @@ export default function DobrogeaCallingPage() {
           <div>
             <MonoLabel className="mb-6 block">The Landscape</MonoLabel>
             <SubHeadline>Why Dobrogea</SubHeadline>
-            <Image src="/assets/dobrogeav.jpg" alt="Dobrogea landscape" width={600} height={600} className="w-full h-[600px] object-cover trax-image opacity-90" />
+            <Image src="/assets/dobrogea/dobrogeav.jpg" alt="Dobrogea landscape" width={600} height={600} className="w-full h-[600px] object-cover trax-image opacity-90" />
           </div>
           <div>
             <Spacer size="md" />
@@ -161,7 +161,7 @@ export default function DobrogeaCallingPage() {
             </div>
           </div>
           <div>
-            <Image src="/assets/iacob.jpg" alt="Dobrogea explorer" width={600} height={700} className="w-full h-full object-cover trax-image opacity-90" />
+            <Image src="/assets/dobrogea/iacob.jpg" alt="Dobrogea explorer" width={600} height={700} className="w-full h-full object-cover trax-image opacity-90" />
           </div>
         </div>
 

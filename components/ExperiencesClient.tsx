@@ -41,7 +41,7 @@ export function ExperiencesClient() {
           >
             <div className="aspect-video w-full overflow-hidden mb-8 bg-trax-grey/10">
               <Image
-                src="/assets/dobrogea.jpg"
+                src="/assets/dobrogea/dobrogea.jpg"
                 alt="Dobrogea"
                 width={700}
                 height={400}

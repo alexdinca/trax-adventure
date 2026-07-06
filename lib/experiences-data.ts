@@ -28,7 +28,7 @@ export const experiences: Experience[] = [
     endDate: '2026-05-03',
     description: '650km across Dobrogea. Ancient terrain, quiet effort, shared discovery. No tour guides, no performance metrics.',
     longDescription: 'Three days through the oldest terrain in Romania. Dobrogea sits east of everything, between the Danube and the Black Sea, shaped by centuries of wind and water. TRAX navigates it without shortcuts — flat limestone plateaus, gorges, river deltas, and long gravel roads that end at places you don\'t find on tourist maps.',
-    image: '/assets/dobrogea.jpg',
+    image: '/assets/dobrogea/dobrogea.jpg',
     href: '/dobrogea-calling',
     duration: '3 days',
     distanceKm: 650,

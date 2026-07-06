@@ -206,7 +206,7 @@ export function BriefingClient() {
       <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/assets/dobrogea.jpg"
+            src="/assets/dobrogea/dobrogea.jpg"
             alt="Dobrogea landscapes"
             fill
             className="object-cover trax-image opacity-50"
@@ -723,7 +723,7 @@ export function BriefingClient() {
 
             <div className="relative w-full aspect-[4/5] overflow-hidden">
               <Image
-                src="/assets/dc-rally-jacket.jpg"
+                src="/assets/dobrogea/dc-rally-jacket.jpg"
                 alt="Dobrogea Calling rally jacket"
                 fill
                 className="object-cover"
