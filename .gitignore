@@ -23,3 +23,9 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Private, unfiltered rally GPX source data (not for public/committed distribution)
+scripts/gpx-source/
