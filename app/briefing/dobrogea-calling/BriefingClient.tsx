@@ -40,13 +40,13 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Riding Gear',
     items: [
-      { id: 'helmet',     name: 'Helmet — off-road or ADV rated',                note: 'Full face preferred.',                                 essential: true },
+      { id: 'helmet',     name: 'Helmet: off-road or ADV rated',                note: 'Full face preferred.',                                 essential: true },
       { id: 'goggles',     name: 'Goggles and visor cleaner',                                                 essential: true },
-      { id: 'jacket',     name: 'Riding jacket — armoured, vented',              note: 'Mornings cold. Afternoons warm. Layer accordingly.',        essential: true },
-      { id: 'trousers',   name: 'Riding trousers — armoured',                    note: 'Knee braces preferred.',                                      essential: true },
+      { id: 'jacket',     name: 'Riding jacket: armoured, vented',              note: 'Mornings cold. Afternoons warm. Layer accordingly.',        essential: true },
+      { id: 'trousers',   name: 'Riding trousers: armoured',                    note: 'Knee braces preferred.',                                      essential: true },
       { id: 'boots',      name: 'Enduro/MX Boots',                 essential: true },
-      { id: 'gloves',     name: 'Gloves — two pairs: off-road and waterproof',        note: 'Off-road for the trail, waterproof for when the sky decides otherwise.',  essential: true },
-      { id: 'rain_layer', name: 'Rain layer — packable',                         note: 'Dobrogea weather changes without announcement.', essential: true },
+      { id: 'gloves',     name: 'Gloves: two pairs: off-road and waterproof',        note: 'Off-road for the trail, waterproof for when the sky decides otherwise.',  essential: true },
+      { id: 'rain_layer', name: 'Rain layer: packable',                         note: 'Dobrogea weather changes without announcement.', essential: true },
       { id: 'socks',     name: 'MX socks',                                       note: 'Significantly increases riding comfort.'                            },
     ],
   },
@@ -54,8 +54,8 @@ const CHECK_GROUPS: CheckGroup[] = [
     title: 'Bike Essentials',
     items: [
       { id: 'full_tank',     name: 'Full tank at departure',                    note: 'Know your range. Some sections are far from fuel.',                        essential: true },
-      { id: 'tyre_pressure', name: 'Tyre pressure — checked and correct',       note: "Off-road terrain may require lower pressures. Know your bike's spec.",     essential: true },
-      { id: 'tool_kit',      name: 'Basic tool kit specific to your bike — tyre plugs, levers, multi-tool', essential: true },
+      { id: 'tyre_pressure', name: 'Tyre pressure: checked and correct',       note: "Off-road terrain may require lower pressures. Know your bike's spec.",     essential: true },
+      { id: 'tool_kit',      name: 'Basic tool kit specific to your bike: tyre plugs, levers, multi-tool', essential: true },
       { id: 'compressor',    name: 'Mini compressor or CO₂ cartridges' },
       { id: 'phone_mount',   name: 'Phone mount and offline maps loaded',        note: 'Signal will drop. Plan accordingly.' },
     ],
@@ -63,15 +63,15 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Personal & Camp',
     items: [
-      { id: 'cash',           name: 'Cash — Romanian lei',                          note: 'Not all stops accept card. Fuel, food, emergencies.', essential: true },
+      { id: 'cash',           name: 'Cash: Romanian lei',                          note: 'Not all stops accept card. Fuel, food, emergencies.', essential: true },
       { id: 'documents',      name: 'ID / insurance / vehicle documents',                                                                          essential: true },
       { id: 'toiletries',      name: 'Personal care toiletries',                                                                          essential: true },
-      { id: 'sleeping_layer', name: 'Warm layer for evenings — fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
+      { id: 'sleeping_layer', name: 'Warm layer for evenings: fleece or light down jacket', note: 'May nights in Dobrogea cool quickly after sundown.' },
       { id: 'sleepwear',      name: 'Sleepwear' },
       { id: 'evening_clothes', name: 'Evening clothes',  note: 'Something casual to sit down for dinner.',  essential: true },
       
-      { id: 'cap',            name: 'Cap or hat — sun protection',               note: 'Dobrogea sun is relentless. Protect your head the moment the helmet comes off.', essential: true },
-      { id: 'water',          name: 'Water — minimum 1.5L on bike at all times' },
+      { id: 'cap',            name: 'Cap or hat: sun protection',               note: 'Dobrogea sun is relentless. Protect your head the moment the helmet comes off.', essential: true },
+      { id: 'water',          name: 'Water: minimum 1.5L on bike at all times' },
       
       { id: 'power_bank',     name: 'Phone charging cable' },
     ],
@@ -263,11 +263,11 @@ export function BriefingClient() {
         <div className="border-t border-trax-grey/20 pt-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
             <div>
-              <MonoLabel className="mb-6 block">01 — Terrain &amp; Route</MonoLabel>
+              <MonoLabel className="mb-6 block">01: Terrain &amp; Route</MonoLabel>
               <SubHeadline>The Landscape</SubHeadline>
               <Spacer size="sm" />
               <Body>
-                Dobrogea is Romania&apos;s oldest geological formation. It doesn&apos;t perform for you. There are no dramatic peaks, no obvious spectacle. What it offers instead is space — wide, horizontal, and deeply quiet.
+                Dobrogea is Romania&apos;s oldest geological formation. It doesn&apos;t perform for you. There are no dramatic peaks, no obvious spectacle. What it offers instead is space, wide, horizontal, and deeply quiet.
               </Body>
               <Spacer size="sm" />
               <Body>
@@ -275,7 +275,7 @@ export function BriefingClient() {
               </Body>
               <Spacer size="sm" />
               <Body>
-                This is not a technical riding challenge. The difficulty in Dobrogea is navigational, physical, and rhythmic — <span className="text-trax-red font-medium">sustained effort over distance, not hard sections.</span> Consistent pace, good navigation habits, and fuel awareness matter more than skill level here.
+                This is not a technical riding challenge. The difficulty in Dobrogea is navigational, physical, and rhythmic, <span className="text-trax-red font-medium">sustained effort over distance, not hard sections.</span> Consistent pace, good navigation habits, and fuel awareness matter more than skill level here.
               </Body>
             </div>
 
@@ -298,7 +298,7 @@ export function BriefingClient() {
 
               <h4 className="font-sans text-trax-red text-lg mb-3">Route Philosophy</h4>
               <Body>
-                Routes are flexible. Weather, terrain condition, and group energy determine how each day unfolds. There is a plan. It is not a contract. <span className="text-trax-red font-medium">The terrain decides — we adapt.</span>
+                Routes are flexible. Weather, terrain condition, and group energy determine how each day unfolds. There is a plan. It is not a contract. <span className="text-trax-red font-medium">The terrain decides. We adapt.</span>
               </Body>
               <Spacer size="sm" />
               <Body>Starting point: <span className="text-trax-white font-medium">Bucharest.</span> Exact location shared 5 days before departure. Arrive with a full tank and a ready bike.</Body>
@@ -310,7 +310,7 @@ export function BriefingClient() {
 
         {/* ── Route Map ─────────────────────────────────────────────────────── */}
         <div className="border-t border-trax-grey/20 pt-16">
-          <MonoLabel className="mb-6 block">01b — Route Map</MonoLabel>
+          <MonoLabel className="mb-6 block">01b: Route Map</MonoLabel>
           <SubHeadline className="mb-8">Three Days Across Dobrogea</SubHeadline>
 
           {/* Day toggles */}
@@ -365,16 +365,16 @@ export function BriefingClient() {
               2: {
                 title: 'Into the Gorges',
                 lines: [
-                  '230 km through the heart of Dobrogea — the Casimcea valley, the gorges at Gura Dobrogei, the caves and medieval ruins that most people drive past on the highway without knowing.',
-                  'The landscape sharpens. Limestone walls rise. The route swings east toward the coast — Cape Doloșman, the peonies at Enisala, the fortress on the hill where the Danube Delta begins to appear on the horizon.',
+                  '230 km through the heart of Dobrogea, the Casimcea valley, the gorges at Gura Dobrogei, the caves and medieval ruins that most people drive past on the highway without knowing.',
+                  'The landscape sharpens. Limestone walls rise. The route swings east toward the coast, Cape Doloșman, the peonies at Enisala, the fortress on the hill where the Danube Delta begins to appear on the horizon.',
                   'This is the pivot day. The group either finds its pace here or it doesn\'t.',
                 ],
               },
               3: {
                 title: 'The Old Mountains',
                 lines: [
-                  '254 km through northern Dobrogea and into the Măcin range — the oldest mountains in Romania, worn down to ridges and granite. The landscape changes completely.',
-                  'Babadag forest. Abandoned quarries. Wind farms on bare hills. Then the terrain lifts — Troesmis fortress overlooking the Danube, Lacul Iacobdeal carved into rock, and the Dobrogean Sphinx waiting at the top of Pricopan. The 350 m max elevation sounds modest. The terrain around it does not feel modest.',
+                  '254 km through northern Dobrogea and into the Măcin range, the oldest mountains in Romania, worn down to ridges and granite. The landscape changes completely.',
+                  'Babadag forest. Abandoned quarries. Wind farms on bare hills. Then the terrain lifts, Troesmis fortress overlooking the Danube, Lacul Iacobdeal carved into rock, and the Dobrogean Sphinx waiting at the top of Pricopan. The 350 m max elevation sounds modest. The terrain around it does not feel modest.',
                   'The group arrives together or not at all.',
                 ],
               },
@@ -383,7 +383,7 @@ export function BriefingClient() {
             return (
               <div className="mt-6 border-t border-trax-white/10 pt-6 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 items-start">
                 <div className="md:w-48">
-                  <MonoLabel className="mb-1 block">Day {activeDay} — Character</MonoLabel>
+                  <MonoLabel className="mb-1 block">Day {activeDay}: Character</MonoLabel>
                   <p className="font-sans text-trax-white text-base font-medium">{n.title}</p>
                 </div>
                 <div className="space-y-2">
@@ -411,9 +411,9 @@ export function BriefingClient() {
             <MonoLabel className="mb-4 block">Download GPX</MonoLabel>
             <div className="flex flex-wrap gap-2">
               {[
-                { day: 1, label: 'Day 1 — The Long Open',    file: 'TRAX_Dobrogea_Calling_Day1_SingleTrack.gpx' },
-                { day: 2, label: 'Day 2 — Into the Gorges',  file: 'TRAX_Dobrogea_Calling_Day2_SingleTrack.gpx' },
-                { day: 3, label: 'Day 3 — The Old Mountains', file: 'TRAX_Dobrogea_Calling_Day3_SingleTrack.gpx' },
+                { day: 1, label: 'Day 1: The Long Open',    file: 'TRAX_Dobrogea_Calling_Day1_SingleTrack.gpx' },
+                { day: 2, label: 'Day 2: Into the Gorges',  file: 'TRAX_Dobrogea_Calling_Day2_SingleTrack.gpx' },
+                { day: 3, label: 'Day 3: The Old Mountains', file: 'TRAX_Dobrogea_Calling_Day3_SingleTrack.gpx' },
               ].map(({ day, label, file }) => (
                 <a
                   key={day}
@@ -436,7 +436,7 @@ export function BriefingClient() {
 
         {/* ── 01c — Accommodation ───────────────────────────────────────────── */}
         <div className="border-t border-trax-grey/20 pt-16">
-          <MonoLabel className="mb-6 block">01c — Accommodation</MonoLabel>
+          <MonoLabel className="mb-6 block">01c: Accommodation</MonoLabel>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-10">
             <div>
               <SubHeadline>Where You Sleep</SubHeadline>
@@ -446,14 +446,14 @@ export function BriefingClient() {
               </Body>
             </div>
             <Body>
-              Food in the evenings is handled as a group. Local, simple, enough. There is no catering operation — there is a group that eats together.
+              Food in the evenings is handled as a group. Local, simple, enough. There is no catering operation. There is a group that eats together.
             </Body>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             {[
-              { night: 'Night 1 — Friday', where: 'Dobrogea — south', type: 'Guesthouse', note: 'After the long plateau day. Rest is non-negotiable.' },
-              { night: 'Night 2 — Saturday', where: 'Murighiol surroundings', type: 'Guesthouse', note: 'Where the land ends and the water begins. Sleep well. Tomorrow starts before the engines do.' },
+              { night: 'Night 1: Friday', where: 'Dobrogea: south', type: 'Guesthouse', note: 'After the long plateau day. Rest is non-negotiable.' },
+              { night: 'Night 2: Saturday', where: 'Murighiol surroundings', type: 'Guesthouse', note: 'Where the land ends and the water begins. Sleep well. Tomorrow starts before the engines do.' },
             ].map((row) => (
               <div key={row.night} className="flex flex-col gap-2 px-5 py-5 bg-trax-white/5">
                 <span className="font-mono text-[11px] text-trax-red font-bold">{row.night}</span>
@@ -470,7 +470,7 @@ export function BriefingClient() {
 
         {/* ── 01d — What You'll Pass ────────────────────────────────────────── */}
         <div className="border-t border-trax-grey/20 pt-16">
-          <MonoLabel className="mb-6 block">01d — What You&apos;ll Pass</MonoLabel>
+          <MonoLabel className="mb-6 block">01d: What You&apos;ll Pass</MonoLabel>
           <SubHeadline className="mb-3">What You&apos;ll Pass</SubHeadline>
           <Body className="mb-10 text-trax-grey/60">Not all of these are stops. Some are detours. Some you&apos;ll just see from the trail. All of them are real.</Body>
 
@@ -484,14 +484,14 @@ export function BriefingClient() {
                   'Canaraua Fetii',
                   'Rezervație de Mufloni',
                   'Old Water Station',
-                  'Peștera — Wind Turbines',
+                  'Peștera: Wind Turbines',
                   'Monumentul Tropaeum Traiani',
                   'Archaeological Museum of Adamclisi',
                   'Cișmeaua turcească Zorile',
                   'Pereții calcaroși de la Petroșani',
                   'Geamia turcească Fântâna Mare',
                   'Fortificația Romano-Bizantină Plopeni',
-                  'NirSum — Pitstop',
+                  'NirSum: Pitstop',
                   'The Monument of Youth',
                   'View Point Murfatlar',
                 ],
@@ -539,7 +539,7 @@ export function BriefingClient() {
                     className="font-mono text-[11px] tracking-[0.12em] uppercase"
                     style={{ color: DAY_COLORS[day] }}
                   >
-                    Day {day} — {title}
+                    Day {day}: {title}
                   </span>
                   <span className="font-mono text-[11px] text-trax-grey/40">{landmarks.length}</span>
                 </div>
@@ -563,11 +563,11 @@ export function BriefingClient() {
         {/* ── 02 — Mental Prep ──────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-trax-grey/20 pt-16 items-start">
           <div>
-            <MonoLabel className="mb-6 block">02 — Mental Prep</MonoLabel>
+            <MonoLabel className="mb-6 block">02: Mental Prep</MonoLabel>
             <SubHeadline>Where You Need to Be</SubHeadline>
             <Spacer size="sm" />
             <Body>
-              Three days in Dobrogea won&apos;t break you physically. What it does is slow you down enough to notice things — about the terrain, about the group, and about yourself.
+              Three days in Dobrogea won&apos;t break you physically. What it does is slow you down enough to notice things, about the terrain, about the group, and about yourself.
             </Body>
             <Spacer size="sm" />
             <Body>
@@ -629,7 +629,7 @@ export function BriefingClient() {
 
             {/* Left — intro + checklist */}
             <div>
-              <MonoLabel className="mb-6 block">03 — Gear &amp; Packing</MonoLabel>
+              <MonoLabel className="mb-6 block">03: Gear &amp; Packing</MonoLabel>
               <SubHeadline>The Principle</SubHeadline>
               <Spacer size="sm" />
               <Body>
@@ -637,7 +637,7 @@ export function BriefingClient() {
               </Body>
               <Spacer size="sm" />
               <Body>
-                <span className="text-trax-red font-medium">If you&apos;re questioning whether you need it — you don&apos;t.</span> Excess weight is honest feedback in Dobrogea.
+                <span className="text-trax-red font-medium">If you&apos;re questioning whether you need it, you don&apos;t.</span> Excess weight is honest feedback in Dobrogea.
               </Body>
 
               <Spacer size="md" />
@@ -648,7 +648,7 @@ export function BriefingClient() {
                   <React.Fragment key={group.title}>
                     <div className="font-mono text-[11px] tracking-widest uppercase text-trax-grey pt-6 pb-3 flex items-center gap-3 border-t border-trax-grey/20">
                       {group.title}
-                      {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">— don&apos;t bring</span>}
+                      {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">: don&apos;t bring</span>}
                     </div>
                     <div className="flex flex-col gap-0.5">
                       {group.items.map((item) => {
@@ -708,11 +708,11 @@ export function BriefingClient() {
         {/* ── 04 — Group Culture ────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-trax-grey/20 pt-16 items-start">
           <div>
-            <MonoLabel className="mb-6 block">04 — Group Culture</MonoLabel>
+            <MonoLabel className="mb-6 block">04: Group Culture</MonoLabel>
             <SubHeadline>How TRAX Moves</SubHeadline>
             <Spacer size="sm" />
             <Body>
-              There is no guide, no sweep, no instructor. Everyone is responsible for themselves and accountable to the group. Those two things are not in conflict — they define how we ride.
+              There is no guide, no sweep, no instructor. Everyone is responsible for themselves and accountable to the group. Those two things are not in conflict. They define how we ride.
             </Body>
             <Spacer size="sm" />
             <Body>
@@ -742,16 +742,16 @@ export function BriefingClient() {
               <Spacer size="md" />
               <h4 className="font-sans text-trax-red text-lg mb-4">Your Artifact</h4>
             <Body>
-              In TRAX, artifacts are not merchandise. They are not available for purchase, not offered as incentives, and not given without corresponding effort. Every artifact is tied to a specific experience — earned by the riders who were there, in that terrain, in that year.
+              In TRAX, artifacts are not merchandise. They are not available for purchase, not offered as incentives, and not given without corresponding effort. Every artifact is tied to a specific experience, earned by the riders who were there, in that terrain, in that year.
             </Body>
             <Body className="mt-4">
               Each TRAX experience carries its own artifact. Different material. Different form. Same principle: if you weren't there, it doesn't exist for you.
             </Body>
             <Body className="mt-4">
-              The Dobrogea Calling artifact is a rally jacket — designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
+              The Dobrogea Calling artifact is a rally jacket, designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
             </Body>
             <Body className="mt-4">
-              What you carry out of a TRAX experience should remind you of what it cost — not what it's worth.
+              What you carry out of a TRAX experience should remind you of what it cost, not what it's worth.
             </Body>
           </div>
         </div>
@@ -762,11 +762,11 @@ export function BriefingClient() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
           {[
             ['01', 'We wait.', "Faster riders wait at junctions. We arrive as a group or we're not doing it right."],
-            ['02', 'We signal problems early.', 'If something is wrong — mechanically, physically, mentally — you say it. Silence is the only thing that creates real problems.'],
+            ['02', 'We signal problems early.', 'If something is wrong, mechanically, physically, mentally, you say it. Silence is the only thing that creates real problems.'],
             ['03', "We don't perform for cameras.", "Phones mostly away. If something real happens, you'll know."],
             ['04', 'We leave terrain as we found it.', 'No shortcuts through private land. No fires without permission. No trace.'],
-            ['05', 'Evenings are not programmed.', "Food, fire, conversation — whatever comes naturally. If the group goes quiet, let it go quiet."],
-            ['06', 'What happens on TRAX stays on TRAX.', "Share your experience — not other people's moments."],
+            ['05', 'Evenings are not programmed.', "Food, fire, conversation, whatever comes naturally. If the group goes quiet, let it go quiet."],
+            ['06', 'What happens on TRAX stays on TRAX.', "Share your experience, not other people's moments."],
           ].map(([num, strong, rest]) => (
             <div key={num} className="flex gap-4 px-5 py-4 bg-trax-white/5">
               <span className="font-mono text-[11px] text-trax-red font-bold min-w-[24px] pt-0.5">{num}</span>

@@ -3,11 +3,11 @@ import { ExperiencesClient } from '@/components/ExperiencesClient';
 import { experiences } from '@/lib/experiences-data';
 
 export const metadata: Metadata = {
-  title: 'TRAX Experiences — A progression system, not a menu',
+  title: 'TRAX Experiences · A progression system, not a menu',
   description: 'Five levels. Each with a role. Each earned. From The Ground to The Long Way In.',
   alternates: { canonical: 'https://ridetrax.eu/experiences' },
   openGraph: {
-    title: 'TRAX Experiences — A progression system, not a menu',
+    title: 'TRAX Experiences · A progression system, not a menu',
     description: 'Five levels. Each with a role. Each earned.',
     url: 'https://ridetrax.eu/experiences',
     images: [{ url: '/android-chrome-512x512.png' }],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const experiencesSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'TRAX Off-Road Motorcycle Experiences — Romania',
+  name: 'TRAX Off-Road Motorcycle Experiences · Romania',
   description: 'Five terrain-led motorcycle experiences across Romania. Each level earned, not purchased.',
   url: 'https://ridetrax.eu/experiences',
   numberOfItems: experiences.length,

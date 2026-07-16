@@ -48,7 +48,7 @@ const DAYS: DayInfo[] = [
     ],
     paragraphs: [
       'Bucharest fades in the mirrors. The day is a transfer, but not a throwaway: two hundred kilometers on a loaded bike is where your packing gets its first honest review. Anything that moves, rattles, or digs into your leg will announce itself long before the mountains do.',
-      'By late afternoon the road tilts up into the Cheia valley. Dinner is cooked at Cabana Cheia — sit down, eat well, it is the last meal someone else makes for you until Day 3. The first camp goes up next to the cabana. Tents up before dark. The first night teaches you what you forgot to pack, while the fix is still cheap.',
+      'By late afternoon the road tilts up into the Cheia valley. Dinner is cooked at Cabana Cheia. Sit down, eat well, it is the last meal someone else makes for you until Day 3. The first camp goes up next to the cabana. Tents up before dark. The first night teaches you what you forgot to pack, while the fix is still cheap.',
     ],
     gpxFile: 'trax-out-there-day1.gpx',
   },
@@ -61,9 +61,9 @@ const DAYS: DayInfo[] = [
       { val: 'Panorama Vidra · ~1,850 m', key: 'Camp 2' },
     ],
     paragraphs: [
-      'Coffee, then the camp folds back onto the bike. The track picks up about six kilometers above the camp — from the cabana there is one valley road and it goes up; follow it until the line starts. From there the route goes straight into the mountains and stays there — a full day of trail through the Căpățânii and Latoriței high country, climbs and loose surfaces that get a full vote on how your bike is packed.',
-      'Midday you drop into the Latorița valley for lunch and supplies in Ciungetu. Buy what you need for the night and the next morning. This is the last resupply before the wild camp — after Ciungetu, everything you eat and drink comes off the bike.',
-      'Then the climb starts. The Strategica — the old military road — works its way up above the treeline, and by evening you reach the belvedere: Panorama Vidra, with the whole lake below you. Camp two sits at the top of the wilderness, around 1,850 meters. Away from roads, signal and noise. This is the night the experience is named after.',
+      'Coffee, then the camp folds back onto the bike. The track picks up about six kilometers above the camp. From the cabana there is one valley road and it goes up; follow it until the line starts. From there the route goes straight into the mountains and stays there, a full day of trail through the Căpățânii and Latoriței high country, climbs and loose surfaces that get a full vote on how your bike is packed.',
+      'Midday you drop into the Latorița valley for lunch and supplies in Ciungetu. Buy what you need for the night and the next morning. This is the last resupply before the wild camp. After Ciungetu, everything you eat and drink comes off the bike.',
+      'Then the climb starts. The Strategica, the old military road, works its way up above the treeline, and by evening you reach the belvedere: Panorama Vidra, with the whole lake below you. Camp two sits at the top of the wilderness, around 1,850 meters. Away from roads, signal and noise. This is the night the experience is named after.',
     ],
     gpxFile: 'trax-out-there-day2.gpx',
     gpxNote: 'The track starts ~6 km above the camp. Follow the valley road uphill from the cabana until it begins.',
@@ -77,12 +77,12 @@ const DAYS: DayInfo[] = [
       { val: 'Bucharest', key: 'Finish' },
     ],
     paragraphs: [
-      'No alarm. Slow coffee, cold hands. The morning finishes what the Strategica started, with a detour onto the Transalpina before the long way down — ninety kilometers of trail losing almost two thousand four hundred meters, down the Lotru country into Tălmaciu. Descents ask different questions than climbs. Loaded, they ask them louder.',
-      'In Tălmaciu the trail becomes asphalt. The road home runs down the Olt valley, then cuts away from the main road through Perișani and the Poiana tunnel toward the Topolog valley. The food stop is earned by then: Hobbitland — La Taverna Berarului, in Șuici. From there, Curtea de Argeș, and Bucharest returns by evening.',
+      'No alarm. Slow coffee, cold hands. The morning finishes what the Strategica started, with a detour onto the Transalpina before the long way down, ninety kilometers of trail losing almost two thousand four hundred meters, down the Lotru country into Tălmaciu. Descents ask different questions than climbs. Loaded, they ask them louder.',
+      'In Tălmaciu the trail becomes asphalt. The road home runs down the Olt valley, then cuts away from the main road through Perișani and the Poiana tunnel toward the Topolog valley. The food stop is earned by then: Hobbitland, La Taverna Berarului, in Șuici. From there, Curtea de Argeș, and Bucharest returns by evening.',
       "The ride back always feels different. That's the point.",
     ],
     gpxFile: 'trax-out-there-day3.gpx',
-    gpxNote: 'GPX runs in riding direction — Camp 2 to Tălmaciu, downhill.',
+    gpxNote: 'GPX runs in riding direction, Camp 2 to Tălmaciu, downhill.',
   },
 ];
 
@@ -90,7 +90,7 @@ const BIKE_REQUIREMENTS = [
   'serviced and inspected before the start, no known issues',
   'off-road tires in good condition, suitable for rock and loose terrain',
   'engine and hand guards',
-  'soft luggage mounted solid — nothing swinging, nothing held by hope',
+  'soft luggage mounted solid, nothing swinging, nothing held by hope',
   'tubeless repair kit or spare tubes, and the tools to use them',
   'tow strap',
   'charged phone, offline maps, all three GPX files loaded before Day 1',
@@ -103,61 +103,61 @@ const GROUP_RULES = [
   'route decisions are made by the lead, for the whole group',
   'signal problems early, small ones become big ones at altitude',
   'camp goes up before dark, and leaves no trace behind',
-  'phones stay away at the camps — the nights are undocumented',
+  'phones stay away at the camps. The nights are undocumented',
 ];
 
 const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Riding Gear',
     items: [
-      { id: 'helmet', name: 'Helmet — off-road or ADV rated', note: 'Full face preferred.', essential: true },
+      { id: 'helmet', name: 'Helmet: off-road or ADV rated', note: 'Full face preferred.', essential: true },
       { id: 'goggles', name: 'Goggles and visor cleaner', essential: true },
-      { id: 'jacket', name: 'Riding jacket — armoured, vented', note: 'Mornings at 1,850 m are cold in August. Layer accordingly.', essential: true },
-      { id: 'trousers', name: 'Riding trousers — armoured', note: 'Knee braces preferred.', essential: true },
+      { id: 'jacket', name: 'Riding jacket: armoured, vented', note: 'Mornings at 1,850 m are cold in August. Layer accordingly.', essential: true },
+      { id: 'trousers', name: 'Riding trousers: armoured', note: 'Knee braces preferred.', essential: true },
       { id: 'boots', name: 'Enduro/MX boots', essential: true },
-      { id: 'gloves', name: 'Gloves — two pairs: off-road and waterproof', essential: true },
-      { id: 'rain_layer', name: 'Rain layer — packable', note: 'Mountain weather changes without announcement. Above the treeline it changes faster.', essential: true },
-      { id: 'socks', name: 'MX socks — plus a dry spare pair, kept dry' },
+      { id: 'gloves', name: 'Gloves: two pairs: off-road and waterproof', essential: true },
+      { id: 'rain_layer', name: 'Rain layer: packable', note: 'Mountain weather changes without announcement. Above the treeline it changes faster.', essential: true },
+      { id: 'socks', name: 'MX socks: plus a dry spare pair, kept dry' },
     ],
   },
   {
     title: 'Sleep System',
     items: [
-      { id: 'tent', name: 'Tent or bivy — compact, storm-worthy', note: 'Camp 2 is exposed. It must hold in wind.', essential: true },
-      { id: 'sleeping_bag', name: 'Sleeping bag — comfort rated around 0–5°C', note: 'August at 1,850 m drops to single digits. Cold nights are remembered longer than heavy panniers.', essential: true },
+      { id: 'tent', name: 'Tent or bivy: compact, storm-worthy', note: 'Camp 2 is exposed. It must hold in wind.', essential: true },
+      { id: 'sleeping_bag', name: 'Sleeping bag: comfort rated around 0–5°C', note: 'August at 1,850 m drops to single digits. Cold nights are remembered longer than heavy panniers.', essential: true },
       { id: 'mat', name: 'Insulated sleeping mat', essential: true },
       { id: 'headlamp', name: 'Headlamp + spare batteries', essential: true },
-      { id: 'camp_layer', name: 'Warm camp layer — down jacket, beanie, camp gloves', note: 'The engine stops. The cold does not.', essential: true },
+      { id: 'camp_layer', name: 'Warm camp layer: down jacket, beanie, camp gloves', note: 'The engine stops. The cold does not.', essential: true },
     ],
   },
   {
     title: 'Food & Water',
     items: [
-      { id: 'water', name: 'Water capacity — minimum 2L on the bike', note: 'More in heat. Streams exist on route; your capacity should not depend on them.', essential: true },
+      { id: 'water', name: 'Water capacity: minimum 2L on the bike', note: 'More in heat. Streams exist on route; your capacity should not depend on them.', essential: true },
       { id: 'filter', name: 'Water filter or purification tablets' },
-      { id: 'food', name: 'Food for Camp 2 — dinner plus two breakfasts', note: 'Bought or topped up in Ciungetu. Simple, calorie-dense, no cooler required.', essential: true },
+      { id: 'food', name: 'Food for Camp 2: dinner plus two breakfasts', note: 'Bought or topped up in Ciungetu. Simple, calorie-dense, no cooler required.', essential: true },
       { id: 'stove', name: 'Compact stove and lighter', note: 'Shared within the group is fine. Coordinate in the chat.' },
-      { id: 'trash', name: 'Trash bag — everything you carry in, you carry out', essential: true },
+      { id: 'trash', name: 'Trash bag: everything you carry in, you carry out', essential: true },
     ],
   },
   {
     title: 'Bike Essentials',
     items: [
-      { id: 'full_tank', name: 'Full tank at departure', note: 'No fuel between Cheia and Tălmaciu — roughly 220 km of mountain riding. 250 km of real-world, loaded autonomy minimum.', essential: true },
-      { id: 'tyre_pressure', name: 'Tyre pressure — checked and correct', note: "Off-road terrain may require lower pressures. Know your bike's spec.", essential: true },
-      { id: 'tool_kit', name: 'Basic tool kit specific to your bike — tyre plugs, levers, multi-tool', essential: true },
+      { id: 'full_tank', name: 'Full tank at departure', note: 'No fuel between Cheia and Tălmaciu, roughly 220 km of mountain riding. 250 km of real-world, loaded autonomy minimum.', essential: true },
+      { id: 'tyre_pressure', name: 'Tyre pressure: checked and correct', note: "Off-road terrain may require lower pressures. Know your bike's spec.", essential: true },
+      { id: 'tool_kit', name: 'Basic tool kit specific to your bike: tyre plugs, levers, multi-tool', essential: true },
       { id: 'compressor', name: 'Mini compressor or CO₂ cartridges' },
-      { id: 'straps', name: 'Luggage straps checked — plus one spare strap', note: 'The climb will find the loose one.', essential: true },
+      { id: 'straps', name: 'Luggage straps checked: plus one spare strap', note: 'The climb will find the loose one.', essential: true },
       { id: 'phone_mount', name: 'Phone mount and offline maps loaded', note: 'Signal disappears on Day 2 and stays gone until the descent.' },
     ],
   },
   {
     title: 'Personal',
     items: [
-      { id: 'cash', name: 'Cash — Romanian lei', note: 'Cabana, village shop, taverna. Cards are optimistic out there.', essential: true },
+      { id: 'cash', name: 'Cash: Romanian lei', note: 'Cabana, village shop, taverna. Cards are optimistic out there.', essential: true },
       { id: 'documents', name: 'ID / insurance / vehicle documents', essential: true },
       { id: 'first_aid', name: 'Basic personal first aid', essential: true },
-      { id: 'toiletries', name: 'Toiletries — travel sized' },
+      { id: 'toiletries', name: 'Toiletries: travel sized' },
       { id: 'power_bank', name: 'Power bank and charging cable', note: 'Two nights, zero sockets.' },
     ],
   },
@@ -441,7 +441,7 @@ export function BriefingClient() {
                 The route on these maps is the route. It was measured, fueled, and planned as a whole. Ride it as one.
               </Body>
               <Body className="mb-6">
-                The days end where the camps are, not where the odometer says. If weather or the group needs it, the lead shortens, reroutes, or drops altitude. The Strategica and the Transalpina both have bailout lines down into the valleys — nobody freelances onto or off the mountain alone.
+                The days end where the camps are, not where the odometer says. If weather or the group needs it, the lead shortens, reroutes, or drops altitude. The Strategica and the Transalpina both have bailout lines down into the valleys. Nobody freelances onto or off the mountain alone.
               </Body>
               <Body>
                 Above the treeline the weather owns the schedule. An afternoon storm at 1,800 meters is not an inconvenience, it is a route decision. Expect the plan to bend. It is built to.
@@ -465,13 +465,13 @@ export function BriefingClient() {
           <SubHeadline>Range and Resupply</SubHeadline>
           <Spacer size="sm" />
           <Body className="mb-6">
-            Leave Bucharest with a full tank and top up on the Day 1 approach, before the Cheia valley. <span className="text-trax-red font-medium">From there, assume no fuel until Tălmaciu on Day 3 — roughly 220 kilometers of loaded, technical mountain riding.</span> Minimum 250 km of real-world autonomy, calculated for trail consumption, not highway figures.
+            Leave Bucharest with a full tank and top up on the Day 1 approach, before the Cheia valley. <span className="text-trax-red font-medium">From there, assume no fuel until Tălmaciu on Day 3, roughly 220 kilometers of loaded, technical mountain riding.</span> Minimum 250 km of real-world autonomy, calculated for trail consumption, not highway figures.
           </Body>
           <Body className="mb-6">
-            Food follows the same logic. Dinner on Day 1 is cooked at Cabana Cheia. Lunch and resupply on Day 2 is in Ciungetu — the last shop before the high camp. Everything after that comes off the bike until the taverna in Șuici on Day 3.
+            Food follows the same logic. Dinner on Day 1 is cooked at Cabana Cheia. Lunch and resupply on Day 2 is in Ciungetu, the last shop before the high camp. Everything after that comes off the bike until the taverna in Șuici on Day 3.
           </Body>
           <Body>
-            Water: two liters minimum on the bike at all times, more in heat. There are streams on the route — treat them as a bonus, not a plan. A filter or tablets earn their weight.
+            Water: two liters minimum on the bike at all times, more in heat. There are streams on the route. Treat them as a bonus, not a plan. A filter or tablets earn their weight.
           </Body>
         </div>
 
@@ -486,16 +486,16 @@ export function BriefingClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mb-8">
             {[
               {
-                night: 'Night 1 — Friday',
+                night: 'Night 1: Friday',
                 where: 'Cheia valley, by the cabana',
                 type: 'Wild camp · dinner at Cabana Cheia',
                 note: 'The soft opening. A cooked meal at the table, then the tent. Use it to sort your system while the stakes are low.',
               },
               {
-                night: 'Night 2 — Saturday',
+                night: 'Night 2: Saturday',
                 where: 'Panorama Vidra · the belvedere · ~1,850 m',
                 type: 'Wild camp · fully self-supported',
-                note: 'Exposed, high, and silent, with Lacul Vidra far below. No facilities, no signal, no light but yours. Anchor everything — the wind up there does not knock first.',
+                note: 'Exposed, high, and silent, with Lacul Vidra far below. No facilities, no signal, no light but yours. Anchor everything. The wind up there does not knock first.',
               },
             ].map((row) => (
               <div key={row.night} className="flex flex-col gap-2 px-5 py-5 bg-trax-white/5">
@@ -510,20 +510,20 @@ export function BriefingClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
             <div>
               <Body className="mb-6">
-                Both camps are wild and both camps disappear behind us. Everything carried in gets carried out. Fires only if the lead calls it safe and legal — and August in the mountains often means no.
+                Both camps are wild and both camps disappear behind us. Everything carried in gets carried out. Fires only if the lead calls it safe and legal, and August in the mountains often means no.
               </Body>
               <Body className="mb-6">
                 August at 1,850 meters drops to single digits after sundown. The night is cold, long, and exactly what you came for. Your sleep system is not the place you save weight.
               </Body>
               <div className="bg-trax-white/5 p-8">
                 <p className="font-body text-trax-white/80 italic leading-relaxed">
-                  Phones stay away. Cameras stay down. The nights are intentionally undocumented — what you remember without a camera is what you actually keep.
+                  Phones stay away. Cameras stay down. The nights are intentionally undocumented. What you remember without a camera is what you actually keep.
                 </p>
               </div>
             </div>
             <Image
               src="/assets/out-there/briefing/IMG_6451.jpg"
-              alt="Loaded motorcycle at the belvedere above Lacul Vidra — the Camp 2 view"
+              alt="Loaded motorcycle at the belvedere above Lacul Vidra, the Camp 2 view"
               width={600}
               height={800}
               className="w-full h-[500px] md:h-[600px] object-cover trax-image opacity-90"
@@ -555,7 +555,7 @@ export function BriefingClient() {
               <SubHeadline>Pack Light. Pack Right.</SubHeadline>
               <Spacer size="sm" />
               <Body>
-                This is the packing list you were promised. It fits in one soft luggage setup and a small backpack. It is not a suggestion of options — it is close to the whole inventory.
+                This is the packing list you were promised. It fits in one soft luggage setup and a small backpack. It is not a suggestion of options. It is close to the whole inventory.
               </Body>
               <Spacer size="sm" />
               <Body>
@@ -570,7 +570,7 @@ export function BriefingClient() {
                   <React.Fragment key={group.title}>
                     <div className="font-mono text-[11px] tracking-widest uppercase text-trax-grey pt-6 pb-3 flex items-center gap-3 border-t border-trax-grey/20">
                       {group.title}
-                      {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">— don&apos;t bring</span>}
+                      {group.disabled && <span className="text-trax-red/60 normal-case tracking-normal text-[10px]">(don&apos;t bring)</span>}
                     </div>
                     <div className="flex flex-col gap-0.5">
                       {group.items.map((item) => {
@@ -648,7 +648,7 @@ export function BriefingClient() {
             Emergency number in Romania: 112. Mountain rescue: Salvamont, 0725 826 668.
           </Body>
           <Body>
-            Trip contact: confirmed in the group chat before departure. Save it before Day 1 — there is no coverage at the second camp, and none for most of Day 2. Someone at home should know the plan and the return time.
+            Trip contact: confirmed in the group chat before departure. Save it before Day 1. There is no coverage at the second camp, and none for most of Day 2. Someone at home should know the plan and the return time.
           </Body>
         </div>
 

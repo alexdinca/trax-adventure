@@ -5,11 +5,11 @@ import { SubHeadline, Body, MonoLabel, Divider } from '@/components/ui/Typograph
 import { DobrogeaCallingCTA } from '@/components/DobrogeaCallingCTA';
 
 export const metadata: Metadata = {
-  title: 'Dobrogea Calling — TRAX Adventure',
+  title: 'Dobrogea Calling · TRAX Adventure',
   description: '~738km exploration of ancient Dobrogean terrain. 3 days of shared effort across quiet wilderness, no tour guides, no performance metrics. An exploration, not an event.',
   alternates: { canonical: 'https://ridetrax.eu/dobrogea-calling' },
   openGraph: {
-    title: 'Dobrogea Calling — TRAX',
+    title: 'Dobrogea Calling · TRAX',
     description: 'Join a ~738km adventure across ancient Romanian terrain. 3 days, 38 points of interest, shared discovery.',
     url: 'https://ridetrax.eu/dobrogea-calling',
     images: [{ url: '/android-chrome-512x512.png' }],
@@ -82,7 +82,7 @@ export default function DobrogeaCallingPage() {
             <div className="space-y-12 mt-8">
               <div>
                 <h4 className="font-sans text-trax-red text-lg mb-2">Terrain-Led Exploration</h4>
-                <Body>Routes are flexible. Conditions decide. The terrain leads — we adapt. Expect dirt roads, forgotten tracks, open fields, and long lines of sight.</Body>
+                <Body>Routes are flexible. Conditions decide. The terrain leads. We adapt. Expect dirt roads, forgotten tracks, open fields, and long lines of sight.</Body>
               </div>
               <div>
                 <h4 className="font-sans text-trax-red text-lg mb-2">Shared Effort</h4>
@@ -90,7 +90,7 @@ export default function DobrogeaCallingPage() {
               </div>
               <div>
                 <h4 className="font-sans text-trax-red text-lg mb-2">Presence Over Performance</h4>
-                <Body>Phones stay mostly away. Moments aren't staged. If something is filmed, it's because it happened — not because it was planned.</Body>
+                <Body>Phones stay mostly away. Moments aren't staged. If something is filmed, it's because it happened, not because it was planned.</Body>
               </div>
             </div>
           </div>

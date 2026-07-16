@@ -6,11 +6,11 @@ import { WhatsAppCTA } from '@/components/WhatsAppCTA';
 import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
-  title: 'Out There — TRAX',
+  title: 'Out There · TRAX',
   description: 'Three days, two nights. A self-supported ride through Carpathian trails to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
   alternates: { canonical: 'https://ridetrax.eu/out-there' },
   openGraph: {
-    title: 'Out There — TRAX',
+    title: 'Out There · TRAX',
     description: 'Three days, two nights. A self-supported ride through Carpathian trails to a camp at the top of the wilderness. Carry what matters. Leave the rest behind.',
     url: 'https://ridetrax.eu/out-there',
     images: [{ url: '/assets/out-there/bliss-there.jpg' }],

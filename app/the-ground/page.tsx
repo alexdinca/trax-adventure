@@ -6,11 +6,11 @@ import { WhatsAppCTA } from '@/components/WhatsAppCTA';
 import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
-  title: 'The Ground — TRAX',
+  title: 'The Ground · TRAX',
   description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 14 November 2026.",
   alternates: { canonical: 'https://ridetrax.eu/the-ground' },
   openGraph: {
-    title: 'The Ground — TRAX',
+    title: 'The Ground · TRAX',
     description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 14 November 2026.",
     url: 'https://ridetrax.eu/the-ground',
     images: [{ url: '/assets/the-ground/IMG_3217.jpg' }],

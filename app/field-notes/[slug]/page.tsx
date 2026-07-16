@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const note = getFieldNote(slug);
   if (!note) return {};
   return {
-    title: `${note.title} — TRAX Field Notes`,
+    title: `${note.title} · TRAX Field Notes`,
     description: note.excerpt,
     alternates: { canonical: `https://ridetrax.eu/field-notes/${slug}` },
     openGraph: {

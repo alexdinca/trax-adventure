@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { BriefingClient } from './BriefingClient';
 
 export const metadata: Metadata = {
-  title: 'Dobrogea Calling — Briefing',
+  title: 'Dobrogea Calling · Briefing',
   robots: { index: false, follow: false },
 };
 

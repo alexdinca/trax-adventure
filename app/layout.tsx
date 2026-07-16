@@ -7,8 +7,8 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://ridetrax.eu'),
   title: {
-    default: 'TRAX — Terrain Leads.',
-    template: '%s — TRAX',
+    default: 'TRAX. Terrain Leads.',
+    template: '%s · TRAX',
   },
   description: 'A culture of intentional progression, built around terrain, presence and earned stories. Romania.',
   openGraph: {

@@ -6,11 +6,11 @@ import { WhatsAppCTA } from '@/components/WhatsAppCTA';
 import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
-  title: 'Carpathian Ridge — TRAX',
+  title: 'Carpathian Ridge · TRAX',
   description: 'Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
   alternates: { canonical: 'https://ridetrax.eu/carpathian-ridge' },
   openGraph: {
-    title: 'Carpathian Ridge — TRAX',
+    title: 'Carpathian Ridge · TRAX',
     description: 'Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
     url: 'https://ridetrax.eu/carpathian-ridge',
     images: [{ url: '/assets/carpathian-ridge/IMG_6451.jpg' }],

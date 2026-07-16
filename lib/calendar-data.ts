@@ -28,7 +28,7 @@ export const calendar: MonthGroup[] = [
     month: 'April',
     events: [
       { date: '17–19 Apr', startDate: '2026-04-17', endDate: '2026-04-19', name: 'Ténéré Event', location: 'Merei, Buzău', type: 'collective', href: 'https://www.facebook.com/YamahaMotorRomania/posts/1336124351880792' },
-      { date: '18–19 Apr', startDate: '2026-04-18', endDate: '2026-04-19', name: 'Mixed Terrain Adventure Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge — Stage 1' },
+      { date: '18–19 Apr', startDate: '2026-04-18', endDate: '2026-04-19', name: 'Mixed Terrain Adventure Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge: Stage 1' },
     ],
   },
   {
@@ -48,10 +48,10 @@ export const calendar: MonthGroup[] = [
     month: 'June',
     events: [
       { date: '4–7 Jun', startDate: '2026-06-04', endDate: '2026-06-07', name: 'Roadbook Experience 2026', type: 'radar', href: 'https://fb.me/e/5zpeollje' },
-      { date: '6–7 Jun', startDate: '2026-06-06', endDate: '2026-06-07', name: 'MX — CE 65/85/W · CB IV · CNIR et. IV', location: 'Ciolpani', type: 'collective', note: 'Campionat European, Campionat Balcanic & Campionat Național de MX', href: 'https://tcsracingpark.ro/calendar/#' },
+      { date: '6–7 Jun', startDate: '2026-06-06', endDate: '2026-06-07', name: 'MX: CE 65/85/W · CB IV · CNIR et. IV', location: 'Ciolpani', type: 'collective', note: 'Campionat European, Campionat Balcanic & Campionat Național de MX', href: 'https://tcsracingpark.ro/calendar/#' },
       { date: '10–14 Jun', startDate: '2026-06-10', endDate: '2026-06-14', name: 'Roadbook Adventure Challenge', location: 'Munții Apuseni', type: 'collective', href: 'https://fb.me/e/483N1XZPm' },
       { date: '26–28 Jun', startDate: '2026-06-26', endDate: '2026-06-28', name: 'BMW GS Challenge', location: 'Merei Racing Park', type: 'collective', href: 'https://rideinromania.com/gschallenge/index.html' },
-      { date: '27–28 Jun', startDate: '2026-06-27', endDate: '2026-06-28', name: 'Enduro Trail Adventure Challenge', location: 'Apuseni, Cluj', type: 'radar', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge — Stage 2' },
+      { date: '27–28 Jun', startDate: '2026-06-27', endDate: '2026-06-28', name: 'Enduro Trail Adventure Challenge', location: 'Apuseni, Cluj', type: 'radar', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge: Stage 2' },
     ],
   },
   {
@@ -74,14 +74,14 @@ export const calendar: MonthGroup[] = [
   {
     month: 'September',
     events: [
-      { date: '5–6 Sep', startDate: '2026-09-05', endDate: '2026-09-06', name: 'Hard Adventure Challenge', location: 'Cheile Grădiștei, Brașov', type: 'radar', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge — Stage 3' },
-      { date: '26–27 Sep', startDate: '2026-09-26', endDate: '2026-09-27', name: 'MT Teams Adventure Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge — Stage 4' },
+      { date: '5–6 Sep', startDate: '2026-09-05', endDate: '2026-09-06', name: 'Hard Adventure Challenge', location: 'Cheile Grădiștei, Brașov', type: 'radar', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge: Stage 3' },
+      { date: '26–27 Sep', startDate: '2026-09-26', endDate: '2026-09-27', name: 'MT Teams Adventure Challenge', location: 'TCS Racing Park, Bucharest', type: 'collective', href: 'https://mt-challenge.cfmoto.ro/', note: 'CF Moto MT Challenge: Stage 4' },
     ],
   },
   {
     month: 'October',
     events: [
-      { date: '9–11 Oct', startDate: '2026-10-09', endDate: '2026-10-11', name: 'Campionatul Național de Motocross — Etapă', location: 'TCS Racing Park, Bucharest', type: 'collective', note: 'Etapă din Campionatul Național de Motocross, sezonul 2026', href: 'https://tcsracingpark.ro/calendar/#' },
+      { date: '9–11 Oct', startDate: '2026-10-09', endDate: '2026-10-11', name: 'Campionatul Național de Motocross: Etapă', location: 'TCS Racing Park, Bucharest', type: 'collective', note: 'Etapă din Campionatul Național de Motocross, sezonul 2026', href: 'https://tcsracingpark.ro/calendar/#' },
     ],
   },
   {

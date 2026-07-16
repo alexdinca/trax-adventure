@@ -46,7 +46,7 @@ export default function ManifestoPage() {
 
         <div className="mt-16 md:mt-24">
           <p className="font-mono text-xs md:text-sm uppercase tracking-widest text-trax-grey/60">
-            — TRAX, MMXX
+            TRAX, MMXX
           </p>
         </div>
 

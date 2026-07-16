@@ -6,11 +6,11 @@ import { Headline, MonoLabel } from '@/components/ui/Typography';
 
 export const metadata: Metadata = {
   title: 'Field Notes',
-  description: 'Writing from TRAX riders. Dispatches from the terrain — accounts of rides, places, and what stays after the experience.',
+  description: 'Writing from TRAX riders. Dispatches from the terrain, accounts of rides, places, and what stays after the experience.',
   alternates: { canonical: 'https://ridetrax.eu/field-notes' },
   openGraph: {
-    title: 'Field Notes — TRAX',
-    description: 'Writing from TRAX riders. Dispatches from the terrain — accounts of rides, places, and what stays after the experience.',
+    title: 'Field Notes · TRAX',
+    description: 'Writing from TRAX riders. Dispatches from the terrain, accounts of rides, places, and what stays after the experience.',
     url: 'https://ridetrax.eu/field-notes',
   },
 };

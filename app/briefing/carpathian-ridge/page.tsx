@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { BriefingClient } from './BriefingClient';
 
 export const metadata: Metadata = {
-  title: 'Carpathian Ridge — Briefing',
+  title: 'Carpathian Ridge · Briefing',
   robots: { index: false, follow: false },
 };
 

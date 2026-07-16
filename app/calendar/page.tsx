@@ -4,11 +4,11 @@ import { getAllEvents } from '@/lib/calendar-data';
 
 export const metadata: Metadata = {
   title: 'Calendar 2026',
-  description: 'All TRAX off-road motorcycle experiences and collective events in 2026. Dates, types, and availability for enduro rides, multi-day terrain experiences, and collective rides across Romania — Dobrogea, Carpathians, and beyond.',
+  description: 'All TRAX off-road motorcycle experiences and collective events in 2026. Dates, types, and availability for enduro rides, multi-day terrain experiences, and collective rides across Romania, Dobrogea, Carpathians, and beyond.',
   alternates: { canonical: 'https://ridetrax.eu/calendar' },
   openGraph: {
-    title: 'Calendar 2026 — TRAX',
-    description: 'All TRAX off-road motorcycle experiences and collective events in 2026. Dates, types, and availability for rides across Romania — Dobrogea, Carpathians, and beyond.',
+    title: 'Calendar 2026 · TRAX',
+    description: 'All TRAX off-road motorcycle experiences and collective events in 2026. Dates, types, and availability for rides across Romania, Dobrogea, Carpathians, and beyond.',
     url: 'https://ridetrax.eu/calendar',
     images: [{ url: '/android-chrome-512x512.png' }],
   },
@@ -19,7 +19,7 @@ function buildCalendarSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'TRAX 2026 Calendar — Off-Road Motorcycle Events Romania',
+    name: 'TRAX 2026 Calendar: Off-Road Motorcycle Events Romania',
     description: 'All TRAX experiences, collective rides, and radar events for the 2026 season.',
     url: 'https://ridetrax.eu/calendar',
     numberOfItems: events.length,

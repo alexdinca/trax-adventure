@@ -5,11 +5,11 @@ import { WhatsAppCTA } from '@/components/WhatsAppCTA';
 import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
-  title: 'The Long Way In — TRAX Adventure',
+  title: 'The Long Way In · TRAX Adventure',
   description: 'Five days across ACT Romania. 1370km from Maramureș to the Transfăgărășan. Advanced adventure riding through tarmac, gravel, forest roads. Self-supported, group-limited, experience-filtered.',
   alternates: { canonical: 'https://ridetrax.eu/long-way-in' },
   openGraph: {
-    title: 'The Long Way In — TRAX',
+    title: 'The Long Way In · TRAX',
     description: 'Join a five-day traversal of Romania\'s backbone. No shortcuts. No rush. No performance.',
     url: 'https://ridetrax.eu/long-way-in',
     images: [{ url: '/android-chrome-512x512.png' }],
@@ -44,7 +44,7 @@ export default function LongWayInPage() {
             <Headline className="mb-8">This Is Not About Crossing Romania</Headline>
             <Body className="text-lg space-y-6">
               <p>ACT Romania already maps the land. TRAX maps the experience.</p>
-              <p>The Long Way In is a deliberate five-day traversal of Romania's backbone — from Maramureș to the high ridges of the Southern Carpathians. It is designed to slow you down, stretch your endurance, and let the country work on you.</p>
+              <p>The Long Way In is a deliberate five-day traversal of Romania's backbone, from Maramureș to the high ridges of the Southern Carpathians. It is designed to slow you down, stretch your endurance, and let the country work on you.</p>
               <p>No shortcuts. No rush. No performance.</p>
             </Body>
           </div>
@@ -123,7 +123,7 @@ export default function LongWayInPage() {
           <Headline className="mb-8">ACT Romania, Interpreted by TRAX</Headline>
           <Body className="text-lg space-y-6 mb-8">
             <p>This experience follows the official ACT Romania track, newly scouted and refined to preserve its spirit.</p>
-            <p>From wooden churches in Maramureș to painted monasteries in Bucovina, through Transylvania's farmland and citadels, across Apuseni's quiet ridges and into the high drama of Transalpina and Transfăgărășan — the route culminates where effort meets perspective.</p>
+            <p>From wooden churches in Maramureș to painted monasteries in Bucovina, through Transylvania's farmland and citadels, across Apuseni's quiet ridges and into the high drama of Transalpina and Transfăgărășan, the route culminates where effort meets perspective.</p>
           </Body>
           <div className="border-l-2 border-trax-red pl-6 py-4">
             <MonoLabel className="text-sm text-trax-grey">Note</MonoLabel>
@@ -216,7 +216,7 @@ export default function LongWayInPage() {
           <Headline className="mb-8">Request Access</Headline>
           <Body className="text-lg space-y-6 mb-8">
             <p>The Long Way In is not a mass experience.</p>
-            <p>Participation is limited to preserve pace, safety, and group dynamic. Access is granted based on experience and alignment — not speed or status.</p>
+            <p>Participation is limited to preserve pace, safety, and group dynamic. Access is granted based on experience and alignment, not speed or status.</p>
           </Body>
           <WhatsAppCTA label="Request Access" source="the_long_way_in_page" href={whatsappLink('Salut,\nVreau să mă alătur experienței The Long Way In.\nÎmi dai te rog mai multe detalii?')} />
         </div>

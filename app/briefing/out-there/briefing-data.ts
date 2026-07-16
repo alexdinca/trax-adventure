@@ -322,19 +322,19 @@ export const ROUTE_DAY3: LatLng[] = [
 ];
 
 export const WAYPOINTS_DAY1: RouteWaypoint[] = [
-  { position: [44.43615, 25.96547], label: "Bucharest — Start", type: "start" },
-  { position: [45.28461, 24.11246], label: "Cabana Cheia — Dinner & Camp 1", type: "camp" },
+  { position: [44.43615, 25.96547], label: "Bucharest: Start", type: "start" },
+  { position: [45.28461, 24.11246], label: "Cabana Cheia: Dinner & Camp 1", type: "camp" },
 ];
 
 export const WAYPOINTS_DAY2: RouteWaypoint[] = [
-  { position: [45.31588, 24.07644], label: "Track Start — 6 km up the valley road from camp", type: "start" },
-  { position: [45.38651, 23.95045], label: "Ciungetu — Lunch & Supplies", type: "lunch" },
-  { position: [45.39022, 23.68254], label: "Panorama Vidra — Camp 2", type: "camp" },
+  { position: [45.31588, 24.07644], label: "Track Start: 6 km up the valley road from camp", type: "start" },
+  { position: [45.38651, 23.95045], label: "Ciungetu: Lunch & Supplies", type: "lunch" },
+  { position: [45.39022, 23.68254], label: "Panorama Vidra: Camp 2", type: "camp" },
 ];
 
 export const WAYPOINTS_DAY3: RouteWaypoint[] = [
-  { position: [45.3887059715, 23.6743569848], label: "Camp 2 — Panorama Vidra", type: "camp" },
-  { position: [45.6592439663, 24.263991938], label: "Tălmaciu — Trail Ends", type: "finish" },
+  { position: [45.3887059715, 23.6743569848], label: "Camp 2: Panorama Vidra", type: "camp" },
+  { position: [45.6592439663, 24.263991938], label: "Tălmaciu: Trail Ends", type: "finish" },
 ];
 
 // Day 3 trail elevation, riding direction, 200 samples.

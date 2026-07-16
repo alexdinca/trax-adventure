@@ -6,11 +6,11 @@ import { Headline, SubHeadline, Body, MonoLabel, Divider } from '@/components/ui
 import { ExperiencesPreviewClient } from '@/components/ExperiencesPreviewClient';
 
 export const metadata: Metadata = {
-  title: 'TRAX — Terrain Leads.',
+  title: 'TRAX. Terrain Leads.',
   description: 'A culture of intentional progression, built around terrain, presence and earned stories. Romania.',
   alternates: { canonical: 'https://ridetrax.eu' },
   openGraph: {
-    title: 'TRAX — Terrain Leads.',
+    title: 'TRAX. Terrain Leads.',
     description: 'A culture of intentional progression, built around terrain, presence and earned stories. Romania.',
     url: 'https://ridetrax.eu',
   },
@@ -65,7 +65,7 @@ function Hero() {
             TRAX designs real-world adventure experiences where uncertainty, effort and shared challenging terrain bring people back to what actually matters.
           </p>
           <div className="pt-8">
-            <MonoLabel>Est. 2025 — Romania</MonoLabel>
+            <MonoLabel>Est. 2025 · Romania</MonoLabel>
           </div>
         </div>
       </Container>
@@ -82,8 +82,8 @@ function Manifesto() {
         <Headline className="mb-12">We don't sell trips. We create conditions.</Headline>
         <div className="space-y-7">
           <Body>Conditions where comfort disappears, plans change and people rediscover presence, trust and themselves.</Body>
-          <Body>Modern life removed friction — and with it, meaning. Adventure became content. Routes replaced exploration. Comfort disguised itself as courage.</Body>
-          <Body>TRAX exists to reintroduce friction on purpose. Not to escape life — but to return to it sharper, calmer and more real.</Body>
+          <Body>Modern life removed friction, and with it, meaning. Adventure became content. Routes replaced exploration. Comfort disguised itself as courage.</Body>
+          <Body>TRAX exists to reintroduce friction on purpose. Not to escape life, but to return to it sharper, calmer and more real.</Body>
           <Body>TRAX exists to bring people back to themselves through shared effort, uncertainty and real terrain.</Body>
         </div>
       </div>
@@ -178,7 +178,7 @@ function Who() {
           ))}
         </ul>
         <p className="mt-12 font-sans text-trax-grey italic">
-          If you're looking for guarantees, itineraries or applause — this isn't it.
+          If you're looking for guarantees, itineraries or applause, this isn't it.
         </p>
       </div>
 
@@ -260,7 +260,7 @@ function Collective() {
             </div>
           </div>
           <Body className="mb-6">Alex builds TRAX as a response to the dilution of adventure.</Body>
-          <Body className="mb-6">An adventure rider and experience architect, he designs environments where people are tested and connection forms naturally.</Body>
+          <Body className="mb-6">An adventure rider, he designs environments where people are tested and connection forms naturally.</Body>
           <p className="font-sans text-trax-grey italic">TRAX is not his image. It's his answer.</p>
         </div>
       </div>

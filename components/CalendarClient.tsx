@@ -244,7 +244,7 @@ export function CalendarClient() {
         <MonoLabel className="mb-8 block">2026 Season</MonoLabel>
         <Headline className="mb-6 max-w-3xl">Where the Collective Will Be</Headline>
         <p className="font-body text-trax-white/70 text-lg max-w-2xl mb-10 leading-relaxed">
-          The season is not only about what we build —<br />
+          The season is not only about what we build,<br />
           but also about where we show up.
         </p>
 
@@ -255,7 +255,7 @@ export function CalendarClient() {
           </div>
           <div>
             <p className="font-mono text-sm text-trax-white uppercase tracking-widest mb-1">TRAX Will Join</p>
-            <p className="font-body text-trax-white/70 leading-relaxed">Events organized by others where members of the TRAX collective ride alongside — as participants, observers, and culture carriers.</p>
+            <p className="font-body text-trax-white/70 leading-relaxed">Events organized by others where members of the TRAX collective ride alongside, as participants, observers, and culture carriers.</p>
           </div>
         </div>
 
