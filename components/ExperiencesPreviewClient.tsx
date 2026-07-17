@@ -7,7 +7,7 @@ import { Headline, Body, MonoLabel } from './ui/Typography';
 
 const experiences = [
   { name: 'Dobrogea Calling', date: '1st – 3rd May', location: 'RO', description: '650km across ancient terrain', route: '/dobrogea-calling', isComingSoon: false },
-  { name: 'Out There', date: '14th – 16th August', location: 'RO', description: 'Self-supported remote camping adventure', route: '/out-there', isComingSoon: false },
+  { name: 'Out There', date: '14th – 16th August', location: 'RO', description: 'Self-supported riding and remote camping', route: '/out-there', isComingSoon: false },
   { name: 'Carpathian Ridge', date: '28th – 30th August', location: 'RO', description: 'Technical mountain riding', route: '/carpathian-ridge', isComingSoon: false },
   { name: 'The Ground', date: '14th November', location: 'RO', description: 'One year anniversary gathering', route: '/the-ground', isComingSoon: false },
   { name: 'The Long Way In', date: '5 Days / Advanced', location: 'RO', description: '1370km across ACT Romania', route: '/long-way-in', isComingSoon: false },
@@ -37,10 +37,10 @@ export function ExperiencesPreviewClient() {
         <div className="mb-12">
           <MonoLabel className="mb-6 block">Open Conditions</MonoLabel>
           <Headline className="mb-6 max-w-2xl">
-            Real <span className="text-trax-red">Adventures</span> await
+            Terrain leads. <span className="text-trax-red">Riders adapt.</span>
           </Headline>
           <Body className="max-w-2xl mb-12">
-            TRAX designs curated experiences in unexplored terrain. Terrain-led exploration, shared effort, and honest discovery.
+            Five experiences across Romania. A progression system, not a menu. Small groups, shared responsibility.
           </Body>
         </div>
 

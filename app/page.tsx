@@ -62,7 +62,7 @@ function Hero() {
 
         <div className="max-w-xl mt-12 space-y-6">
           <p className="font-body text-lg md:text-xl text-trax-white leading-relaxed">
-            TRAX designs real-world adventure experiences where uncertainty, effort and shared challenging terrain bring people back to what actually matters.
+            TRAX designs real-world adventure experiences built around uncertainty, effort and shared challenging terrain.
           </p>
           <div className="pt-8">
             <MonoLabel>Est. 2025 · Romania</MonoLabel>
@@ -81,10 +81,9 @@ function Manifesto() {
         <SubHeadline className="text-trax-red">Why TRAX Exists</SubHeadline>
         <Headline className="mb-12">We don't sell trips. We create conditions.</Headline>
         <div className="space-y-7">
-          <Body>Conditions where comfort disappears, plans change and people rediscover presence, trust and themselves.</Body>
+          <Body>Conditions where comfort disappears, plans change and people have to pay attention.</Body>
           <Body>Modern life removed friction, and with it, meaning. Adventure became content. Routes replaced exploration. Comfort disguised itself as courage.</Body>
-          <Body>TRAX exists to reintroduce friction on purpose. Not to escape life, but to return to it sharper, calmer and more real.</Body>
-          <Body>TRAX exists to bring people back to themselves through shared effort, uncertainty and real terrain.</Body>
+          <Body>TRAX exists to reintroduce friction on purpose. Not to escape life. To notice it again.</Body>
         </div>
       </div>
 
@@ -195,7 +194,7 @@ function Who() {
         </div>
         <div className="mt-12 pt-12 border-t border-trax-grey/20">
           <p className="font-body text-trax-white text-xl leading-relaxed">
-            TRAX is a platform for <span className="text-trax-red font-medium">modern exploration culture.</span>
+            TRAX is what's left when you <span className="text-trax-red font-medium">remove all three.</span>
           </p>
         </div>
       </div>
@@ -241,7 +240,7 @@ function Collective() {
           <SubHeadline className="text-3xl">The Collective</SubHeadline>
           <Body className="mb-6">TRAX is not built around an audience. It's built around a collective.</Body>
           <Body className="mb-6">Riders, explorers and individuals who show up fully for the terrain, for each other and for themselves.</Body>
-          <p className="font-sans text-xl text-trax-white mt-8">Earn the story. Share the effort. Leave changed.</p>
+          <p className="font-sans text-xl text-trax-white mt-8">Earn the story. Share the effort. Carry it out.</p>
         </div>
 
         <div className="md:col-span-5 md:col-start-8">

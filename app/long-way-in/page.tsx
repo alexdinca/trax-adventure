@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://ridetrax.eu/long-way-in' },
   openGraph: {
     title: 'The Long Way In · TRAX',
-    description: 'Join a five-day traversal of Romania\'s backbone. No shortcuts. No rush. No performance.',
+    description: 'A five-day traversal of Romania\'s backbone. No shortcuts. No rush. No performance.',
     url: 'https://ridetrax.eu/long-way-in',
     images: [{ url: '/android-chrome-512x512.png' }],
   },
@@ -123,7 +123,7 @@ export default function LongWayInPage() {
           <Headline className="mb-8">ACT Romania, Interpreted by TRAX</Headline>
           <Body className="text-lg space-y-6 mb-8">
             <p>This experience follows the official ACT Romania track, newly scouted and refined to preserve its spirit.</p>
-            <p>From wooden churches in Maramureș to painted monasteries in Bucovina, through Transylvania's farmland and citadels, across Apuseni's quiet ridges and into the high drama of Transalpina and Transfăgărășan, the route culminates where effort meets perspective.</p>
+            <p>Wooden churches in Maramureș. Painted monasteries in Bucovina. Transylvania's farmland and citadels. The quiet ridges of the Apuseni. The route ends high, on Transalpina and Transfăgărășan.</p>
           </Body>
           <div className="border-l-2 border-trax-red pl-6 py-4">
             <MonoLabel className="text-sm text-trax-grey">Note</MonoLabel>
@@ -230,7 +230,7 @@ export default function LongWayInPage() {
           <Body className="text-lg text-trax-grey italic max-w-2xl mx-auto">
             You won't remember every kilometer.
             <br />
-            But you'll remember who you were when you finished.
+            You'll remember the ones that nearly stopped you.
           </Body>
           <MonoLabel className="text-trax-red mt-6">#OnTRAX</MonoLabel>
         </div>

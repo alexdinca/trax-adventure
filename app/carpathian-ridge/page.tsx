@@ -72,7 +72,7 @@ export default function CarpathianRidgePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             {[
               { title: 'Sustained Mountain Riding', body: 'Not one hard section. Three days of consistency. Forest and alpine trails, long technical climbs, changing grip and altitude. Fatigue is part of the design.' },
-              { title: 'Tested Limits', body: "Physical fatigue, mental load, decisions made under pressure. You don't conquer this terrain. You adapt to it." },
+              { title: 'Skill Under Pressure', body: "Physical fatigue, mental load, decisions that have to be right the first time. You don't conquer this terrain. You adapt to it." },
               { title: 'Shared Responsibility', body: "The mountains don't allow shortcuts. We ride as a group, manage risk together, finish together. Strength here isn't loud. It's reliable." },
             ].map((pillar) => (
               <div key={pillar.title} className="bg-trax-white/5 p-6 md:p-8">

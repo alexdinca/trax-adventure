@@ -199,7 +199,7 @@ export function BriefingClient() {
       {/* Access Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-[200] bg-trax-black/95 border-t border-trax-white/10 px-6 md:px-12 py-3 flex items-center justify-between backdrop-blur-sm">
         <MonoLabel>TRAX Briefing Pack · Confirmed Riders Only</MonoLabel>
-        <MonoLabel><span className="text-trax-red">#DobrogeaCalling</span> · You&apos;re In.</MonoLabel>
+        <MonoLabel><span className="text-trax-red">#DobrogeaCalling</span></MonoLabel>
       </div>
 
       {/* Hero */}
@@ -748,7 +748,7 @@ export function BriefingClient() {
               Each TRAX experience carries its own artifact. Different material. Different form. Same principle: if you weren't there, it doesn't exist for you.
             </Body>
             <Body className="mt-4">
-              The Dobrogea Calling artifact is a rally jacket, designed specifically for this terrain, this year, this group. It is not sold separately. It is not available after the fact. It exists only because you answered the Calling.
+              The Dobrogea Calling artifact is a rally jacket, designed specifically for this terrain, this year, this group. It is never sold. It is not available after the fact. It exists only because you answered the Calling.
             </Body>
             <Body className="mt-4">
               What you carry out of a TRAX experience should remind you of what it cost, not what it's worth.

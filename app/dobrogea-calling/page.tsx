@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://ridetrax.eu/dobrogea-calling' },
   openGraph: {
     title: 'Dobrogea Calling · TRAX',
-    description: 'Join a ~738km adventure across ancient Romanian terrain. 3 days, 38 points of interest, shared discovery.',
+    description: 'A ~738km exploration of ancient Romanian terrain. 3 days, 38 points of interest, shared discovery.',
     url: 'https://ridetrax.eu/dobrogea-calling',
     images: [{ url: '/android-chrome-512x512.png' }],
   },
