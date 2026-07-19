@@ -5,9 +5,9 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Container, Spacer } from '@/components/ui/Container';
 import { SubHeadline, Body, MonoLabel, Divider } from '@/components/ui/Typography';
-import { ROUTES, WAYPOINTS, DAY3_ELEVATION } from './briefing-data';
+import { ELEVATIONS, DAY_COLORS, DISTANCE_KM, ELEV_STATS } from './briefing-data';
 
-const OutThereMap = dynamic(() => import('@/components/OutThereMap'), { ssr: false });
+const OutThereRouteMap = dynamic(() => import('@/components/OutThereRouteMap'), { ssr: false });
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -44,11 +44,11 @@ const DAYS: DayInfo[] = [
     stats: [
       { val: '~212 km', key: 'Distance' },
       { val: 'Mostly asphalt', key: 'Surface' },
-      { val: 'Cabana Cheia', key: 'Camp 1' },
+      { val: 'Cabana Cheia', key: 'Night 1' },
     ],
     paragraphs: [
       'Bucharest fades in the mirrors. The day is a transfer, but not a throwaway: two hundred kilometers on a loaded bike is where your packing gets its first honest review. Anything that moves, rattles, or digs into your leg will announce itself long before the mountains do.',
-      'By late afternoon the road tilts up into the Cheia valley. Dinner is cooked at Cabana Cheia. Sit down, eat well, it is the last meal someone else makes for you until Day 3. The first camp goes up next to the cabana. Tents up before dark. The first night teaches you what you forgot to pack, while the fix is still cheap.',
+      'By late afternoon the road tilts up into the Cheia valley. Dinner is cooked at Cabana Cheia. Sit down, eat well, it is the last meal someone else makes for you until Day 3. There is a restroom, and a choice: pitch a tent next to the cabana, or take a bunk inside in what are probably big shared rooms. We settle it with the group about a week out. The first night teaches you what you forgot to pack, while the fix is still cheap.',
     ],
     gpxFile: 'trax-out-there-day1.gpx',
   },
@@ -123,7 +123,7 @@ const CHECK_GROUPS: CheckGroup[] = [
   {
     title: 'Sleep System',
     items: [
-      { id: 'tent', name: 'Tent or bivy: compact, storm-worthy', note: 'Camp 2 is exposed. It must hold in wind.', essential: true },
+      { id: 'tent', name: 'Tent or bivy: compact, storm-worthy', note: 'Camp 2 is exposed and always under canvas. It must hold in wind. Night 1 at the cabana you may not need it.', essential: true },
       { id: 'sleeping_bag', name: 'Sleeping bag: comfort rated around 0–5°C', note: 'August at 1,850 m drops to single digits. Cold nights are remembered longer than heavy panniers.', essential: true },
       { id: 'mat', name: 'Insulated sleeping mat', essential: true },
       { id: 'headlamp', name: 'Headlamp + spare batteries', essential: true },
@@ -230,6 +230,8 @@ function RequirementList({ items }: { items: string[] }) {
 
 export function BriefingClient() {
   const [mounted, setMounted] = useState(false);
+  const [activeDay, setActiveDay] = useState(0);
+  const [fitKey, setFitKey] = useState(0);
   const [countdown, setCountdown] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [checked, setChecked] = useState<Set<string>>(() => {
     if (typeof window === 'undefined') return new Set();
@@ -352,7 +354,7 @@ export function BriefingClient() {
                 Out There is self-supported. Everything you need for three days comes on the bike: shelter, sleep, food for the high camp. There is no van, no base, no backup plan parked nearby. The group is the support.
               </Body>
               <Body className="mb-6">
-                Both nights are wild camps. The second one sits at around 1,850 meters, above the treeline, off the grid. <span className="text-trax-red font-medium">Between Cheia on Day 2 and Tălmaciu on Day 3 there is no fuel and no shop except Ciungetu.</span> The mountains do not improvise well. You prepare, or you carry the consequence.
+                Night 1 is soft: Cabana Cheia, a hot dinner, a roof if you want one. Night 2 is the wild one, around 1,850 meters, above the treeline, off the grid. <span className="text-trax-red font-medium">Between Cheia on Day 2 and Tălmaciu on Day 3 there is no fuel and no shop except Ciungetu.</span> The mountains do not improvise well. You prepare, or you carry the consequence.
               </Body>
               <Body>
                 Read everything below. Then read it again the night before.
@@ -373,58 +375,103 @@ export function BriefingClient() {
         {/* 02 — The Route */}
         <div className="border-t border-trax-grey/20 pt-16">
           <MonoLabel className="mb-6 block">02 · The Route</MonoLabel>
-          <SubHeadline className="mb-8">Three Days</SubHeadline>
+          <SubHeadline className="mb-8">Three Days, One Line</SubHeadline>
 
-          <div className="flex flex-col gap-20">
-            {DAYS.map((d) => (
-              <div key={d.day}>
-                <div className="flex items-baseline justify-between mb-4">
-                  <h4 className="font-sans text-trax-white text-2xl font-medium">Day {d.day} · {d.title}</h4>
-                </div>
+          {/* Day toggles */}
+          <div className="flex gap-0.5 mb-4 flex-wrap">
+            {[
+              { d: 1, label: `Day 1 · ${DISTANCE_KM[1]}km` },
+              { d: 2, label: `Day 2 · ${DISTANCE_KM[2]}km` },
+              { d: 3, label: `Day 3 · ${DISTANCE_KM[3]}km` },
+              { d: 0, label: 'All Days' },
+            ].map(({ d, label }) => {
+              const color = d === 0 ? '#C04A30' : DAY_COLORS[d];
+              return (
+                <button
+                  key={d}
+                  onClick={() => { setActiveDay(d); setFitKey((k) => k + 1); }}
+                  className="font-mono text-[12px] tracking-[0.12em] uppercase px-4 py-2.5 bg-trax-white/5 border border-trax-white/15 text-trax-grey cursor-pointer transition-all duration-200 flex-1 text-center hover:text-trax-white hover:border-trax-white/30"
+                  style={activeDay === d ? { borderColor: color + '80', color } : {}}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
 
-                <div className="grid grid-cols-3 gap-[1px] bg-trax-white/10 mb-6">
-                  {d.stats.map((s) => (
-                    <div key={s.key} className="bg-trax-black p-4 text-center">
-                      <span className="font-sans text-lg md:text-2xl font-medium text-trax-white block leading-none">{s.val}</span>
-                      <span className="font-mono text-[10px] tracking-widest uppercase text-trax-grey block mt-1">{s.key}</span>
-                    </div>
-                  ))}
-                </div>
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-[1px] bg-trax-white/10 mb-6">
+            {(activeDay === 0
+              ? [
+                  { val: `${DISTANCE_KM[1] + DISTANCE_KM[2] + DISTANCE_KM[3]} km`, key: 'Total Distance' },
+                  { val: `${Math.max(ELEV_STATS[1].max, ELEV_STATS[2].max, ELEV_STATS[3].max)} m`, key: 'High Point' },
+                  { val: `${Math.min(ELEV_STATS[1].min, ELEV_STATS[2].min, ELEV_STATS[3].min)} m`, key: 'Low Point' },
+                ]
+              : [
+                  { val: `${DISTANCE_KM[activeDay]} km`, key: 'Distance' },
+                  { val: `${ELEV_STATS[activeDay].max} m`, key: 'High Point' },
+                  { val: `${ELEV_STATS[activeDay].min} m`, key: 'Low Point' },
+                ]
+            ).map((s) => (
+              <div key={s.key} className="bg-trax-black p-4 text-center">
+                <span className="font-sans text-lg md:text-2xl font-medium text-trax-white block leading-none">{s.val}</span>
+                <span className="font-mono text-[10px] tracking-widest uppercase text-trax-grey block mt-1">{s.key}</span>
+              </div>
+            ))}
+          </div>
 
-                <div className="w-full h-[380px] md:h-[460px] relative border border-trax-white/10 mb-6 bg-[#111]">
-                  <OutThereMap route={ROUTES[d.day]} waypoints={WAYPOINTS[d.day]} />
-                </div>
+          {/* Map */}
+          <div className="w-full h-[420px] md:h-[520px] relative border border-trax-white/10 mb-4 bg-[#111]">
+            <OutThereRouteMap activeDay={activeDay} fitKey={fitKey} />
+          </div>
 
-                {d.day === 3 && (
-                  <div className="mb-6">
-                    <MonoLabel className="mb-2 block">Trail Elevation · Riding Direction · Camp 2 → Tălmaciu</MonoLabel>
-                    <ElevationChart data={DAY3_ELEVATION} color="#C04A30" />
-                    <div className="flex justify-between mt-1">
-                      <span className="font-mono text-[10px] tracking-widest uppercase text-trax-grey">~1,850 m · Camp 2</span>
-                      <span className="font-mono text-[10px] tracking-widest uppercase text-trax-grey">~380 m · Tălmaciu</span>
-                    </div>
+          {activeDay === 0 ? (
+            <p className="font-mono text-[11px] tracking-[0.1em] uppercase text-trax-grey/60 mt-2 mb-2 leading-relaxed">
+              Three tracks, one line. Bucharest to Cheia, Cheia up to Panorama Vidra, Vidra down to Tălmaciu. Pick a day for its profile and notes.
+            </p>
+          ) : (() => {
+            const day = DAYS.find((x) => x.day === activeDay)!;
+            return (
+              <>
+                <div className="mt-6 border-t border-trax-white/10 pt-6 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 items-start">
+                  <div className="md:w-48">
+                    <MonoLabel className="mb-1 block">Day {activeDay} · Character</MonoLabel>
+                    <p className="font-sans text-trax-white text-base font-medium">{day.title}</p>
                   </div>
-                )}
+                  <div className="space-y-2">
+                    {day.paragraphs.map((p) => (
+                      <Body key={p.slice(0, 32)}>{p}</Body>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-6">
+                  <MonoLabel className="mb-2 block">Elevation · Riding Direction</MonoLabel>
+                  <ElevationChart data={ELEVATIONS[activeDay]} color={DAY_COLORS[activeDay]} />
+                </div>
+              </>
+            );
+          })()}
 
-                {d.paragraphs.map((p) => (
-                  <Body key={p.slice(0, 32)} className="mb-6">{p}</Body>
-                ))}
-
+          {/* GPX downloads */}
+          <div className="mt-8 border-t border-trax-white/10 pt-6">
+            <MonoLabel className="mb-4 block">Download GPX</MonoLabel>
+            <div className="flex flex-wrap gap-2">
+              {DAYS.map((d) => (
                 <a
+                  key={d.day}
                   href={`/assets/gpx/${d.gpxFile}`}
                   download
                   className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase px-4 py-2.5 bg-trax-white/5 border border-trax-white/15 text-trax-grey hover:text-trax-white hover:border-trax-white/30 transition-all duration-200"
+                  style={activeDay === d.day ? { borderColor: DAY_COLORS[d.day] + '80', color: DAY_COLORS[d.day] } : {}}
                 >
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  Download Day {d.day} GPX
+                  Day {d.day} · {d.title}
                 </a>
-                {d.gpxNote && (
-                  <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey/60 mt-3">{d.gpxNote}</p>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
+            <p className="font-mono text-[10px] tracking-widest uppercase text-trax-grey/60 mt-3">Day 3 GPX runs in riding direction, Camp 2 to Tălmaciu.</p>
           </div>
         </div>
 
@@ -488,8 +535,8 @@ export function BriefingClient() {
               {
                 night: 'Night 1: Friday',
                 where: 'Cheia valley, by the cabana',
-                type: 'Wild camp · dinner at Cabana Cheia',
-                note: 'The soft opening. A cooked meal at the table, then the tent. Use it to sort your system while the stakes are low.',
+                type: 'Cabana Cheia · roof or tent',
+                note: 'The soft opening. A cooked meal at the table, a restroom, and a bunk inside or a tent outside, settled with the group about a week out. Sort your system while the stakes are low.',
               },
               {
                 night: 'Night 2: Saturday',
@@ -510,7 +557,7 @@ export function BriefingClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
             <div>
               <Body className="mb-6">
-                Both camps are wild and both camps disappear behind us. Everything carried in gets carried out. Fires only if the lead calls it safe and legal, and August in the mountains often means no.
+                The high camp is wild, and both stops disappear behind us. Everything carried in gets carried out. Fires only if the lead calls it safe and legal, and August in the mountains often means no.
               </Body>
               <Body className="mb-6">
                 August at 1,850 meters drops to single digits after sundown. The night is cold, long, and exactly what you came for. Your sleep system is not the place you save weight.

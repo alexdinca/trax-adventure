@@ -97,7 +97,7 @@ export default function OutTherePage() {
           <Spacer size="lg" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-trax-white/10">
             {[
-              { day: 1, title: 'The Ride In', body: 'Bucharest fades behind you. Asphalt turns to trail, and the trail starts asking questions early. You arrive with daylight to spare. Tents up. Fire lit. The first night teaches you what you forgot to pack.' },
+              { day: 1, title: 'The Ride In', body: 'Bucharest fades behind you. Asphalt turns to trail, and the trail starts asking questions early. You arrive at Cabana Cheia with daylight to spare. A hot meal at the table, then a roof or a tent, your call. The first night teaches you what you forgot to pack.' },
               { day: 2, title: 'Up There', body: 'Morning coffee, then the camp disappears into the bags. A full day of trails, and by evening you climb. The second camp sits at the top of the wilderness. Away from roads, signal and noise. This is the night the experience is named after.' },
               { day: 3, title: 'The Way Back', body: "No alarm. Slow coffee, cold hands. Some exploration on the descent, easier than what you climbed, but still the Carpathians. Then the trail becomes asphalt and Bucharest returns. The ride back always feels different. That's the point." },
             ].map(({ day, title, body }) => (
@@ -123,7 +123,7 @@ export default function OutTherePage() {
           </div>
           <div>
             <Spacer size="md" />
-            <Body className="mb-6">Both camps are wild. No infrastructure, no facilities, no backup plan parked nearby.</Body>
+            <Body className="mb-6">The high camp is wild. No infrastructure, no facilities, no backup plan parked nearby.</Body>
             <Body className="mb-6">Phones stay away. Cameras stay down. <span className="text-trax-red font-medium">The nights are intentionally undocumented.</span></Body>
             <div className="bg-trax-white/5 p-8">
               <p className="font-body text-trax-white/80 italic leading-relaxed">What you remember without a camera is what you actually keep.</p>
@@ -171,7 +171,7 @@ export default function OutTherePage() {
               { label: 'Duration', value: '3 Days / 2 Nights', sub: '14th – 16th August 2026' },
               { label: 'Route', value: 'Bucharest & Back', sub: 'Self-supported, loaded' },
               { label: 'Terrain', value: 'Carpathian Trails', sub: 'Medium technical, loaded' },
-              { label: 'Camps', value: 'Two, Wild', sub: 'The second one, up there' },
+              { label: 'Nights', value: 'Two', sub: 'Cabana, then wild camp' },
             ].map((item) => (
               <div key={item.label} className="space-y-2">
                 <p className="font-sans text-trax-red text-sm tracking-widest uppercase">{item.label}</p>
