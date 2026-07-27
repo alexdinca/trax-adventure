@@ -134,8 +134,7 @@ const CHECK_GROUPS: CheckGroup[] = [
     title: 'Food & Water',
     items: [
       { id: 'water', name: 'Water capacity: minimum 2L on the bike', note: 'More in heat. Streams exist on route; your capacity should not depend on them.', essential: true },
-      { id: 'filter', name: 'Water filter or purification tablets' },
-      { id: 'food', name: 'Food for Camp 2: dinner plus two breakfasts', note: 'Bought or topped up in Ciungetu. Simple, calorie-dense, no cooler required.', essential: true },
+      { id: 'food', name: 'Food for Camp 2: dinner plus one breakfast', note: 'Bought or topped up in Ciungetu. Simple, calorie-dense, no cooler required.', essential: true },
       { id: 'stove', name: 'Compact stove and lighter', note: 'Shared within the group is fine. Coordinate in the chat.' },
       { id: 'trash', name: 'Trash bag: everything you carry in, you carry out', essential: true },
     ],
@@ -686,20 +685,6 @@ export function BriefingClient() {
 
         <Spacer size="lg" />
 
-        {/* 09 — Contact */}
-        <div className="border-t border-trax-grey/20 pt-16">
-          <MonoLabel className="mb-6 block">09 · Contact</MonoLabel>
-          <SubHeadline>If Something Goes Wrong</SubHeadline>
-          <Spacer size="sm" />
-          <Body className="mb-6">
-            Emergency number in Romania: 112. Mountain rescue: Salvamont, 0725 826 668.
-          </Body>
-          <Body>
-            Trip contact: confirmed in the group chat before departure. Save it before Day 1. There is no coverage at the second camp, and none for most of Day 2. Someone at home should know the plan and the return time.
-          </Body>
-        </div>
-
-        <Spacer size="xl" />
 
         <div className="text-center opacity-40">
           <p className="font-sans text-sm tracking-widest text-trax-white">Out There · Briefing v1.0 · For confirmed riders only</p>
