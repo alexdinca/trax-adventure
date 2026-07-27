@@ -111,7 +111,7 @@ export function BriefingClient() {
       <div className="relative w-full h-[70vh] flex flex-col justify-end pb-24">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/assets/carpathian-ridge/IMG_6451.jpg"
+            src="/assets/carpathian-ridge/IMG_6451-2.jpg"
             alt="Loaded KTM adventure motorcycle on a ridge above a mountain lake in the Carpathians"
             fill
             className="object-cover object-bottom trax-image opacity-50"
