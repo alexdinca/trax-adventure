@@ -158,18 +158,20 @@ function Intro({
 
       <Block space="sm" className="space-y-5">
         <p className="font-body text-trax-white/80 text-base md:text-lg leading-[1.7]">
-          It is a set of statements about what you have already done. You mark
-          each one honestly, and at the end it tells you whether the experience
-          you are looking at is within you yet, or which two things are not
-          there.
+          It is an inventory. Statements about terrain and about carrying
+          yourself. You mark each one in control, survived, or never. The nevers
+          are the part that matters. Most riders have a column of them. So does
+          the person who built this.
         </p>
         <p className="font-body text-trax-white/80 text-base md:text-lg leading-[1.7]">
           Nothing is sent anywhere. It is worked out on this phone and stays on
           it. Nobody at TRAX sees this unless you decide to send it.
         </p>
         <p className="font-body text-trax-white/80 text-base md:text-lg leading-[1.7]">
-          The terrain checks this answer later, and a wrong one costs the group,
-          not you. That is the only reason to be accurate.
+          At the end it tells you whether the one you are looking at is within
+          you yet, and if it is not, which nevers to spend first and where.
+          Some of them the group carries with you. A few it cannot, and those
+          are the ones that decide the order.
         </p>
       </Block>
 
@@ -261,7 +263,8 @@ function Statements({
       <Block space="sm">
         <p className="font-body text-trax-white/70 text-base leading-[1.7]">
           Done in control is not the same as done and survived. The difference
-          between them is the whole point of asking.
+          between them is the whole point of asking. Never is an answer like any
+          other, and it is the one this page is built to read.
         </p>
       </Block>
 

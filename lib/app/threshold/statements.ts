@@ -86,7 +86,24 @@ export interface Statement {
   clause: Record<Answer, string>;
   /**
    * Weight per tier. Absent means the statement does not bear on that tier.
-   * 3 = this is what breaks people here. 2 = expected. 1 = helps.
+   *
+   * Weight is NOT how hard the thing is. It is how much the group pays if you
+   * arrive without it, which is the only question the ladder actually asks
+   * (Bible v2, The Nevers: "a never spent in the wrong place is spent on the
+   * group, not on you").
+   *
+   *   3 — nobody can carry this for you. Unspent here, it costs the group a
+   *       real risk. This is what routes a rider down a rung.
+   *   2 — the group absorbs it, but everyone feels it. Slower days, longer
+   *       stops, someone waiting in the cold.
+   *   1 — yours alone to feel. It will teach you something and cost nobody.
+   *
+   * Worked example, because it is the one that got this wrong first time:
+   * picking up a loaded bike alone is weight 1 on every group experience.
+   * On a TRAX ride nobody does it alone. Six people lift it and the day
+   * continues. It is weight 1 on The Long Way In too, for the same reason.
+   * Compare a loaded technical descent, which is weight 3 on Carpathian
+   * Ridge: no one can ride it for you, and the group cannot absorb it.
    */
   weight: Partial<Record<TierId, 1 | 2 | 3>>;
   /** Second person, names an action, never character (BRD P3). */
@@ -112,7 +129,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Deep sand, an hour of it, standing on the pegs.',
     clause: TERRAIN,
-    weight: { 'dobrogea-calling': 3, 'long-way-in': 2 },
+    weight: { 'dobrogea-calling': 2, 'long-way-in': 1 },
     gap: 'you have not ridden deep sand for an hour standing',
   },
   {
@@ -120,7 +137,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'A rutted forestry climb on loose rock, with no run-up.',
     clause: TERRAIN,
-    weight: { 'out-there': 3, 'carpathian-ridge': 3, 'long-way-in': 2 },
+    weight: { 'out-there': 2, 'carpathian-ridge': 2, 'long-way-in': 2 },
     gap: 'you have not climbed loose rock without a run-up',
   },
   {
@@ -128,7 +145,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Wet clay on a descent, with the back end stepping out.',
     clause: TERRAIN,
-    weight: { 'carpathian-ridge': 3, 'out-there': 2, 'long-way-in': 2 },
+    weight: { 'carpathian-ridge': 2, 'out-there': 2, 'long-way-in': 2 },
     gap: 'you have not held a descent on wet clay',
   },
   {
@@ -136,7 +153,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'A water crossing deeper than your boot, bottom unknown.',
     clause: TERRAIN,
-    weight: { 'out-there': 2, 'carpathian-ridge': 2, 'long-way-in': 2 },
+    weight: { 'out-there': 1, 'carpathian-ridge': 1, 'long-way-in': 1 },
     gap: 'you have not crossed water you could not see the bottom of',
   },
   {
@@ -144,7 +161,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Technical ground with the bike fully loaded.',
     clause: TERRAIN,
-    weight: { 'out-there': 3, 'carpathian-ridge': 2, 'long-way-in': 3 },
+    weight: { 'out-there': 2, 'carpathian-ridge': 3, 'long-way-in': 2 },
     gap: 'you have not ridden technical ground with the bike loaded',
   },
   {
@@ -152,7 +169,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'A full day of mountain trail, most of it above the treeline.',
     clause: TERRAIN,
-    weight: { 'out-there': 2, 'carpathian-ridge': 3, 'long-way-in': 2 },
+    weight: { 'out-there': 2, 'carpathian-ridge': 2, 'long-way-in': 1 },
     gap: 'you have not spent a full day on trail above the treeline',
   },
   {
@@ -168,7 +185,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Two hundred kilometres of gravel and dirt road in one day.',
     clause: TERRAIN,
-    weight: { 'dobrogea-calling': 3, 'long-way-in': 3, 'out-there': 1 },
+    weight: { 'dobrogea-calling': 3, 'long-way-in': 2, 'out-there': 1 },
     gap: 'you have not put two hundred kilometres of gravel behind you in a day',
   },
   {
@@ -176,7 +193,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Navigating by GPX alone, no signal, nobody ahead to follow.',
     clause: TERRAIN,
-    weight: { 'dobrogea-calling': 3, 'long-way-in': 3, 'out-there': 2 },
+    weight: { 'dobrogea-calling': 2, 'long-way-in': 2, 'out-there': 1 },
     gap: 'you have not navigated by GPX with nobody ahead of you',
   },
   {
@@ -184,7 +201,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Planning fuel across 250km with nothing open in between.',
     clause: TERRAIN,
-    weight: { 'out-there': 3, 'dobrogea-calling': 2, 'long-way-in': 3 },
+    weight: { 'out-there': 1, 'dobrogea-calling': 2, 'long-way-in': 2 },
     gap: 'you have not planned fuel across 250km with nothing in between',
   },
   {
@@ -192,7 +209,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'terrain',
     lead: 'Picking the bike up, loaded, alone, on a slope.',
     clause: TERRAIN,
-    weight: { 'out-there': 3, 'carpathian-ridge': 2, 'long-way-in': 3 },
+    weight: { 'out-there': 1, 'carpathian-ridge': 1, 'long-way-in': 1 },
     gap: 'you have not picked the bike up loaded and alone',
   },
   {
@@ -218,7 +235,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'A full day in the saddle with the bike loaded.',
     clause: READINESS,
-    weight: { 'out-there': 3, 'dobrogea-calling': 2, 'long-way-in': 3 },
+    weight: { 'out-there': 2, 'dobrogea-calling': 2, 'long-way-in': 3 },
     gap: 'you have not ridden a full day with the bike loaded',
   },
   {
@@ -226,7 +243,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Eight hours with no signal and no way to call anyone.',
     clause: READINESS,
-    weight: { 'out-there': 3, 'long-way-in': 2, 'carpathian-ridge': 1 },
+    weight: { 'out-there': 1, 'long-way-in': 1, 'carpathian-ridge': 1 },
     gap: 'you have not gone eight hours without signal',
   },
   {
@@ -234,7 +251,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Packed three days into soft luggage and nothing else.',
     clause: READINESS,
-    weight: { 'out-there': 3, 'long-way-in': 3 },
+    weight: { 'out-there': 2, 'long-way-in': 2 },
     gap: 'you have not packed three days into soft luggage',
   },
   {
@@ -242,7 +259,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Made camp in the dark, in wind, already finished.',
     clause: READINESS,
-    weight: { 'out-there': 3, 'long-way-in': 2 },
+    weight: { 'out-there': 2, 'long-way-in': 1 },
     gap: 'you have not made camp in the dark when you were already done',
   },
   {
@@ -250,7 +267,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Fixed a puncture on the trail with what you were carrying.',
     clause: READINESS,
-    weight: { 'out-there': 2, 'dobrogea-calling': 2, 'long-way-in': 3 },
+    weight: { 'out-there': 1, 'dobrogea-calling': 1, 'long-way-in': 3 },
     gap: 'you have not fixed a puncture with what you carry',
   },
   {
@@ -258,7 +275,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Three days of riding, back to back, no rest day.',
     clause: READINESS,
-    weight: { 'dobrogea-calling': 2, 'carpathian-ridge': 3, 'out-there': 2 },
+    weight: { 'dobrogea-calling': 2, 'carpathian-ridge': 2, 'out-there': 1 },
     gap: 'you have not ridden three days back to back',
   },
   {
@@ -274,7 +291,7 @@ export const STATEMENTS: Statement[] = [
     domain: 'readiness',
     lead: 'Carried and cooked your own food for a night out.',
     clause: READINESS,
-    weight: { 'out-there': 2, 'long-way-in': 2 },
+    weight: { 'out-there': 1, 'long-way-in': 1 },
     gap: 'you have not carried and cooked your own food for a night',
   },
   {

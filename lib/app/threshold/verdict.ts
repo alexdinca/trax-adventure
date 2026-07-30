@@ -52,8 +52,13 @@ const UNGATED: TierId[] = ['the-ground'];
 /** A single 'never' on something this heavy is disqualifying on its own. */
 const HARD_STOP_WEIGHT = 3;
 
-/** Below this, the shortfall is real but does not stand in the way. */
-const TOLERANCE = 2.0;
+/**
+ * Below this, the shortfall is real and the group absorbs it. Never is the
+ * ordinary condition (Bible v2, The Nevers), so this is deliberately generous:
+ * a rider may arrive with several unspent nevers and still belong here, as
+ * long as none of them is one the group would pay for.
+ */
+const TOLERANCE = 3.0;
 
 export function evaluate(tier: TierId, answers: Answers): Verdict {
   const t = tierById(tier);
@@ -123,38 +128,46 @@ export function evaluate(tier: TierId, answers: Answers): Verdict {
 
 const OPEN_GROUND = [
   'The Ground has no gate. That is the point of it.',
-  'It is a closed circuit, one day, no ranking, and nobody there is counting. Come and find out what you actually do under your own weight.',
-  'Everything above it asks more. This one just asks you to turn up.',
+  'One day, closed circuit, no ranking, nobody counting. It is where you find out what you actually do under your own weight.',
+  'Bring the whole list. This is the rung that takes the first one off it.',
 ].join('\n\n');
 
 const CLEAN = (tier: string) =>
   [
     `${tier} is within you.`,
-    'Nothing in what you just said stands in the way. That is not the same as it being comfortable, and it is not a promise that the terrain will go well. It only means the gap between what you have done and what this asks is small enough to cross on the day.',
-    'Ask for a place.',
+    'Nothing you marked stands in the way. That is not a promise about the day; the terrain has agreed to nothing. It means the nevers you are still carrying are not the ones this ground asks about.',
+    'You will find new ones out there. That is what it is for.',
+    'Ask for a place, and say what you are least sure of when you do.',
   ].join('\n\n');
 
 const NEARLY = (tier: string) =>
   [
     `${tier} is within you.`,
-    'There are one or two things you have done once rather than often. The terrain will find them. It will not stop you.',
+    'One or two things you have done once rather than often. The terrain will find them. It will not stop you, and it will not stop the group.',
     'Ask for a place, and say what you are least sure of when you do.',
   ].join('\n\n');
 
 const NOT_YET = (tier: string, gaps: string[], send: string | null) => {
   const named =
     gaps.length === 2
-      ? `Two things are not there yet. First, ${gaps[0]}. Second, ${gaps[1]}.`
-      : `One thing is not there yet: ${gaps[0]}.`;
+      ? `Two nevers are in the way. First, ${gaps[0]}. Second, ${gaps[1]}.`
+      : `One never is in the way: ${gaps[0]}.`;
+
+  const two = gaps.length === 2;
+
+  const notAboutYou = two
+    ? 'Neither is about who you are.'
+    : 'That is not about who you are.';
 
   const onward = send
-    ? `${send} is where that gets built. Not as a consolation. Because it is the rung that teaches exactly this, and doing it in the wrong order costs the group, not you.`
-    : 'Build it, then come back to this page.';
+    ? `${send} is the rung built to take exactly ${two ? 'these two' : 'this'}. Not a consolation, and not a smaller version of ${tier}. It is where ${two ? 'they stop being nevers' : 'it stops being a never'}.`
+    : `Spend ${two ? 'them' : 'it'}, then come back to this page.`;
 
   return [
-    `Not yet, and not by much.`,
+    `${tier}, not yet.`,
     named,
-    'Neither of those is about who you are. They are things you have not done, and things you have not done can be done.',
+    `${notAboutYou} Everyone starts with a list of things they have not done. The only question is where each one gets spent.`,
     onward,
+    `Take ${two ? 'them' : 'it'} with you. That is what you are going there to do.`,
   ].join('\n\n');
 };
