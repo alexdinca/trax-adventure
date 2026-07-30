@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { AptabaseProvider } from '@aptabase/react';
 import { Analytics } from '@/components/Analytics';
 import { PublicChrome, PublicFooter, BackgroundMark } from '@/components/PublicChrome';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <PublicFooter />
+          <SpeedInsights />
         </AptabaseProvider>
       </body>
     </html>
