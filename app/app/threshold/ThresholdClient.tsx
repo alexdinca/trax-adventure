@@ -10,7 +10,7 @@ import {
   statementsFor,
   tierById,
 } from '@/lib/app/threshold/statements';
-import { evaluate, type Answers } from '@/lib/app/threshold/verdict';
+import { forecast, type Answers, type Forecast } from '@/lib/app/threshold/verdict';
 
 /**
  * Threshold.
@@ -76,7 +76,7 @@ export function ThresholdClient() {
   const complete = statements.length > 0 && answered === statements.length;
 
   const verdict = useMemo(
-    () => (tier && stage === 'verdict' ? evaluate(tier, answers) : null),
+    () => (tier && stage === 'verdict' ? forecast(tier, answers) : null),
     [tier, answers, stage]
   );
 
@@ -126,7 +126,7 @@ export function ThresholdClient() {
 
         {stage === 'verdict' && verdict && (
           <VerdictView
-            paragraph={verdict.paragraph}
+            result={verdict}
             summary={summary}
             onSummary={setSummary}
             onRestart={restart}
@@ -325,37 +325,62 @@ function Statements({
 /* ── Verdict ───────────────────────────────────────────────────────────── */
 
 function VerdictView({
-  paragraph,
+  result,
   summary,
   onSummary,
   onRestart,
 }: {
-  paragraph: string;
+  result: Forecast;
   summary: string;
   onSummary: (s: string) => void;
   onRestart: () => void;
 }) {
   return (
     <>
-      {/* A full screen of nothing. The verdict is worth arriving at rather
-          than being handed, and silence is more honest than a spinner
-          pretending to think (BRD TH-09). */}
+      {/* A full screen of nothing. Worth arriving at rather than being handed,
+          and silence is more honest than a spinner pretending to think
+          (BRD TH-09). */}
       <div className="h-[70svh]" aria-hidden="true" />
 
-      <div className="space-y-8">
-        {paragraph.split('\n\n').map((p, i) => (
+      <p className="font-sans font-medium text-trax-white text-2xl md:text-3xl leading-[1.3]">
+        {result.headline}
+      </p>
+
+      {/* What the terrain will hand you, and how to arrive ready for it. */}
+      {result.takes.length > 0 && (
+        <Block space="lg" className="space-y-10">
+          {result.takes.map((t, i) => (
+            <div key={i}>
+              <Rule tone={t.heavy ? 'ember' : 'faint'} />
+              <p className="font-sans font-medium text-trax-white text-lg md:text-xl leading-[1.4] mt-5">
+                {t.willBe}
+                {t.again && (
+                  <span className="text-trax-grey font-normal">, properly this time</span>
+                )}
+              </p>
+              <p className="font-body text-trax-white/75 text-base leading-[1.7] mt-3">
+                {t.prepare}
+              </p>
+              {t.heavy && (
+                <Mark className="block mt-4 text-trax-red/80">
+                  Nobody can carry this one for you
+                </Mark>
+              )}
+            </div>
+          ))}
+        </Block>
+      )}
+
+      <Block space="lg" className="space-y-6">
+        {result.closing.split('\n\n').map((p, i) => (
           <p
             key={i}
-            className={
-              i === 0
-                ? 'font-sans font-medium text-trax-white text-2xl md:text-3xl leading-[1.3]'
-                : 'font-body text-trax-white/85 text-base md:text-lg leading-[1.75]'
-            }
+            className="font-body text-trax-white/85 text-base md:text-lg leading-[1.75]"
           >
             {p}
           </p>
         ))}
-      </div>
+      </Block>
 
       <Block space="xl">
         <Rule />
