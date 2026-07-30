@@ -33,3 +33,71 @@ body {
   position: relative;
   overflow: hidden;
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   /app — the rider-facing product (Threshold, Aftermath, Ledger).
+   A document, not an interface. See BRD §9.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.trax-app {
+  /* Stop iOS inflating type and destroying solid-set leading (BRD §9.2) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* No rubber-band bounce; it reads as app chrome on a reading surface */
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* DS-03: the institutional rhythm comes from IBM Plex Mono's fixed advance
+   width plus uppercase, never from tracking. This is the mechanism Co-Star
+   uses; its computed letter-spacing is `normal` on every element. */
+.trax-app .trax-mark {
+  letter-spacing: normal;
+}
+
+/* DS-04/DS-05: no radius, no shadow, no native control chrome anywhere. */
+.trax-app *,
+.trax-app *::before,
+.trax-app *::after {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.trax-app input,
+.trax-app textarea,
+.trax-app button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+.trax-app input:focus,
+.trax-app textarea:focus,
+.trax-app button:focus {
+  outline: none;
+}
+
+/* Focus is shown by the rule going solid and bone, never by a browser ring. */
+.trax-app .trax-field:focus {
+  border-bottom-style: solid;
+  border-bottom-color: #F4F3EF;
+}
+
+.trax-app textarea {
+  resize: none;
+}
+
+/* Labels are read, not selected. */
+.trax-app .trax-mark {
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trax-app * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

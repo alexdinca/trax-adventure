@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { AptabaseProvider } from '@aptabase/react';
 import { Analytics } from '@/components/Analytics';
-import { PublicChrome, PublicFooter } from '@/components/PublicChrome';
+import { PublicChrome, PublicFooter, BackgroundMark } from '@/components/PublicChrome';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -64,15 +64,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <AptabaseProvider appKey={process.env.NEXT_PUBLIC_APTABASE_KEY!}>
-          {/* Global background watermark */}
-          <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/trax-tyre-mark.png"
-              alt=""
-              className="w-[90vw] md:w-[1000px] object-contain max-h-[80vh]"
-            />
-          </div>
+          {/* Global background watermark (suppressed inside /app) */}
+          <BackgroundMark />
 
           <PublicChrome />
 

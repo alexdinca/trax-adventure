@@ -15,6 +15,10 @@ export function Analytics() {
   }, []);
 
   useEffect(() => {
+    // Threshold is an honest private inventory of what a rider cannot do.
+    // Nothing about it is measured, not even a screen view (BRD TH-12).
+    if (pathname.startsWith('/app/threshold')) return;
+
     const view = pathname === '/' ? 'home' : pathname.slice(1);
     trackEvent('page_visit', {
       view,

@@ -3,7 +3,9 @@ import type { MetadataRoute } from 'next';
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: '*', allow: '/' },
+      // /app is the rider-facing product: Threshold, Aftermath, the Ledger.
+      // It is never indexed, by any agent (BRD DI-04).
+      { userAgent: '*', allow: '/', disallow: '/app' },
       { userAgent: 'GPTBot', allow: '/' },
       { userAgent: 'ChatGPT-User', allow: '/' },
       { userAgent: 'ClaudeBot', allow: '/' },
