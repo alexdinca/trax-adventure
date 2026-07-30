@@ -29,3 +29,4 @@ yarn-error.log*
 
 # Private, unfiltered rally GPX source data (not for public/committed distribution)
 scripts/gpx-source/
+.env*
