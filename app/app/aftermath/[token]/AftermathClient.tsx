@@ -212,7 +212,7 @@ export function AftermathClient({ token }: { token: string }) {
         <button
           onClick={submit}
           disabled={saving || (!took.trim() && !gave.trim())}
-          className="px-8 py-4 bg-trax-white text-trax-black font-mono text-xs uppercase disabled:opacity-30"
+          className="trax-filled px-8 py-4 font-mono text-xs uppercase tracking-normal"
         >
           {saving ? 'Leaving it' : saved ? 'Left' : 'Leave it'}
         </button>
