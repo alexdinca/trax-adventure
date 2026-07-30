@@ -18,7 +18,9 @@ export const metadata: Metadata = {
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="trax-app min-h-[100svh] bg-trax-black">
+    // No background colour here: the body already carries near-black, and an
+    // opaque layer would paint over the tyre-mark watermark sitting behind it.
+    <div className="trax-app min-h-[100svh]">
       {children}
     </div>
   );

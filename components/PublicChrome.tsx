@@ -37,14 +37,13 @@ export function PublicFooter() {
 }
 
 /**
- * The site-wide tyre-mark watermark. Suppressed inside /app, where the ground
- * must be plain near-black (BRD DS-06: no imagery as pacing furniture).
- * Left in place on /briefing so those pages are unchanged.
+ * The site-wide tyre-mark watermark, at 6% opacity behind everything.
+ *
+ * It runs on /app too. DS-06 forbids photographs used as pacing furniture
+ * between text blocks; this is not that. It is fixed, non-content ground that
+ * never moves and never punctuates, the same treatment the manifesto uses.
  */
 export function BackgroundMark() {
-  const pathname = usePathname();
-  if (pathname.startsWith('/app')) return null;
-
   return (
     <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
