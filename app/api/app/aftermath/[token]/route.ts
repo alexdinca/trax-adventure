@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 import { and, eq } from 'drizzle-orm';
 import { db } from '@/lib/app/db';
-import { aftermathLines, experiences } from '@/lib/app/db/schema';
+import {
+  aftermathLines,
+  experiences,
+  participations,
+  windowFor,
+} from '@/lib/app/db/schema';
 import { readAftermathToken } from '@/lib/app/tokens';
 
 export const runtime = 'nodejs';
@@ -10,46 +15,71 @@ export const dynamic = 'force-dynamic';
 /**
  * The rider's own window. GET reads its state, POST writes their two lines.
  *
- * The window is enforced on both verbs, from the signed token, on the server.
- * Nothing here trusts the client (BRD AF-02).
+ * The token proves identity. The window is derived from the running, in the
+ * database, on every request, so the founder can open a late collection or
+ * close a finished one after links are already in riders' hands. Both verbs
+ * check it. Nothing here trusts the client (BRD AF-02).
  */
 
 async function resolve(token: string) {
-  const w = await readAftermathToken(token);
-  if (w.state !== 'open') return { window: w, experience: null };
+  const id = await readAftermathToken(token);
+  if (!id.ok) return null;
+
   const [experience] = await db
     .select()
     .from(experiences)
-    .where(eq(experiences.id, w.experienceId))
+    .where(eq(experiences.id, id.experienceId))
     .limit(1);
-  return { window: w, experience: experience ?? null };
+  if (!experience) return null;
+
+  // A link only works for someone recorded as having ridden this running.
+  const [rode] = await db
+    .select({ id: participations.id })
+    .from(participations)
+    .where(
+      and(
+        eq(participations.riderId, id.riderId),
+        eq(participations.experienceId, id.experienceId)
+      )
+    )
+    .limit(1);
+  if (!rode) return null;
+
+  return { riderId: id.riderId, experience, window: windowFor(experience) };
 }
 
 export async function GET(_req: Request, { params }: { params: { token: string } }) {
-  const { window: w, experience } = await resolve(params.token);
+  const r = await resolve(params.token);
+  if (!r) return NextResponse.json({ state: 'invalid' }, { status: 404 });
+
+  const { window: w, experience } = r;
 
   if (w.state === 'early') {
     return NextResponse.json({ state: 'early', opensAt: w.opensAt.toISOString() });
   }
   if (w.state === 'closed') return NextResponse.json({ state: 'closed' });
-  if (w.state === 'invalid' || !experience) {
-    return NextResponse.json({ state: 'invalid' }, { status: 404 });
-  }
 
   const [existing] = await db
     .select()
     .from(aftermathLines)
     .where(
       and(
-        eq(aftermathLines.riderId, w.riderId),
-        eq(aftermathLines.experienceId, w.experienceId)
+        eq(aftermathLines.riderId, r.riderId),
+        eq(aftermathLines.experienceId, experience.id)
       )
     )
     .limit(1);
 
+  // How long ago it finished, so the page can be honest about a late window
+  // instead of pretending the ride was yesterday.
+  const daysSince = Math.floor(
+    (Date.now() - experience.finishedAt.getTime()) / (24 * 60 * 60 * 1000)
+  );
+
   return NextResponse.json({
     state: 'open',
-    closesAt: w.closesAt.toISOString(),
+    closesAt: w.closesAt ? w.closesAt.toISOString() : null,
+    daysSince,
     experience: { name: experience.name, year: experience.year },
     lines: existing
       ? { took: existing.took, gave: existing.gave, mayPublish: existing.mayPublish }
@@ -58,16 +88,15 @@ export async function GET(_req: Request, { params }: { params: { token: string }
 }
 
 export async function POST(req: Request, { params }: { params: { token: string } }) {
-  const { window: w, experience } = await resolve(params.token);
+  const r = await resolve(params.token);
+  if (!r) return NextResponse.json({ error: 'invalid' }, { status: 404 });
 
+  const { window: w, experience } = r;
   if (w.state === 'early') {
     return NextResponse.json({ error: 'not open yet' }, { status: 403 });
   }
   if (w.state === 'closed') {
     return NextResponse.json({ error: 'window closed' }, { status: 410 });
-  }
-  if (w.state === 'invalid' || !experience) {
-    return NextResponse.json({ error: 'invalid' }, { status: 404 });
   }
 
   const body = (await req.json().catch(() => null)) as {
@@ -88,13 +117,7 @@ export async function POST(req: Request, { params }: { params: { token: string }
 
   await db
     .insert(aftermathLines)
-    .values({
-      riderId: w.riderId,
-      experienceId: w.experienceId,
-      took,
-      gave,
-      mayPublish,
-    })
+    .values({ riderId: r.riderId, experienceId: experience.id, took, gave, mayPublish })
     .onConflictDoUpdate({
       target: [aftermathLines.riderId, aftermathLines.experienceId],
       set: { took, gave, mayPublish, updatedAt: new Date() },

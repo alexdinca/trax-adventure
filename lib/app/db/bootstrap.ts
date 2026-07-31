@@ -53,4 +53,31 @@ export const BOOTSTRAP_SQL: string[] = [
        ADD CONSTRAINT "aftermath_lines_experience_id_experiences_id_fk"
        FOREIGN KEY ("experience_id") REFERENCES "experiences"("id") ON DELETE cascade;
    EXCEPTION WHEN duplicate_object THEN NULL; END $$`,
+
+  // ── Added after the first release ────────────────────────────────────────
+
+  `ALTER TABLE "experiences"
+     ADD COLUMN IF NOT EXISTS "auto_expire" boolean DEFAULT true NOT NULL`,
+
+  `CREATE TABLE IF NOT EXISTS "participations" (
+     "id" serial PRIMARY KEY NOT NULL,
+     "rider_id" integer NOT NULL,
+     "experience_id" integer NOT NULL,
+     "created_at" timestamp with time zone DEFAULT now() NOT NULL
+   )`,
+
+  `CREATE UNIQUE INDEX IF NOT EXISTS "participation_once"
+     ON "participations" ("rider_id","experience_id")`,
+
+  `DO $$ BEGIN
+     ALTER TABLE "participations"
+       ADD CONSTRAINT "participations_rider_id_riders_id_fk"
+       FOREIGN KEY ("rider_id") REFERENCES "riders"("id") ON DELETE cascade;
+   EXCEPTION WHEN duplicate_object THEN NULL; END $$`,
+
+  `DO $$ BEGIN
+     ALTER TABLE "participations"
+       ADD CONSTRAINT "participations_experience_id_experiences_id_fk"
+       FOREIGN KEY ("experience_id") REFERENCES "experiences"("id") ON DELETE cascade;
+   EXCEPTION WHEN duplicate_object THEN NULL; END $$`,
 ];

@@ -23,8 +23,14 @@ type Exp = {
   name: string;
   year: number;
   finishedAt: string;
+  autoExpire: boolean;
   lines: number;
+  cast: number;
+  state: 'early' | 'open' | 'closed';
+  opensAt: string;
+  closesAt: string | null;
 };
+type Candidate = Rider & { rode: boolean };
 type Link = { rider: string; phone: string | null; url: string };
 type Line = {
   id: number;
@@ -194,6 +200,8 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
   const [open, setOpen] = useState<string | null>(null);
   const [links, setLinks] = useState<Link[]>([]);
   const [lines, setLines] = useState<Line[]>([]);
+  const [cast, setCast] = useState<Candidate[]>([]);
+  const [editingCast, setEditingCast] = useState(false);
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ slug: '', name: '', year: '2026', finishedAt: '' });
@@ -220,12 +228,35 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
     setOpen(slug);
     setLinks([]);
     setLines([]);
-    const [l, s] = await Promise.all([
+    setCast([]);
+    setEditingCast(false);
+    const [l, s, p] = await Promise.all([
       api(`aftermath?slug=${slug}`).then((r) => r.json()),
       api('compile', { method: 'POST', body: JSON.stringify({ slug }) }).then((r) => r.json()),
+      api(`participants?slug=${slug}`).then((r) => r.json()),
     ]);
     setLinks(l.links ?? []);
     setLines(s.rows ?? []);
+    setCast(p.riders ?? []);
+  }
+
+  async function saveCast(slug: string, riders: Candidate[]) {
+    setCast(riders);
+    await api('participants', {
+      method: 'POST',
+      body: JSON.stringify({
+        slug,
+        riderIds: riders.filter((r) => r.rode).map((r) => r.id),
+      }),
+    });
+    const l = await api(`aftermath?slug=${slug}`).then((r) => r.json());
+    setLinks(l.links ?? []);
+    void load();
+  }
+
+  async function setExpiry(slug: string, autoExpire: boolean) {
+    await api('aftermath', { method: 'PUT', body: JSON.stringify({ slug, autoExpire }) });
+    void load();
   }
 
   async function toggle(id: number, selected: boolean) {
@@ -317,14 +348,14 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
           </div>
         )}
         {list.map((e) => {
-          const finished = new Date(e.finishedAt);
-          const opens = new Date(finished.getTime() + 24 * 3600e3);
-          const closes = new Date(finished.getTime() + 7 * 24 * 3600e3);
-          const now = Date.now();
           const state =
-            now < opens.getTime() ? 'opens ' + opens.toLocaleDateString()
-            : now > closes.getTime() ? 'closed'
-            : 'open, until ' + closes.toLocaleDateString();
+            e.state === 'early'
+              ? 'opens ' + new Date(e.opensAt).toLocaleDateString()
+              : e.state === 'closed'
+                ? 'closed'
+                : e.closesAt
+                  ? 'open, until ' + new Date(e.closesAt).toLocaleDateString()
+                  : 'open, no end set';
           return (
             <div key={e.id}>
               <button onClick={() => void select(e.slug)} className="w-full text-left py-4">
@@ -333,13 +364,96 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                 </span>
                 <span className="block mt-1">
                   <Mark className="text-trax-grey/70">
-                    {state} · {e.lines} {e.lines === 1 ? 'line' : 'lines'} in
+                    {state} · {e.cast} riding · {e.lines} {e.lines === 1 ? 'line' : 'lines'} in
                   </Mark>
                 </span>
               </button>
 
               {open === e.slug && (
                 <div className="pb-8 pl-4 border-l border-trax-white/15">
+                  {/* The seven-day close, as a switch. On by default. Turned
+                      off, a late collection can run; turned back on, the links
+                      expire at once because finish + 7 days is already past. */}
+                  <Mark className="block mb-3">Window</Mark>
+                  <button
+                    type="button"
+                    role="checkbox"
+                    aria-checked={e.autoExpire}
+                    onClick={() => void setExpiry(e.slug, !e.autoExpire)}
+                    className="flex gap-3 items-start text-left mb-2"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`mt-0.5 w-4 h-4 shrink-0 border flex items-center justify-center ${
+                        e.autoExpire ? 'border-trax-white bg-trax-white' : 'border-trax-white/40'
+                      }`}
+                    >
+                      {e.autoExpire && (
+                        <svg width="10" height="8" viewBox="0 0 11 9" fill="none">
+                          <path d="M1 4.5L4 7.5L10 1.5" stroke="#0E0F11" strokeWidth="2" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="font-body text-sm text-trax-white/85">
+                      Close it seven days after the finish
+                      <span className="block text-trax-grey text-xs mt-1">
+                        {e.autoExpire
+                          ? e.state === 'closed'
+                            ? 'Closed. Untick to reopen a late collection.'
+                            : 'The usual rule. Untick to leave it open with no end.'
+                          : 'Open with no end. Tick it to close the links now.'}
+                      </span>
+                    </span>
+                  </button>
+
+                  <Block space="md">
+                    <div className="flex items-baseline justify-between">
+                      <Mark>Who rode · {links.length}</Mark>
+                      <button onClick={() => setEditingCast((v) => !v)}>
+                        <Mark className="text-trax-white/70">
+                          {editingCast ? 'done' : 'edit'}
+                        </Mark>
+                      </button>
+                    </div>
+                  </Block>
+
+                  {editingCast && (
+                    <div className="mt-3 mb-6 space-y-1">
+                      {cast.length === 0 && (
+                        <Mark className="text-trax-grey/50">the roster is empty</Mark>
+                      )}
+                      {cast.map((c) => (
+                        <button
+                          key={c.id}
+                          type="button"
+                          role="checkbox"
+                          aria-checked={c.rode}
+                          onClick={() =>
+                            void saveCast(
+                              e.slug,
+                              cast.map((x) => (x.id === c.id ? { ...x, rode: !x.rode } : x))
+                            )
+                          }
+                          className="flex gap-3 items-center text-left w-full py-1"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className={`w-4 h-4 shrink-0 border flex items-center justify-center ${
+                              c.rode ? 'border-trax-white bg-trax-white' : 'border-trax-white/40'
+                            }`}
+                          >
+                            {c.rode && (
+                              <svg width="10" height="8" viewBox="0 0 11 9" fill="none">
+                                <path d="M1 4.5L4 7.5L10 1.5" stroke="#0E0F11" strokeWidth="2" />
+                              </svg>
+                            )}
+                          </span>
+                          <span className="font-body text-sm text-trax-white/85">{c.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
                   <Mark className="block mb-3">Send</Mark>
                   <textarea
                     value={message}
@@ -349,7 +463,9 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                     aria-label="Message"
                   />
                   {links.length === 0 && (
-                    <Mark className="text-trax-grey/50">no riders on the roster</Mark>
+                    <Mark className="text-trax-grey/50">
+                      nobody marked as having ridden this one yet
+                    </Mark>
                   )}
                   <div className="space-y-2">
                     {links.map((l) => {
@@ -423,6 +539,20 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                       </Block>
                     </>
                   )}
+                </div>
+              )}
+              {open === e.slug && (
+                <div className="pb-6 pl-4">
+                  <button
+                    onClick={async () => {
+                      if (!confirm(`Delete ${e.name} ${e.year}? Lines written for it go too.`)) return;
+                      await api(`experiences?id=${e.id}`, { method: 'DELETE' });
+                      setOpen(null);
+                      void load();
+                    }}
+                  >
+                    <Mark className="text-trax-grey/40">delete this running</Mark>
+                  </button>
                 </div>
               )}
               <Rule />

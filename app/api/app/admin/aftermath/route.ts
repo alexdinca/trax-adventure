@@ -1,22 +1,26 @@
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/app/db';
-import { aftermathLines, experiences, riders } from '@/lib/app/db/schema';
+import {
+  aftermathLines,
+  experiences,
+  participations,
+  riders,
+  windowFor,
+} from '@/lib/app/db/schema';
 import { isFounder, mintAftermathToken } from '@/lib/app/tokens';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const HOURS = 60 * 60 * 1000;
-
 /**
  * Founder only.
  *
- * GET  ?key=…&slug=out-there   mint one link per rider, ready to send
- * POST ?key=…                  create or update an experience running
+ * GET  ?key=…&slug=out-there   mint one link per PARTICIPANT, ready to send
+ * POST ?key=…                  create or update a running
+ * PUT  ?key=…                  toggle the seven-day close on or off
  *
- * The links are minted here and sent by hand over WhatsApp. That message is
- * the ritual and it stays a human act (BRD AF-11, NT-02).
+ * Links are minted for the cast of a running, never for the whole roster.
  */
 
 export async function GET(req: Request) {
@@ -32,33 +36,78 @@ export async function GET(req: Request) {
     .where(eq(experiences.slug, slug))
     .limit(1);
   if (!experience) {
-    return NextResponse.json({ error: `no experience with slug ${slug}` }, { status: 404 });
+    return NextResponse.json({ error: `no running with slug ${slug}` }, { status: 404 });
   }
 
-  const opensAt = new Date(experience.finishedAt.getTime() + 24 * HOURS);
-  const closesAt = new Date(experience.finishedAt.getTime() + 7 * 24 * HOURS);
+  const w = windowFor(experience);
 
-  const all = await db.select().from(riders);
+  // Only the cast. A rider who did not ride this one never gets a link.
+  const cast = await db
+    .select({ id: riders.id, name: riders.name, phone: riders.phone })
+    .from(participations)
+    .innerJoin(riders, eq(participations.riderId, riders.id))
+    .where(eq(participations.experienceId, experience.id));
 
   const links = await Promise.all(
-    all.map(async (r) => ({
+    cast.map(async (r) => ({
+      riderId: r.id,
       rider: r.name,
       phone: r.phone,
       url: `https://ridetrax.eu/app/aftermath/${await mintAftermathToken({
         riderId: r.id,
         experienceId: experience.id,
-        opensAt,
-        closesAt,
       })}`,
     }))
   );
 
   return NextResponse.json({
     experience: experience.name,
-    opensAt: opensAt.toISOString(),
-    closesAt: closesAt.toISOString(),
+    opensAt: w.opensAt.toISOString(),
+    closesAt: w.closesAt ? w.closesAt.toISOString() : null,
+    autoExpire: experience.autoExpire,
+    state: w.state,
     count: links.length,
     links,
+  });
+}
+
+/** Toggle the seven-day close, or correct a running's finish time. */
+export async function PUT(req: Request) {
+  if (!isFounder(req)) return NextResponse.json({ error: 'no' }, { status: 404 });
+
+  const body = (await req.json().catch(() => null)) as {
+    slug?: string;
+    autoExpire?: boolean;
+    finishedAt?: string;
+  } | null;
+  if (!body?.slug) return NextResponse.json({ error: 'slug required' }, { status: 400 });
+
+  const patch: Record<string, unknown> = {};
+  if (typeof body.autoExpire === 'boolean') patch.autoExpire = body.autoExpire;
+  if (body.finishedAt) {
+    const d = new Date(body.finishedAt);
+    if (Number.isNaN(d.getTime())) {
+      return NextResponse.json({ error: 'finishedAt is not a date' }, { status: 400 });
+    }
+    patch.finishedAt = d;
+  }
+  if (Object.keys(patch).length === 0) {
+    return NextResponse.json({ error: 'nothing to change' }, { status: 400 });
+  }
+
+  const [row] = await db
+    .update(experiences)
+    .set(patch)
+    .where(eq(experiences.slug, body.slug))
+    .returning();
+  if (!row) return NextResponse.json({ error: 'no such running' }, { status: 404 });
+
+  const w = windowFor(row);
+  return NextResponse.json({
+    ok: true,
+    experience: row,
+    state: w.state,
+    closesAt: w.closesAt ? w.closesAt.toISOString() : null,
   });
 }
 
@@ -89,6 +138,8 @@ export async function POST(req: Request) {
     .values({ slug: body.slug, name: body.name, year: body.year, finishedAt })
     .onConflictDoUpdate({
       target: experiences.slug,
+      // Deliberately does not touch autoExpire: re-saving a running must not
+      // silently slam a window the founder opened on purpose.
       set: { name: body.name, year: body.year, finishedAt },
     })
     .returning();

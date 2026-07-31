@@ -38,7 +38,44 @@ export const experiences = pgTable('experiences', {
   year: integer('year').notNull(),
   /** When the riders got home. The Aftermath window is measured from here. */
   finishedAt: timestamp('finished_at', { withTimezone: true }).notNull(),
+  /**
+   * Whether the seven-day close applies.
+   *
+   * On by default, because the deadline is part of why the ritual works.
+   * Turned off, the window stays open with no end, which is how a running
+   * that finished months ago can still be collected. Turned back on, the
+   * links expire the moment it is saved, since finish + 7 days is by then
+   * in the past. That is the intended way to close a late collection.
+   *
+   * The twenty-four hour delay before opening is not affected. Sleep first
+   * applies whatever else is true.
+   */
+  autoExpire: boolean('auto_expire').notNull().default(true),
 });
+
+/**
+ * Who actually rode a given running.
+ *
+ * The roster is everyone admitted to the Collective. Participation is a
+ * different fact, and conflating them means a rider who skipped Dobrogea gets
+ * asked what Dobrogea took from them.
+ */
+export const participations = pgTable(
+  'participations',
+  {
+    id: serial('id').primaryKey(),
+    riderId: integer('rider_id')
+      .notNull()
+      .references(() => riders.id, { onDelete: 'cascade' }),
+    experienceId: integer('experience_id')
+      .notNull()
+      .references(() => experiences.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    once: uniqueIndex('participation_once').on(t.riderId, t.experienceId),
+  })
+);
 
 /**
  * One rider's two sentences about one experience.
@@ -78,3 +115,28 @@ export const aftermathLines = pgTable(
 export type Rider = typeof riders.$inferSelect;
 export type Experience = typeof experiences.$inferSelect;
 export type AftermathLine = typeof aftermathLines.$inferSelect;
+export type Participation = typeof participations.$inferSelect;
+
+const HOUR = 60 * 60 * 1000;
+
+export interface Window {
+  opensAt: Date;
+  /** Null when the seven-day close is switched off. */
+  closesAt: Date | null;
+  state: 'early' | 'open' | 'closed';
+}
+
+/**
+ * The window, derived from the running rather than baked into a link.
+ *
+ * Deriving it here means the founder can move it after links are already in
+ * riders' hands: a collection can be opened months late, and closed the moment
+ * he decides it is done.
+ */
+export function windowFor(e: Pick<Experience, 'finishedAt' | 'autoExpire'>, now = new Date()): Window {
+  const opensAt = new Date(e.finishedAt.getTime() + 24 * HOUR);
+  const closesAt = e.autoExpire ? new Date(e.finishedAt.getTime() + 7 * 24 * HOUR) : null;
+  const state =
+    now < opensAt ? 'early' : closesAt && now > closesAt ? 'closed' : 'open';
+  return { opensAt, closesAt, state };
+}

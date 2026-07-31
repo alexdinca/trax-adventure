@@ -27,79 +27,47 @@ export interface AftermathClaims extends JWTPayload {
   purpose: 'aftermath';
 }
 
+/** Two years. A backstop against an ancient link, not the Aftermath window. */
+const MAX_LIFE = '730d';
+
 /**
- * Mint one rider's link for one experience.
+ * Mint one rider's link for one running.
  *
- * @param opensAt  finish + 24h. Before this the page will not resolve.
- * @param closesAt finish + 7 days. After this it stops accepting writes.
+ * The token carries identity only: which rider, which running. It deliberately
+ * does NOT carry the window. A window baked into a signed link cannot be moved
+ * afterwards, and the founder needs to open a collection months late and close
+ * it when he decides it is done. The window is derived from the running in the
+ * database on every request instead (see windowFor in db/schema).
  */
 export async function mintAftermathToken(opts: {
   riderId: number;
   experienceId: number;
-  opensAt: Date;
-  closesAt: Date;
 }): Promise<string> {
   return new SignJWT({ exp_id: opts.experienceId, purpose: 'aftermath' })
     .setProtectedHeader({ alg: 'HS256', kid: 'v1' })
     .setIssuer(ISSUER)
     .setSubject(String(opts.riderId))
     .setIssuedAt()
-    .setNotBefore(opts.opensAt)
-    .setExpirationTime(opts.closesAt)
+    .setExpirationTime(MAX_LIFE)
     .sign(secret());
 }
 
-export type WindowState =
-  | { state: 'open'; riderId: number; experienceId: number; closesAt: Date }
-  | { state: 'early'; opensAt: Date }
-  | { state: 'closed' }
-  | { state: 'invalid' };
+export type Identity =
+  | { ok: true; riderId: number; experienceId: number }
+  | { ok: false };
 
-/**
- * Verify a token and report where we are in its window.
- *
- * jose throws distinct errors for "not yet valid" and "expired", which is
- * exactly the distinction the rider-facing copy needs: one is a door that has
- * not opened, the other is a door that has closed.
- */
-export async function readAftermathToken(token: string): Promise<WindowState> {
+/** Verify a link and report who it belongs to. Says nothing about the window. */
+export async function readAftermathToken(token: string): Promise<Identity> {
   try {
     const { payload } = await jwtVerify(token, secret(), { issuer: ISSUER });
     const claims = payload as AftermathClaims;
-    if (claims.purpose !== 'aftermath') return { state: 'invalid' };
-    return {
-      state: 'open',
-      riderId: Number(claims.sub),
-      experienceId: Number(claims.exp_id),
-      closesAt: new Date((claims.exp ?? 0) * 1000),
-    };
-  } catch (err) {
-    const code = (err as { code?: string })?.code;
-    if (code === 'ERR_JWT_CLAIM_VALIDATION_FAILED') {
-      // Distinguish "too early" from a malformed claim by decoding without
-      // verifying time. The signature has already been checked by this point
-      // only in the expired case, so decode defensively.
-      const nbf = readClaimUnsafe(token, 'nbf');
-      if (nbf && nbf * 1000 > Date.now()) return { state: 'early', opensAt: new Date(nbf * 1000) };
-      return { state: 'invalid' };
-    }
-    if (code === 'ERR_JWT_EXPIRED') return { state: 'closed' };
-    return { state: 'invalid' };
-  }
-}
-
-/**
- * Read one numeric claim from an unverified token, for the sole purpose of
- * telling a rider when their window opens. Never used for authorisation.
- */
-function readClaimUnsafe(token: string, claim: string): number | null {
-  try {
-    const part = token.split('.')[1];
-    const json = JSON.parse(Buffer.from(part, 'base64url').toString('utf8'));
-    const v = json?.[claim];
-    return typeof v === 'number' ? v : null;
+    if (claims.purpose !== 'aftermath') return { ok: false };
+    const riderId = Number(claims.sub);
+    const experienceId = Number(claims.exp_id);
+    if (!riderId || !experienceId) return { ok: false };
+    return { ok: true, riderId, experienceId };
   } catch {
-    return null;
+    return { ok: false };
   }
 }
 

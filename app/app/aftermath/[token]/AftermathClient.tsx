@@ -21,7 +21,9 @@ type State =
   | { state: 'invalid' }
   | {
       state: 'open';
-      closesAt: string;
+      /** Null when the seven-day close is switched off. */
+      closesAt: string | null;
+      daysSince: number;
       experience: { name: string; year: number };
       lines: { took: string; gave: string; mayPublish: boolean } | null;
     };
@@ -127,11 +129,13 @@ export function AftermathClient({ token }: { token: string }) {
     );
   }
 
-  const closes = new Date(data.closesAt);
-  const daysLeft = Math.max(
-    0,
-    Math.ceil((closes.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
-  );
+  const daysLeft = data.closesAt
+    ? Math.max(0, Math.ceil((new Date(data.closesAt).getTime() - Date.now()) / (24 * 3600e3)))
+    : null;
+
+  // A collection can be opened long after the finish. Saying "while it is
+  // still close" three months later would be a lie the rider can check.
+  const late = data.daysSince > 21;
 
   return shell(
     <>
@@ -141,7 +145,7 @@ export function AftermathClient({ token }: { token: string }) {
 
       <Block space="md">
         <p className="font-sans font-medium text-trax-white text-2xl md:text-3xl leading-[1.3]">
-          Two things, while it is still close.
+          {late ? 'Two things, late but not too late.' : 'Two things, while it is still close.'}
         </p>
       </Block>
 
@@ -156,16 +160,33 @@ export function AftermathClient({ token }: { token: string }) {
           is obvious at the moment of writing. */}
       <Block space="lg" className="border-l border-trax-white/15 pl-5 space-y-4">
         <Mark className="block">Why this exists</Mark>
-        <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
-          The detail is already going. In a week you will have the summary, and
-          in a year you will have whatever you wrote down. This is the part of
-          the experience that lasts, and it is the only part you can still
-          change.
-        </p>
-        <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
-          It is also the only record TRAX keeps of what happened out there, in
-          the words of the people it happened to. Not the photographs. These.
-        </p>
+        {late ? (
+          <>
+            <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+              This one is being asked late. Months late. The detail has already
+              gone and nobody is pretending otherwise.
+            </p>
+            <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+              What is left after this long is the part that was always going to
+              last, which makes it the more honest answer, not the weaker one.
+              Write what you still carry.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+              The detail is already going. In a week you will have the summary,
+              and in a year you will have whatever you wrote down. This is the
+              part of the experience that lasts, and it is the only part you can
+              still change.
+            </p>
+            <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+              It is also the only record TRAX keeps of what happened out there,
+              in the words of the people it happened to. Not the photographs.
+              These.
+            </p>
+          </>
+        )}
         <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
           Two lines. Nobody is marking them. Write them badly if badly is what
           is true.
@@ -266,12 +287,14 @@ export function AftermathClient({ token }: { token: string }) {
 
       <Block space="md">
         <Mark className="text-trax-grey/60">
-          {saved ? 'You can change it until the window closes. ' : ''}
-          {daysLeft === 0
-            ? 'Closes today'
-            : daysLeft === 1
-              ? 'One day left'
-              : `${daysLeft} days left`}
+          {saved ? 'You can change it while this stays open. ' : ''}
+          {daysLeft === null
+            ? 'Open until Alex closes it'
+            : daysLeft === 0
+              ? 'Closes today'
+              : daysLeft === 1
+                ? 'One day left'
+                : `${daysLeft} days left`}
         </Mark>
       </Block>
     </>
