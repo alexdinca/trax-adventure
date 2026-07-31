@@ -31,6 +31,27 @@ type Exp = {
   closesAt: string | null;
 };
 type Candidate = Rider & { rode: boolean };
+type TwilioStatus = {
+  ready: boolean;
+  templateName: string | null;
+  approval: string | null;
+  from: string | null;
+  problem: string | null;
+};
+type SendReport = {
+  ok: boolean;
+  dryRun: boolean;
+  sent: number;
+  failed: number;
+  skipped: number;
+  error?: string;
+  results?: {
+    rider: string;
+    status: 'sent' | 'skipped' | 'failed';
+    reason?: string;
+    code?: number;
+  }[];
+};
 type Link = { rider: string; phone: string | null; url: string };
 type Line = {
   id: number;
@@ -205,6 +226,37 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ slug: '', name: '', year: '2026', finishedAt: '' });
+  const [sending, setSending] = useState(false);
+  const [sendResult, setSendResult] = useState<SendReport | null>(null);
+  const [twilio, setTwilio] = useState<TwilioStatus | null>(null);
+
+  useEffect(() => {
+    api('send')
+      .then((r) => r.json())
+      .then((d) =>
+        setTwilio({
+          ready: Boolean(d.template) && d.template?.approval?.status !== 'rejected',
+          templateName: d.template?.friendlyName ?? null,
+          approval: d.template?.approval?.status ?? null,
+          from: d.config?.from ?? null,
+          problem: d.template ? null : (d.error?.message ?? 'no template configured'),
+        })
+      )
+      .catch(() => setTwilio(null));
+  }, [api]);
+
+  async function send(slug: string, dryRun: boolean) {
+    setSending(true);
+    setSendResult(null);
+    try {
+      const r = await api('send', { method: 'POST', body: JSON.stringify({ slug, dryRun }) });
+      setSendResult(await r.json());
+    } catch (e) {
+      onError(String((e as Error).message));
+    } finally {
+      setSending(false);
+    }
+  }
 
   const load = useCallback(async () => {
     try {
@@ -490,6 +542,85 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                       );
                     })}
                   </div>
+
+                  {/* Batch send. One button, one message each, results listed. */}
+                  {links.length > 0 && (
+                    <Block space="md">
+                      <Mark className="block mb-3">Send it to everyone</Mark>
+
+                      {twilio && !twilio.ready && (
+                        <Mark className="block mb-3 text-trax-red">
+                          Twilio not ready: {twilio.problem ?? twilio.approval}
+                        </Mark>
+                      )}
+                      {twilio?.ready && (
+                        <Mark className="block mb-3 text-trax-grey/70">
+                          {twilio.templateName}
+                          {twilio.approval && twilio.approval !== 'unknown'
+                            ? ` · ${twilio.approval}`
+                            : ''}
+                          {twilio.from ? ` · from ${twilio.from}` : ''}
+                        </Mark>
+                      )}
+
+                      <div className="flex gap-4 items-center flex-wrap">
+                        <button
+                          onClick={() => void send(e.slug, true)}
+                          disabled={sending}
+                          className="px-4 py-2 border border-trax-white/25 font-mono text-[11px] uppercase text-trax-white/80"
+                        >
+                          {sending ? 'working' : 'dry run'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (
+                              !confirm(
+                                `Send ${links.length} WhatsApp ${
+                                  links.length === 1 ? 'message' : 'messages'
+                                } for ${e.name}? Each rider gets their own link.`
+                              )
+                            )
+                              return;
+                            void send(e.slug, false);
+                          }}
+                          disabled={sending || !twilio?.ready}
+                          className="trax-filled px-5 py-2.5 font-mono text-[11px] uppercase"
+                        >
+                          send for real
+                        </button>
+                      </div>
+
+                      {sendResult && (
+                        <div className="mt-4">
+                          <Mark className="block text-trax-white/80">
+                            {sendResult.error
+                              ? sendResult.error
+                              : `${sendResult.dryRun ? 'Dry run · ' : ''}${sendResult.sent} sent · ${sendResult.failed} failed · ${sendResult.skipped} skipped`}
+                          </Mark>
+                          <div className="mt-2 space-y-1">
+                            {(sendResult.results ?? []).map((r, i) => (
+                              <div key={i} className="font-mono text-[11px] text-trax-grey">
+                                <span
+                                  className={
+                                    r.status === 'failed'
+                                      ? 'text-trax-red'
+                                      : r.status === 'skipped'
+                                        ? 'text-trax-grey/50'
+                                        : 'text-trax-white/70'
+                                  }
+                                >
+                                  {r.status}
+                                </span>{' '}
+                                {r.rider}
+                                {r.status !== 'sent' && r.reason ? ` — ${r.reason}` : ''}
+                                {r.code ? ` (${r.code})` : ''}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </Block>
+                  )}
 
                   {lines.length > 0 && (
                     <>
