@@ -49,33 +49,50 @@ export async function GET(req: Request) {
   };
 
   const c = client();
-  if (!c || !config.contentSid) {
-    return NextResponse.json({ config, template: null });
+  if (!c) return NextResponse.json({ config, template: null });
+
+  const describe = (content: {
+    sid: string;
+    friendlyName: string;
+    language: string;
+    variables: unknown;
+    types: unknown;
+  }) => ({
+    sid: content.sid,
+    friendlyName: content.friendlyName,
+    language: content.language,
+    variables: content.variables,
+    types: Object.keys((content.types as Record<string, unknown>) ?? {}),
+    body:
+      (content.types as Record<string, { body?: string }> | undefined)?.['twilio/text']
+        ?.body ?? null,
+  });
+
+  let template = null;
+  let error = null;
+
+  if (config.contentSid) {
+    try {
+      template = describe(await c.content.v1.contents(config.contentSid).fetch());
+    } catch (err) {
+      const e = err as { code?: number; message?: string; status?: number };
+      error = { code: e.code, message: e.message, status: e.status };
+    }
   }
 
-  try {
-    const content = await c.content.v1.contents(config.contentSid).fetch();
-    return NextResponse.json({
-      config,
-      template: {
-        friendlyName: content.friendlyName,
-        language: content.language,
-        variables: content.variables,
-        types: Object.keys(content.types ?? {}),
-        body:
-          (content.types as Record<string, { body?: string }> | undefined)?.[
-            'twilio/text'
-          ]?.body ?? null,
-      },
-    });
-  } catch (err) {
-    const e = err as { code?: number; message?: string; status?: number };
-    return NextResponse.json({
-      config,
-      template: null,
-      error: { code: e.code, message: e.message, status: e.status },
-    });
+  // When the configured SID does not resolve, say what this account actually
+  // has, so the right one can be picked rather than guessed at.
+  let available: unknown[] = [];
+  if (!template) {
+    try {
+      const list = await c.content.v1.contents.list({ limit: 25 });
+      available = list.map(describe);
+    } catch {
+      /* listing is a convenience; its failure is not the headline */
+    }
   }
+
+  return NextResponse.json({ config, template, error, available });
 }
 
 interface Result {
