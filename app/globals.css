@@ -40,6 +40,9 @@ body {
    ────────────────────────────────────────────────────────────────────────── */
 
 .trax-app {
+  /* Native UI (date pickers, scrollbars, form controls) renders dark rather
+     than a white panel dropped onto a near-black page. */
+  color-scheme: dark;
   /* Stop iOS inflating type and destroying solid-set leading (BRD §9.2) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -72,6 +75,33 @@ body {
   border: none;
   color: inherit;
   font: inherit;
+}
+
+/* Date and time fields keep their native picker. The reset above strips
+   `appearance`, which in WebKit also removes the calendar indicator, leaving
+   a field that looks typeable but will not open a calendar. */
+.trax-app input[type='date'],
+.trax-app input[type='datetime-local'],
+.trax-app input[type='time'] {
+  appearance: auto;
+  -webkit-appearance: auto;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* The indicator ships black, which is invisible on near-black ground. */
+.trax-app input[type='date']::-webkit-calendar-picker-indicator,
+.trax-app input[type='datetime-local']::-webkit-calendar-picker-indicator,
+.trax-app input[type='time']::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.45;
+  cursor: pointer;
+}
+
+.trax-app input[type='date']::-webkit-calendar-picker-indicator:hover,
+.trax-app input[type='datetime-local']::-webkit-calendar-picker-indicator:hover,
+.trax-app input[type='time']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .trax-app input:focus,

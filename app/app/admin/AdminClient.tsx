@@ -203,15 +203,38 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
               className="trax-field font-mono text-sm text-trax-white w-full border-b border-dashed border-trax-white/25 pb-1"
             />
           ))}
-          <input
-            type="datetime-local"
-            value={form.finishedAt}
-            onChange={(e) => setForm({ ...form, finishedAt: e.target.value })}
-            className="trax-field font-mono text-sm text-trax-white w-full border-b border-dashed border-trax-white/25 pb-1"
-          />
+          <div>
+            <Mark className="block mb-2 text-trax-grey/60">Finished</Mark>
+            <input
+              type="datetime-local"
+              value={form.finishedAt}
+              onChange={(e) => setForm({ ...form, finishedAt: e.target.value })}
+              // Tapping anywhere in the field opens the calendar, rather than
+              // only the small indicator. Matters most on a phone.
+              onClick={(e) => {
+                const el = e.currentTarget as HTMLInputElement & { showPicker?: () => void };
+                try {
+                  el.showPicker?.();
+                } catch {
+                  /* older browsers fall back to the indicator */
+                }
+              }}
+              className="trax-field font-mono text-sm text-trax-white w-full border-b border-dashed border-trax-white/25 pb-1"
+            />
+          </div>
           <Mark className="block text-trax-grey/60">
             when the riders got home. the window opens 24h later and dies on day seven
           </Mark>
+          {form.finishedAt && (
+            <Mark className="block text-trax-white/70">
+              {(() => {
+                const f = new Date(form.finishedAt);
+                if (Number.isNaN(f.getTime())) return null;
+                const d = (n: number) => new Date(f.getTime() + n * 3600e3).toLocaleString();
+                return `opens ${d(24)} · closes ${d(24 * 7)}`;
+              })()}
+            </Mark>
+          )}
           <button
             onClick={async () => {
               await api('aftermath', {
