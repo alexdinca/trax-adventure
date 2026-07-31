@@ -152,12 +152,32 @@ export function AftermathClient({ token }: { token: string }) {
         </p>
       </Block>
 
+      {/* Why a rider should bother. The ritual only works if the point of it
+          is obvious at the moment of writing. */}
+      <Block space="lg" className="border-l border-trax-white/15 pl-5 space-y-4">
+        <Mark className="block">Why this exists</Mark>
+        <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+          The detail is already going. In a week you will have the summary, and
+          in a year you will have whatever you wrote down. This is the part of
+          the experience that lasts, and it is the only part you can still
+          change.
+        </p>
+        <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+          It is also the only record TRAX keeps of what happened out there, in
+          the words of the people it happened to. Not the photographs. These.
+        </p>
+        <p className="font-body text-trax-white/70 text-sm md:text-base leading-[1.7]">
+          Two lines. Nobody is marking them. Write them badly if badly is what
+          is true.
+        </p>
+      </Block>
+
       <Block space="lg">
-        <Rule tone="ember" />
-        <p className="font-sans font-medium text-trax-white text-lg md:text-xl mt-5 mb-4">
+        <p className="font-sans font-medium text-trax-white text-lg md:text-xl mb-4">
           What the terrain took.
         </p>
         <Field
+          tone="ember"
           value={took}
           onChange={(e) => {
             setTook(e.target.value);
@@ -169,11 +189,11 @@ export function AftermathClient({ token }: { token: string }) {
       </Block>
 
       <Block space="lg">
-        <Rule tone="ember" />
-        <p className="font-sans font-medium text-trax-white text-lg md:text-xl mt-5 mb-4">
+        <p className="font-sans font-medium text-trax-white text-lg md:text-xl mb-4">
           What it gave.
         </p>
         <Field
+          tone="ember"
           value={gave}
           onChange={(e) => {
             setGave(e.target.value);
@@ -184,43 +204,69 @@ export function AftermathClient({ token }: { token: string }) {
         />
       </Block>
 
-      {/* Consent. Private by default; publishing is the rider's decision. */}
+      {/* Consent, as an actual checkbox, and separate from saving. Private is
+          the default and stays the default until the rider says otherwise. */}
       <Block space="lg">
         <Rule />
         <button
+          type="button"
+          role="checkbox"
+          aria-checked={mayPublish}
           onClick={() => {
             setMayPublish((v) => !v);
             setSaved(false);
           }}
-          className="w-full text-left py-5"
-          aria-pressed={mayPublish}
+          className="w-full text-left py-5 flex gap-4 items-start"
         >
-          <span className="font-body text-base leading-[1.6] text-trax-white">
-            {mayPublish ? '— ' : '   '}
-            TRAX may use these words in a Field Note.
+          <span
+            aria-hidden="true"
+            className={`mt-0.5 w-[18px] h-[18px] shrink-0 border flex items-center justify-center ${
+              mayPublish ? 'border-trax-white bg-trax-white' : 'border-trax-white/40'
+            }`}
+          >
+            {mayPublish && (
+              <svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true">
+                <path
+                  d="M1 4.5L4 7.5L10 1.5"
+                  stroke="#0E0F11"
+                  strokeWidth="1.8"
+                  strokeLinecap="square"
+                />
+              </svg>
+            )}
           </span>
-          <span className="block font-body text-sm text-trax-grey mt-2">
-            {mayPublish
-              ? 'Attributed to your first name. Nothing else.'
-              : 'Left off, these stay between you and Alex.'}
+          <span>
+            <span className="block font-body text-base leading-[1.5] text-trax-white">
+              TRAX may quote these in a Field Note.
+            </span>
+            <span className="block font-body text-sm text-trax-grey mt-1.5">
+              {mayPublish
+                ? 'Under your first name. Nothing else, and never the whole thing.'
+                : 'Leave it unticked and these stay between you and Alex.'}
+            </span>
           </span>
         </button>
         <Rule />
       </Block>
 
-      <Block space="lg">
+      <Block space="lg" className="flex items-center gap-6 flex-wrap">
         <button
           onClick={submit}
           disabled={saving || (!took.trim() && !gave.trim())}
           className="trax-filled px-8 py-4 font-mono text-xs uppercase tracking-normal"
         >
-          {saving ? 'Leaving it' : saved ? 'Left' : 'Leave it'}
+          {saving ? 'Saving' : 'Save'}
         </button>
+        {saved && !saving && (
+          <Mark className="text-trax-white/70">
+            Saved{mayPublish ? '' : ', and private'}
+          </Mark>
+        )}
       </Block>
 
       <Block space="md">
         <Mark className="text-trax-grey/60">
-          {saved ? 'Saved. You can change it until the window closes. ' : ''}
+          {saved ? 'You can change it until the window closes. ' : ''}
           {daysLeft === 0
             ? 'Closes today'
             : daysLeft === 1

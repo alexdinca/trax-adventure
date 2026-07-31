@@ -83,16 +83,26 @@ export function Block({
 
 type FieldProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'> & {
   className?: string;
+  /**
+   * 'ember' puts the accent on the input's own underline. A rule sitting above
+   * a field reads as the field itself, which sent at least one rider typing
+   * into the wrong place.
+   */
+  tone?: 'default' | 'ember';
 };
 
 export const Field = React.forwardRef<HTMLTextAreaElement, FieldProps>(
-  function Field({ className = '', rows = 3, ...rest }, ref) {
+  function Field({ className = '', rows = 3, tone = 'default', ...rest }, ref) {
+    const underline =
+      tone === 'ember'
+        ? 'border-b-2 border-solid border-trax-red'
+        : 'border-b border-dashed border-trax-white/25';
     return (
       <textarea
         ref={ref}
         rows={rows}
         className={`trax-field font-body text-base md:text-lg leading-[1.7] text-trax-white w-full
-                    border-b border-dashed border-trax-white/25 pb-2
+                    ${underline} pb-2
                     placeholder:text-trax-grey/50 ${className}`}
         {...rest}
       />
