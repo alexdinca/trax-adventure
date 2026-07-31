@@ -30,3 +30,6 @@ yarn-error.log*
 # Private, unfiltered rally GPX source data (not for public/committed distribution)
 scripts/gpx-source/
 .env*
+
+# Claude Code: per-machine settings stay local, project settings are shared
+.claude/settings.local.json
