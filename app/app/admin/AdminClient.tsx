@@ -43,6 +43,7 @@ export function AdminClient() {
   const [key, setKey] = useState<string | null>(null);
   const [typed, setTyped] = useState('');
   const [err, setErr] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
 
   useEffect(() => {
     try {
@@ -51,6 +52,17 @@ export function AdminClient() {
     } catch {
       /* private mode */
     }
+  }, []);
+
+  const forget = useCallback((message?: string) => {
+    try {
+      sessionStorage.removeItem(KEY_STORE);
+    } catch {
+      /* private mode */
+    }
+    setKey(null);
+    setTyped('');
+    if (message) setErr(message);
   }, []);
 
   const api = useCallback(
@@ -63,11 +75,46 @@ export function AdminClient() {
           ...(init?.headers ?? {}),
         },
       });
-      if (res.status === 404) throw new Error('unauthorised');
+      // Every founder route answers 404 rather than 401, so a wrong key is
+      // indistinguishable from a missing route. Treat it as a dead key and
+      // send the operator back to the gate instead of leaving them in a
+      // console where nothing works and nothing says why.
+      if (res.status === 404) {
+        forget('That key does not work. Check it and paste again.');
+        throw new Error('unauthorised');
+      }
       return res;
     },
-    [key]
+    [key, forget]
   );
+
+  /** Verify before storing. An unchecked key lets you into a broken console. */
+  async function tryKey(candidate: string) {
+    const trimmed = candidate.trim();
+    if (!trimmed) return;
+    setChecking(true);
+    setErr(null);
+    try {
+      const res = await fetch('/api/app/admin/riders', {
+        headers: { 'x-admin-key': trimmed },
+      });
+      if (!res.ok) {
+        setErr('That key does not work. Check it and paste again.');
+        return;
+      }
+      try {
+        sessionStorage.setItem(KEY_STORE, trimmed);
+      } catch {
+        /* private mode: hold it in memory for this session only */
+      }
+      setKey(trimmed);
+      setTyped('');
+    } catch {
+      setErr('Could not reach the server.');
+    } finally {
+      setChecking(false);
+    }
+  }
 
   if (!key) {
     return (
@@ -80,16 +127,27 @@ export function AdminClient() {
           <input
             type="password"
             value={typed}
-            onChange={(e) => setTyped(e.target.value)}
+            onChange={(e) => {
+              setTyped(e.target.value);
+              if (err) setErr(null);
+            }}
             onKeyDown={(e) => {
-              if (e.key !== 'Enter' || !typed.trim()) return;
-              sessionStorage.setItem(KEY_STORE, typed.trim());
-              setKey(typed.trim());
+              if (e.key === 'Enter') void tryKey(typed);
             }}
             className="trax-field font-mono text-base text-trax-white w-full border-b border-dashed border-trax-white/25 pb-2"
             placeholder="paste it"
             autoFocus
+            autoComplete="off"
           />
+        </Block>
+        <Block space="sm">
+          <button
+            onClick={() => void tryKey(typed)}
+            disabled={checking || !typed.trim()}
+            className="trax-filled px-5 py-2.5 font-mono text-[11px] uppercase"
+          >
+            {checking ? 'checking' : 'open'}
+          </button>
         </Block>
         {err && (
           <Block space="sm">
@@ -104,13 +162,7 @@ export function AdminClient() {
     <Shell>
       <div className="flex items-baseline justify-between">
         <Mark>Console</Mark>
-        <button
-          onClick={() => {
-            sessionStorage.removeItem(KEY_STORE);
-            setKey(null);
-            setTyped('');
-          }}
-        >
+        <button onClick={() => forget()}>
           <Mark className="text-trax-grey/50">forget key</Mark>
         </button>
       </div>
