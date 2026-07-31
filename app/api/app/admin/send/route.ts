@@ -76,11 +76,20 @@ export async function GET(req: Request) {
   const approval = async (sid: string) => {
     try {
       const a = await c.content.v1.contents(sid).approvalFetch();
-      const w = (a as unknown as { whatsapp?: { status?: string; category?: string; rejectionReason?: string } })
-        .whatsapp;
-      return { status: w?.status ?? 'unknown', category: w?.category ?? null, reason: w?.rejectionReason ?? null };
-    } catch {
-      return { status: 'unknown', category: null, reason: null };
+      // Return the payload as Twilio actually shaped it. Meta's rejection
+      // reason is the whole point of asking, and guessing at the field name
+      // is how it gets lost.
+      const raw = JSON.parse(JSON.stringify(a)) as Record<string, unknown>;
+      const w = (raw.whatsapp ?? raw) as Record<string, unknown>;
+      return {
+        status: w.status ?? 'unknown',
+        category: w.category ?? null,
+        reason: w.rejection_reason ?? w.rejectionReason ?? null,
+        raw,
+      };
+    } catch (err) {
+      const e = err as { code?: number; message?: string };
+      return { status: 'unknown', category: null, reason: null, error: e.message, code: e.code };
     }
   };
 
