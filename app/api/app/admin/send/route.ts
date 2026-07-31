@@ -68,12 +68,29 @@ export async function GET(req: Request) {
         ?.body ?? null,
   });
 
+  /**
+   * A template can exist and still be unusable. Sending outside the 24h
+   * window needs Meta's approval, and an unapproved one fails at send time
+   * with 21656 rather than at configuration time.
+   */
+  const approval = async (sid: string) => {
+    try {
+      const a = await c.content.v1.contents(sid).approvalFetch();
+      const w = (a as unknown as { whatsapp?: { status?: string; category?: string; rejectionReason?: string } })
+        .whatsapp;
+      return { status: w?.status ?? 'unknown', category: w?.category ?? null, reason: w?.rejectionReason ?? null };
+    } catch {
+      return { status: 'unknown', category: null, reason: null };
+    }
+  };
+
   let template = null;
   let error = null;
 
   if (config.contentSid) {
     try {
-      template = describe(await c.content.v1.contents(config.contentSid).fetch());
+      const fetched = await c.content.v1.contents(config.contentSid).fetch();
+      template = { ...describe(fetched), approval: await approval(config.contentSid) };
     } catch (err) {
       const e = err as { code?: number; message?: string; status?: number };
       error = { code: e.code, message: e.message, status: e.status };
@@ -86,7 +103,11 @@ export async function GET(req: Request) {
   if (!template) {
     try {
       const list = await c.content.v1.contents.list({ limit: 25 });
-      available = list.map(describe);
+      available = await Promise.all(
+        list
+          .filter((x) => /trax|aftermath/i.test(x.friendlyName))
+          .map(async (x) => ({ ...describe(x), approval: await approval(x.sid) }))
+      );
     } catch {
       /* listing is a convenience; its failure is not the headline */
     }
@@ -154,13 +175,20 @@ export async function POST(req: Request) {
 
     // Minted inside the loop, against this rider, so a link can never be
     // addressed to the wrong person.
-    const url = `https://ridetrax.eu/app/aftermath/${await mintAftermathToken({
+    const token = await mintAftermathToken({
       riderId: rider.id,
       experienceId: experience.id,
-    })}`;
+    });
+    const url = `https://ridetrax.eu/app/aftermath/${token}`;
 
     if (body.dryRun) {
-      results.push({ rider: rider.name, phone: rider.phone, status: 'sent', sid: 'dry-run' });
+      results.push({
+        rider: rider.name,
+        phone: rider.phone,
+        status: 'sent',
+        sid: 'dry-run',
+        reason: url,
+      });
       continue;
     }
 
@@ -168,10 +196,13 @@ export async function POST(req: Request) {
       const payload: Record<string, unknown> = {
         to: waAddress(rider.phone),
         contentSid,
+        // The template is a call-to-action whose button URL is already
+        //   https://ridetrax.eu/app/aftermath/{{2}}
+        // so variable 2 carries ONLY the token. Sending the whole link here
+        // would produce .../aftermath/https://ridetrax.eu/app/aftermath/…
         contentVariables: JSON.stringify({
-          '1': rider.name.trim().split(/\s+/)[0],
-          '2': experience.name,
-          '3': url,
+          '1': experience.name,
+          '2': token,
         }),
       };
       if (messagingServiceSid) payload.messagingServiceSid = messagingServiceSid;
