@@ -22,6 +22,7 @@ export async function GET(req: Request) {
       year: experiences.year,
       finishedAt: experiences.finishedAt,
       autoExpire: experiences.autoExpire,
+      noteSlug: experiences.noteSlug,
       lines: sql<number>`count(distinct ${aftermathLines.id})::int`,
       cast: sql<number>`count(distinct ${participations.id})::int`,
     })

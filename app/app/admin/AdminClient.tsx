@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Mark, Rule, Block } from '@/components/app/primitives';
+import { RecordEditor } from './RecordEditor';
 
 /**
  * The founder console. One operator, one screen.
@@ -24,6 +25,7 @@ type Exp = {
   year: number;
   finishedAt: string;
   autoExpire: boolean;
+  noteSlug: string | null;
   lines: number;
   cast: number;
   state: 'early' | 'open' | 'closed';
@@ -668,6 +670,24 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                           download the draft
                         </a>
                       </Block>
+
+                      {/* Once the note is published, name it here. Riders whose
+                          line was used then see it in their own Record. It is
+                          recorded rather than guessed from the filename, so
+                          renaming a draft cannot make the Record lie. */}
+                      <Block space="md">
+                        <Mark className="block mb-2">Published as</Mark>
+                        <NoteSlug
+                          value={e.noteSlug ?? ''}
+                          onSave={async (slug) => {
+                            await api('aftermath', {
+                              method: 'PUT',
+                              body: JSON.stringify({ slug: e.slug, noteSlug: slug }),
+                            });
+                            void load();
+                          }}
+                        />
+                      </Block>
                     </>
                   )}
                 </div>
@@ -695,12 +715,38 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
   );
 }
 
+/** The Field Note slug, saved on blur rather than on every keystroke. */
+function NoteSlug({
+  value,
+  onSave,
+}: {
+  value: string;
+  onSave: (slug: string) => Promise<void>;
+}) {
+  const [typed, setTyped] = useState(value);
+  useEffect(() => setTyped(value), [value]);
+
+  return (
+    <input
+      value={typed}
+      onChange={(e) => setTyped(e.target.value)}
+      onBlur={() => {
+        if (typed.trim() !== value) void onSave(typed.trim());
+      }}
+      placeholder="field-note-slug, or leave empty"
+      className="trax-field font-mono text-sm text-trax-white w-full border-b border-dashed border-trax-white/25 pb-1"
+    />
+  );
+}
+
 /* ── Roster ─────────────────────────────────────────────────────────────── */
 
 function Roster({ api, onError }: { api: Api; onError: (e: string) => void }) {
   const [list, setList] = useState<Rider[]>([]);
   const [bulk, setBulk] = useState('');
   const [adding, setAdding] = useState(false);
+  /** Which rider's record is expanded. One at a time; this is one operator. */
+  const [open, setOpen] = useState<number | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -770,19 +816,44 @@ function Roster({ api, onError }: { api: Api; onError: (e: string) => void }) {
         {list.map((r) => (
           <div key={r.id}>
             <div className="flex items-center justify-between py-3">
-              <span className="font-body text-trax-white/85">
-                {r.name}{' '}
-                <span className="font-mono text-[11px] uppercase text-trax-grey/60">{r.rung}</span>
-              </span>
+              <button
+                onClick={() => setOpen(open === r.id ? null : r.id)}
+                className="text-left flex-1"
+              >
+                <span className="font-body text-trax-white/85">
+                  {r.name}{' '}
+                  <span className="font-mono text-[11px] uppercase text-trax-grey/60">
+                    {r.rung}
+                  </span>
+                </span>
+              </button>
               <button
                 onClick={async () => {
+                  if (
+                    !confirm(
+                      `Remove ${r.name}? Their record and their own words go with them. Artifacts stay, unowned.`
+                    )
+                  )
+                    return;
                   await api(`riders?id=${r.id}`, { method: 'DELETE' });
+                  if (open === r.id) setOpen(null);
                   void load();
                 }}
               >
                 <Mark className="text-trax-grey/40">remove</Mark>
               </button>
             </div>
+
+            {open === r.id && (
+              <RecordEditor
+                api={api}
+                riderId={r.id}
+                rung={r.rung}
+                onRung={(rung) =>
+                  setList((prev) => prev.map((x) => (x.id === r.id ? { ...x, rung } : x)))
+                }
+              />
+            )}
             <Rule />
           </div>
         ))}

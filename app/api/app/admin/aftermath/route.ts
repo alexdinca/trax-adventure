@@ -79,11 +79,15 @@ export async function PUT(req: Request) {
     slug?: string;
     autoExpire?: boolean;
     finishedAt?: string;
+    noteSlug?: string;
   } | null;
   if (!body?.slug) return NextResponse.json({ error: 'slug required' }, { status: 400 });
 
   const patch: Record<string, unknown> = {};
   if (typeof body.autoExpire === 'boolean') patch.autoExpire = body.autoExpire;
+  // Which published Field Note this running's lines went into. Recorded once
+  // the note is live, so a rider whose words were used sees it in their Record.
+  if (typeof body.noteSlug === 'string') patch.noteSlug = body.noteSlug.trim() || null;
   if (body.finishedAt) {
     const d = new Date(body.finishedAt);
     if (Number.isNaN(d.getTime())) {

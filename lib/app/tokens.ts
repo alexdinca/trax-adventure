@@ -71,6 +71,87 @@ export async function readAftermathToken(token: string): Promise<Identity> {
   }
 }
 
+/* ── Binding a device to a rider (BRD ID-02) ───────────────────────────────
+   Two different tokens, and the difference matters. The invite is a one-time
+   claim that travels over WhatsApp and dies on redemption; the session is what
+   the device keeps afterwards. Separating them means a forwarded invite link is
+   spent rather than shared, and a stolen session cannot be replayed into a new
+   binding. */
+
+const INVITE_LIFE = '14d';
+/** Two years. An app opened four times a year must not log itself out. */
+const SESSION_LIFE = '730d';
+
+export interface InviteClaims extends JWTPayload {
+  sub: string;
+  jti: string;
+  purpose: 'bind';
+}
+
+/**
+ * Mint one invite. The jti is the row in `invites`; this only signs it.
+ *
+ * The caller writes the row first and passes the same jti in, so a signature
+ * that verifies but has no matching row is always a forgery attempt rather
+ * than a race.
+ */
+export async function mintInviteToken(opts: {
+  riderId: number;
+  jti: string;
+}): Promise<string> {
+  return new SignJWT({ purpose: 'bind' })
+    .setProtectedHeader({ alg: 'HS256', kid: 'v1' })
+    .setIssuer(ISSUER)
+    .setSubject(String(opts.riderId))
+    .setJti(opts.jti)
+    .setIssuedAt()
+    .setExpirationTime(INVITE_LIFE)
+    .sign(secret());
+}
+
+export type InviteIdentity = { ok: true; riderId: number; jti: string } | { ok: false };
+
+export async function readInviteToken(token: string): Promise<InviteIdentity> {
+  try {
+    const { payload } = await jwtVerify(token, secret(), { issuer: ISSUER });
+    const claims = payload as InviteClaims;
+    if (claims.purpose !== 'bind') return { ok: false };
+    const riderId = Number(claims.sub);
+    if (!riderId || !claims.jti) return { ok: false };
+    return { ok: true, riderId, jti: claims.jti };
+  } catch {
+    return { ok: false };
+  }
+}
+
+export interface SessionClaims extends JWTPayload {
+  sub: string;
+  purpose: 'session';
+}
+
+export async function mintSessionToken(riderId: number): Promise<string> {
+  return new SignJWT({ purpose: 'session' })
+    .setProtectedHeader({ alg: 'HS256', kid: 'v1' })
+    .setIssuer(ISSUER)
+    .setSubject(String(riderId))
+    .setIssuedAt()
+    .setExpirationTime(SESSION_LIFE)
+    .sign(secret());
+}
+
+/** Verify a session cookie. Returns the rider id, or null for anything else. */
+export async function readSessionToken(token: string): Promise<number | null> {
+  try {
+    const { payload } = await jwtVerify(token, secret(), { issuer: ISSUER });
+    const claims = payload as SessionClaims;
+    if (claims.purpose !== 'session') return null;
+    const riderId = Number(claims.sub);
+    return riderId || null;
+  } catch {
+    return null;
+  }
+}
+
 /** The founder-only guard, reusing the shared-secret pattern already shipped. */
 export function isFounder(request: Request): boolean {
   const key = process.env.APP_ADMIN_KEY;

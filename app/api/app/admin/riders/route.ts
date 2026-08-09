@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/app/db';
-import { riders } from '@/lib/app/db/schema';
+import { RUNGS, riders } from '@/lib/app/db/schema';
 import { isFounder } from '@/lib/app/tokens';
 
 export const runtime = 'nodejs';
@@ -56,6 +56,45 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json({ ok: true, created });
+}
+
+/**
+ * Move a rider's standing, or correct their number.
+ *
+ * Standing is set here by hand and nowhere else. LG-13: the app never mints
+ * it — no rule in this codebase promotes anybody because a row appeared. The
+ * founder's spreadsheet remains the source of truth and this records what it
+ * already says.
+ */
+export async function PATCH(req: Request) {
+  if (!isFounder(req)) return NextResponse.json({ error: 'no' }, { status: 404 });
+
+  const body = (await req.json().catch(() => null)) as {
+    id?: number;
+    rung?: string;
+    name?: string;
+    phone?: string;
+  } | null;
+  const id = Number(body?.id);
+  if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
+
+  const patch: Record<string, unknown> = {};
+  if (typeof body?.rung === 'string') {
+    if (!(RUNGS as readonly string[]).includes(body.rung)) {
+      return NextResponse.json({ error: `rung must be one of ${RUNGS.join(', ')}` }, { status: 400 });
+    }
+    patch.rung = body.rung;
+  }
+  if (typeof body?.name === 'string' && body.name.trim()) patch.name = body.name.trim();
+  if (typeof body?.phone === 'string') patch.phone = body.phone.trim() || null;
+
+  if (Object.keys(patch).length === 0) {
+    return NextResponse.json({ error: 'nothing to change' }, { status: 400 });
+  }
+
+  const [row] = await db.update(riders).set(patch).where(eq(riders.id, id)).returning();
+  if (!row) return NextResponse.json({ error: 'no such rider' }, { status: 404 });
+  return NextResponse.json({ ok: true, rider: row });
 }
 
 export async function DELETE(req: Request) {

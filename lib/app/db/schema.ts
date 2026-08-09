@@ -6,6 +6,7 @@ import {
   boolean,
   integer,
   uniqueIndex,
+  index,
 } from 'drizzle-orm/pg-core';
 
 /**
@@ -51,6 +52,14 @@ export const experiences = pgTable('experiences', {
    * applies whatever else is true.
    */
   autoExpire: boolean('auto_expire').notNull().default(true),
+  /**
+   * The published Field Note this running's lines went into, if one exists.
+   *
+   * Recorded rather than inferred. The Record shows a rider the note their own
+   * words were used in (IA-02), and matching on a filename convention would
+   * quietly start lying the first time the founder renames a draft.
+   */
+  noteSlug: text('note_slug'),
 });
 
 /**
@@ -112,10 +121,122 @@ export const aftermathLines = pgTable(
   })
 );
 
+/* ── Phase 3: the Record ──────────────────────────────────────────────────
+   Participation says a rider was on a running. Completion says they finished
+   it, and it is the only fact that moves anyone to Rider. They are separate
+   because turning back is a real outcome and the Record should be able to
+   hold it. */
+
+export const completions = pgTable(
+  'completions',
+  {
+    id: serial('id').primaryKey(),
+    riderId: integer('rider_id')
+      .notNull()
+      .references(() => riders.id, { onDelete: 'cascade' }),
+    experienceId: integer('experience_id')
+      .notNull()
+      .references(() => experiences.id, { onDelete: 'cascade' }),
+    /** The day it was finished. Anchors this entry's place in the Record. */
+    completedAt: timestamp('completed_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    once: uniqueIndex('completion_once').on(t.riderId, t.experienceId),
+  })
+);
+
+/**
+ * An issued object.
+ *
+ * The serial is the primary key because the serial is stamped on the thing
+ * itself: the physical object is the record, and the row describes it.
+ *
+ * riderId is nullable and clears rather than cascades. A rider erasing
+ * themselves (ID-04) must not delete an artifact that exists in the world and
+ * whose provenance a stranger can still look up — a lookup that never returned
+ * a name in the first place (LG-09).
+ */
+export const artifacts = pgTable(
+  'artifacts',
+  {
+    /** Canonical form: DC-MMXXVI-014. See lib/app/serial.ts. */
+    serial: text('serial').primaryKey(),
+    riderId: integer('rider_id').references(() => riders.id, { onDelete: 'set null' }),
+    experienceId: integer('experience_id').references(() => experiences.id, {
+      onDelete: 'set null',
+    }),
+    /** The rung this object is locked to. Rendered as one word, like standing. */
+    tier: text('tier').notNull().default('Rider'),
+    /** Roman-numeral year on the object itself: 2026 → MMXXVI. */
+    year: integer('year').notNull(),
+    issuedAt: timestamp('issued_at', { withTimezone: true }).notNull(),
+    /** held | lost. Public provenance reports this and nothing personal. */
+    status: text('status').notNull().default('held'),
+    /** Who put it in their hands. Shown to the owner only (LG-08). */
+    handedBy: text('handed_by'),
+    /** One photograph on the artifact page. A path under /public or a URL. */
+    photo: text('photo'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    byRider: index('artifact_by_rider').on(t.riderId),
+  })
+);
+
+/**
+ * A moment deliberately not documented (LG-07).
+ *
+ * It holds a date and nothing else, on purpose. The Record renders it as a
+ * dated entry containing no content and one mono line saying so. Giving this
+ * row a description field would defeat the only thing it is for, so it does
+ * not have one.
+ */
+export const blanks = pgTable('blanks', {
+  id: serial('id').primaryKey(),
+  riderId: integer('rider_id')
+    .notNull()
+    .references(() => riders.id, { onDelete: 'cascade' }),
+  occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/**
+ * A one-time invite to bind a device to a rider (BRD ID-02).
+ *
+ * The jti is the row. Redemption is a single UPDATE guarded on redeemedAt
+ * being null, so a link forwarded to a second phone finds it already spent.
+ */
+export const invites = pgTable(
+  'invites',
+  {
+    jti: text('jti').primaryKey(),
+    riderId: integer('rider_id')
+      .notNull()
+      .references(() => riders.id, { onDelete: 'cascade' }),
+    purpose: text('purpose').notNull().default('bind'),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    redeemedAt: timestamp('redeemed_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    byRider: index('invite_by_rider').on(t.riderId),
+  })
+);
+
 export type Rider = typeof riders.$inferSelect;
 export type Experience = typeof experiences.$inferSelect;
 export type AftermathLine = typeof aftermathLines.$inferSelect;
 export type Participation = typeof participations.$inferSelect;
+export type Completion = typeof completions.$inferSelect;
+export type Artifact = typeof artifacts.$inferSelect;
+export type Blank = typeof blanks.$inferSelect;
+export type Invite = typeof invites.$inferSelect;
+
+/** The ladder lives in lib/app/ladder so client code can read it without
+ *  pulling drizzle into the browser bundle. Re-exported here for server code
+ *  that is already importing the schema. */
+export { RUNGS, type Rung } from '../ladder';
 
 const HOUR = 60 * 60 * 1000;
 
