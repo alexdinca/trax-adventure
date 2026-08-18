@@ -14,8 +14,17 @@ export interface Experience {
   distanceKm?: number;
   offRoadPercent?: number;
   level: 'intro' | 'intermediate' | 'advanced' | 'expert' | 'multiday';
-  status: 'active' | 'upcoming' | 'tbd';
+  /**
+   * `postponed` means announced, then pulled, with no new date yet. It is kept
+   * distinct from `tbd` — which never had a date — because a rider who already
+   * planned around it is owed a different sentence than one who never heard of it.
+   */
+  status: 'active' | 'upcoming' | 'tbd' | 'postponed';
 }
+
+/** One phrasing, used on every surface that has to say it. */
+export const POSTPONED_LABEL = 'Postponed';
+export const POSTPONED_NOTE = 'To be rescheduled';
 
 export const experiences: Experience[] = [
   {
@@ -56,16 +65,18 @@ export const experiences: Experience[] = [
     name: 'Carpathian Ridge',
     location: 'Carpathians, Romania',
     country: 'RO',
-    dates: '28th – 30th August 2026',
-    startDate: '2026-08-28',
-    endDate: '2026-08-30',
+    // Postponed 31 Jul 2026: too close behind Out There. No new date yet.
+    // startDate and endDate are deliberately absent — the structured data on
+    // /experiences is built from them, and publishing a date we are not keeping
+    // would put a wrong date in search results and in anyone's calendar.
+    dates: 'Postponed · To be rescheduled',
     description: 'Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.',
     longDescription: 'The Carpathians don\'t reward speed. They reward patience, line choice, and a willingness to be genuinely uncomfortable. This three-day experience follows high-altitude ridge trails with long technical sections, significant elevation, and no flat recovery days.',
     image: '/assets/trax landscape.png',
     href: '/carpathian-ridge',
     duration: '3 days',
     level: 'advanced',
-    status: 'active',
+    status: 'postponed',
   },
   {
     slug: 'the-ground',

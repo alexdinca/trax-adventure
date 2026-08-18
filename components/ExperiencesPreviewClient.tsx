@@ -5,10 +5,23 @@ import { useAptabase } from '@aptabase/react';
 import { Container } from './ui/Container';
 import { Headline, Body, MonoLabel } from './ui/Typography';
 
-const experiences = [
+interface PreviewCard {
+  name: string;
+  date: string;
+  location: string;
+  description: string;
+  route: string;
+  isComingSoon: boolean;
+  /** Announced, then pulled, with no new date. Colours the date line. */
+  postponed?: boolean;
+}
+
+const experiences: PreviewCard[] = [
   { name: 'Dobrogea Calling', date: '1st – 3rd May', location: 'RO', description: '650km across ancient terrain', route: '/dobrogea-calling', isComingSoon: false },
   { name: 'Out There', date: '14th – 16th August', location: 'RO', description: 'Self-supported riding and remote camping', route: '/out-there', isComingSoon: false },
-  { name: 'Carpathian Ridge', date: '28th – 30th August', location: 'RO', description: 'Technical mountain riding', route: '/carpathian-ridge', isComingSoon: false },
+  // Postponed 31 Jul 2026. The date is replaced rather than struck here: this
+  // card is three lines on the home page and has no room to explain itself.
+  { name: 'Carpathian Ridge', date: 'Postponed · To be rescheduled', location: 'RO', description: 'Technical mountain riding', route: '/carpathian-ridge', isComingSoon: false, postponed: true },
   { name: 'The Ground', date: '14th November', location: 'RO', description: 'One year anniversary gathering', route: '/the-ground', isComingSoon: false },
   { name: 'The Long Way In', date: '5 Days / Advanced', location: 'RO', description: '1370km across ACT Romania', route: '/long-way-in', isComingSoon: false },
 ];
@@ -70,7 +83,13 @@ export function ExperiencesPreviewClient() {
                   <h3 className="font-sans text-lg text-trax-white group-hover:text-trax-red transition-colors">{exp.name}</h3>
                   <MonoLabel className="text-xs">{exp.location}</MonoLabel>
                 </div>
-                <p className="font-mono text-xs text-trax-grey mb-3 uppercase tracking-widest">{exp.date}</p>
+                <p
+                  className={`font-mono text-xs mb-3 uppercase tracking-widest ${
+                    exp.postponed ? 'text-trax-red' : 'text-trax-grey'
+                  }`}
+                >
+                  {exp.date}
+                </p>
                 <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors text-sm">{exp.description}</p>
                 <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors inline-block mt-4">
                   Explore →

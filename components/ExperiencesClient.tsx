@@ -85,7 +85,7 @@ export function ExperiencesClient() {
             <span className="font-mono text-xs text-trax-red uppercase tracking-widest group-hover:text-trax-white transition-colors">See details →</span>
           </Link>
 
-          {/* Carpathian Ridge — active */}
+          {/* Carpathian Ridge — postponed 31 Jul 2026, no new date */}
           <Link
             href="/carpathian-ridge"
             onClick={() => handleExperienceClick('carpathian_ridge')}
@@ -104,7 +104,15 @@ export function ExperiencesClient() {
               <h3 className="font-sans text-2xl md:text-3xl text-trax-white group-hover:text-trax-red transition-colors">Carpathian Ridge</h3>
               <MonoLabel>RO</MonoLabel>
             </div>
-            <p className="font-body text-trax-grey text-xs mb-2">28th – 30th August</p>
+            {/* The struck date says a decision was made, where a missing date
+                would only look like an oversight. */}
+            <p className="flex items-center gap-3 mb-2">
+              <span className="inline-block font-mono text-[11px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-2 py-0.5">
+                Postponed
+              </span>
+              <span className="font-body text-trax-grey text-xs line-through">28th – 30th August</span>
+            </p>
+            <p className="font-body text-trax-grey text-xs mb-2">To be rescheduled</p>
             <p className="font-body text-trax-grey group-hover:text-trax-white transition-colors mb-6">
               Three days of sustained mountain riding in the Carpathians. Fatigue as design. Technical terrain. Honest mountains.
             </p>

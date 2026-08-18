@@ -7,11 +7,11 @@ import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
   title: 'Carpathian Ridge · TRAX',
-  description: 'Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
+  description: 'Postponed, to be rescheduled. Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
   alternates: { canonical: 'https://ridetrax.eu/carpathian-ridge' },
   openGraph: {
     title: 'Carpathian Ridge · TRAX',
-    description: 'Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
+    description: 'Postponed, to be rescheduled. Three days of sustained mountain riding in the Romanian Carpathians. Technical terrain, no support, experienced riders only. An endurance, not an escape.',
     url: 'https://ridetrax.eu/carpathian-ridge',
     images: [{ url: '/assets/carpathian-ridge/IMG_6451.jpg' }],
   },
@@ -38,9 +38,15 @@ export default function CarpathianRidgePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-trax-black via-transparent to-transparent" />
         </div>
         <Container className="relative z-10">
-          <MonoLabel className="mb-4 block">A TRAX Experience · Romania</MonoLabel>
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+            <MonoLabel className="block">A TRAX Experience · Romania</MonoLabel>
+            <span className="inline-block font-mono text-[11px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-2 py-0.5">
+              Postponed
+            </span>
+          </div>
           <h1 className="font-sans text-trax-white text-5xl md:text-7xl font-medium tracking-trax-wide leading-none mb-4">Carpathian Ridge</h1>
           <p className="font-body text-trax-white/80 text-xl md:text-2xl font-light italic">An endurance, not an escape.</p>
+          <p className="font-mono text-xs text-trax-grey uppercase tracking-widest mt-4">To be rescheduled</p>
         </Container>
       </div>
 
@@ -159,7 +165,7 @@ export default function CarpathianRidgePage() {
           <SubHeadline>The Details</SubHeadline>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
             {[
-              { label: 'Duration', value: '3 Days / 2 Nights', sub: '28th – 30th August 2026' },
+              { label: 'Duration', value: '3 Days / 2 Nights', sub: 'Postponed · To be rescheduled' },
               { label: 'Base', value: 'Sibiu → Ranca', sub: 'Cabana nights, mountain days' },
               { label: 'Terrain', value: 'Forest & Alpine', sub: 'Technical, sustained' },
               { label: 'Support', value: 'None', sub: 'You and your bike' },
@@ -184,8 +190,9 @@ export default function CarpathianRidgePage() {
           <div>
             <Spacer size="md" />
             <Body className="text-xl md:text-2xl leading-relaxed mb-6">Carpathian Ridge runs with a small group. The mountains set the limit, not the marketing.</Body>
-            <Body className="mb-8">If this resonates, you&apos;ll know it.</Body>
-            <WhatsAppCTA label="Request Access" source="carpathian_ridge_page" eventName="access_request_click" href={whatsappLink('Salut,\nVreau să mă alătur experienței Carpathian Ridge.\nÎmi dai te rog mai multe detalii?')} />
+            <Body className="mb-6">This one has been postponed. There is no new date yet, and there will not be one until it can be ridden properly.</Body>
+            <Body className="mb-8">When it is set, it appears here first.</Body>
+            <WhatsAppCTA label="Tell me when it runs" source="carpathian_ridge_page" eventName="postponed_interest_click" href={whatsappLink('Salut,\nAm văzut că Carpathian Ridge a fost amânat.\nMă anunți te rog când se reprogramează?')} />
           </div>
         </div>
 

@@ -143,9 +143,15 @@ function EventRow({ event }: { event: CalendarEvent }) {
 
   const content = (
     <>
-      {/* Date */}
+      {/* Date. Struck rather than removed when postponed — the original dates
+          are what a rider planned around, and seeing them crossed out says a
+          decision was made where a blank would only look like an omission. */}
       <div className="flex-shrink-0 sm:w-44">
-        <span className="font-mono text-sm text-trax-white/80 uppercase tracking-widest">
+        <span
+          className={`font-mono text-sm uppercase tracking-widest ${
+            event.postponed ? 'text-trax-grey/60 line-through' : 'text-trax-white/80'
+          }`}
+        >
           {event.date}
         </span>
       </div>
@@ -172,7 +178,11 @@ function EventRow({ event }: { event: CalendarEvent }) {
 
       {/* Badge */}
       <div className="flex-shrink-0">
-        {isTrax ? (
+        {event.postponed ? (
+          <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-3 py-1">
+            Postponed
+          </span>
+        ) : isTrax ? (
           <span className="inline-block font-mono text-[15px] uppercase tracking-widest text-trax-red border border-trax-red/60 px-3 py-1">
             TRAX Experience
           </span>
@@ -209,7 +219,10 @@ function EventRow({ event }: { event: CalendarEvent }) {
           {content}
         </div>
       )}
-      <AddToCalendar event={event} />
+      {/* No export for a date that is no longer real — an .ics or a Google
+          event would outlive this page and keep the old dates alive in
+          someone's calendar long after we corrected them here. */}
+      {!event.postponed && <AddToCalendar event={event} />}
     </div>
   );
 }
