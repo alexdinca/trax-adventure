@@ -47,14 +47,17 @@ type SendReport = {
   failed: number;
   skipped: number;
   error?: string;
-  results?: {
-    rider: string;
-    status: 'sent' | 'skipped' | 'failed';
-    reason?: string;
-    code?: number;
-  }[];
+  results?: SendResult[];
 };
-type Link = { rider: string; phone: string | null; url: string };
+type SendResult = {
+  riderId: number;
+  rider: string;
+  phone?: string | null;
+  status: 'sent' | 'skipped' | 'failed';
+  reason?: string;
+  code?: number;
+};
+type Link = { riderId: number; rider: string; phone: string | null; url: string };
 type Line = {
   id: number;
   rider: string;
@@ -231,6 +234,39 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
   const [sending, setSending] = useState(false);
   const [sendResult, setSendResult] = useState<SendReport | null>(null);
   const [twilio, setTwilio] = useState<TwilioStatus | null>(null);
+  /** Per-rider resend state, keyed by rider id. 'sending' while in flight. */
+  const [oneSend, setOneSend] = useState<Record<number, 'sending' | SendResult>>({});
+
+  /**
+   * Send to one rider. Exists because a batch can half-succeed: Meta can
+   * disable the sender partway through, or one number can be wrong, and
+   * re-running the batch would message everybody who already got theirs.
+   */
+  async function sendOne(slug: string, riderId: number) {
+    setOneSend((p) => ({ ...p, [riderId]: 'sending' }));
+    try {
+      const r = await api('send', {
+        method: 'POST',
+        body: JSON.stringify({ slug, riderId }),
+      });
+      const d = (await r.json()) as SendReport & { error?: string };
+      const row = d.results?.[0];
+      setOneSend((p) => ({
+        ...p,
+        [riderId]: row ?? {
+          riderId,
+          rider: '',
+          status: 'failed',
+          reason: d.error ?? 'no answer from the server',
+        },
+      }));
+    } catch (e) {
+      setOneSend((p) => ({
+        ...p,
+        [riderId]: { riderId, rider: '', status: 'failed', reason: String((e as Error).message) },
+      }));
+    }
+  }
 
   useEffect(() => {
     api('send')
@@ -521,25 +557,60 @@ function Experiences({ api, onError }: { api: Api; onError: (e: string) => void 
                       nobody marked as having ridden this one yet
                     </Mark>
                   )}
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     {links.map((l) => {
                       const text = `${message}\n\n${l.url}`;
                       const wa = l.phone
                         ? `https://wa.me/${l.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`
                         : null;
+                      const one = oneSend[l.riderId];
+                      const busy = one === 'sending';
+                      const done = one && one !== 'sending' ? one : null;
                       return (
-                        <div key={l.rider} className="flex items-center justify-between gap-4 py-1">
-                          <span className="font-body text-sm text-trax-white/85">{l.rider}</span>
-                          <span className="flex gap-4 shrink-0">
-                            <button onClick={() => navigator.clipboard?.writeText(text)}>
-                              <Mark className="text-trax-white/60">copy</Mark>
-                            </button>
-                            {wa && (
-                              <a href={wa} target="_blank" rel="noopener noreferrer">
-                                <Mark className="text-trax-red">whatsapp</Mark>
-                              </a>
-                            )}
-                          </span>
+                        <div key={l.riderId} className="py-2 border-b border-trax-white/5">
+                          <div className="flex items-baseline justify-between gap-4">
+                            <span className="font-body text-sm text-trax-white/85">
+                              {l.rider}{' '}
+                              {/* The number, so a failed send can be checked
+                                  against the person rather than guessed at. */}
+                              <span className="font-mono text-[11px] text-trax-grey">
+                                {l.phone ?? 'no number'}
+                              </span>
+                            </span>
+                            <span className="flex gap-4 shrink-0">
+                              <button onClick={() => navigator.clipboard?.writeText(text)}>
+                                <Mark className="text-trax-white/60">copy</Mark>
+                              </button>
+                              {wa && (
+                                <a href={wa} target="_blank" rel="noopener noreferrer">
+                                  <Mark className="text-trax-red">whatsapp</Mark>
+                                </a>
+                              )}
+                              {l.phone && (
+                                <button
+                                  disabled={busy}
+                                  onClick={() => void sendOne(e.slug, l.riderId)}
+                                >
+                                  <Mark
+                                    className={busy ? 'text-trax-grey/40' : 'text-trax-white/60'}
+                                  >
+                                    {busy ? 'sending' : 'resend'}
+                                  </Mark>
+                                </button>
+                              )}
+                            </span>
+                          </div>
+                          {done && (
+                            <Mark
+                              className={`block mt-1 ${
+                                done.status === 'sent' ? 'text-trax-white/70' : 'text-trax-red'
+                              }`}
+                            >
+                              {done.status === 'sent'
+                                ? 'sent'
+                                : `${done.status}${done.code ? ` · ${done.code}` : ''} — ${done.reason ?? ''}`}
+                            </Mark>
+                          )}
                         </div>
                       );
                     })}
@@ -824,6 +895,15 @@ function Roster({ api, onError }: { api: Api; onError: (e: string) => void }) {
                   {r.name}{' '}
                   <span className="font-mono text-[11px] uppercase text-trax-grey/60">
                     {r.rung}
+                  </span>
+                  {/* A missing number is why a send silently skips somebody,
+                      so it is stated here rather than discovered afterwards. */}
+                  <span
+                    className={`block font-mono text-[11px] mt-0.5 ${
+                      r.phone ? 'text-trax-grey' : 'text-trax-red'
+                    }`}
+                  >
+                    {r.phone ?? 'no number'}
                   </span>
                 </span>
               </button>

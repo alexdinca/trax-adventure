@@ -126,6 +126,7 @@ export async function GET(req: Request) {
 }
 
 interface Result {
+  riderId: number;
   rider: string;
   phone: string | null;
   status: 'sent' | 'skipped' | 'failed';
@@ -134,12 +135,33 @@ interface Result {
   code?: number;
 }
 
+/**
+ * Twilio codes worth naming, because the right response to each is different
+ * and the raw message does not say so.
+ *
+ * 63112 is the one that matters most: it is not this message failing, it is
+ * Meta having disabled the WhatsApp Business Account behind the sender.
+ * Retrying cannot fix it and repeated attempts are themselves a signal. The
+ * account has to be reinstated in WhatsApp Manager first.
+ */
+const CODE_HINTS: Record<number, string> = {
+  63112:
+    'Meta has disabled the WhatsApp Business Account behind this sender. Resending will fail the same way until it is reinstated — appeal in WhatsApp Manager, then try again. Send these links by hand in the meantime.',
+  21656: 'The content template is invalid or not approved for this account.',
+  63016: 'Sent outside the 24h window without a template.',
+  63028: 'Too many recipients, or rate limited.',
+  63024: 'Invalid recipient number.',
+  63051: 'That number is not registered on WhatsApp.',
+};
+
 export async function POST(req: Request) {
   if (!isFounder(req)) return NextResponse.json({ error: 'no' }, { status: 404 });
 
   const body = (await req.json().catch(() => null)) as {
     slug?: string;
     dryRun?: boolean;
+    /** One rider only. Omitted, the whole cast is sent to, as before. */
+    riderId?: number;
   } | null;
   if (!body?.slug) return NextResponse.json({ error: 'slug required' }, { status: 400 });
 
@@ -164,21 +186,40 @@ export async function POST(req: Request) {
 
   const w = windowFor(experience);
 
-  const cast = await db
+  const everyone = await db
     .select({ id: riders.id, name: riders.name, phone: riders.phone })
     .from(participations)
     .innerJoin(riders, eq(participations.riderId, riders.id))
     .where(eq(participations.experienceId, experience.id));
 
-  if (cast.length === 0) {
+  if (everyone.length === 0) {
     return NextResponse.json({ error: 'nobody is marked as having ridden this one' }, { status: 400 });
+  }
+
+  // One rider, or all of them. Narrowing happens AFTER the participation join
+  // rather than by querying the rider directly, so a single resend still cannot
+  // address someone who was not on this running, and the token is still minted
+  // from the same row that named the recipient (BRD NT-10).
+  const cast = body.riderId ? everyone.filter((r) => r.id === body.riderId) : everyone;
+
+  if (cast.length === 0) {
+    return NextResponse.json(
+      { error: 'that rider is not marked as having ridden this one' },
+      { status: 404 }
+    );
   }
 
   const results: Result[] = [];
 
   for (const rider of cast) {
     if (!rider.phone) {
-      results.push({ rider: rider.name, phone: null, status: 'skipped', reason: 'no phone' });
+      results.push({
+        riderId: rider.id,
+        rider: rider.name,
+        phone: null,
+        status: 'skipped',
+        reason: 'no phone',
+      });
       continue;
     }
 
@@ -192,6 +233,7 @@ export async function POST(req: Request) {
 
     if (body.dryRun) {
       results.push({
+        riderId: rider.id,
         rider: rider.name,
         phone: rider.phone,
         status: 'sent',
@@ -218,23 +260,29 @@ export async function POST(req: Request) {
       else payload.from = from.startsWith('whatsapp:') ? from : waAddress(from);
 
       const msg = await c.messages.create(payload as never);
-      results.push({ rider: rider.name, phone: rider.phone, status: 'sent', sid: msg.sid });
+      results.push({
+        riderId: rider.id,
+        rider: rider.name,
+        phone: rider.phone,
+        status: 'sent',
+        sid: msg.sid,
+      });
     } catch (err) {
       const e = err as { code?: number; message?: string; status?: number };
+      const hint = e.code ? CODE_HINTS[e.code] : undefined;
       results.push({
+        riderId: rider.id,
         rider: rider.name,
         phone: rider.phone,
         status: 'failed',
         code: e.code,
-        // 63016: freeform outside the 24h window, i.e. the template was not used
-        // 21656: the content template is invalid or not approved
-        // 63028: too many recipients / rate limited
-        reason: e.message,
+        reason: hint ? `${hint} — ${e.message}` : e.message,
       });
     }
 
-    // Gentle on Twilio, and on WhatsApp's per-number pacing.
-    await new Promise((r) => setTimeout(r, 350));
+    // Gentle on Twilio, and on WhatsApp's per-number pacing. Pointless when
+    // there is one recipient, which is the whole point of a single resend.
+    if (cast.length > 1) await new Promise((r) => setTimeout(r, 350));
   }
 
   const sent = results.filter((r) => r.status === 'sent').length;
