@@ -9,10 +9,17 @@ export const metadata: Metadata = {
   title: 'TRAX. Terrain Leads.',
   description: 'A culture of intentional progression, built around terrain, presence and earned stories. Romania.',
   alternates: { canonical: 'https://ridetrax.eu' },
+  // Next replaces the parent `openGraph` object rather than merging into it, so
+  // `type` and `images` have to be restated here or the home page — the one
+  // page every agent and crawler looks at first — ships without them.
   openGraph: {
+    type: 'website',
     title: 'TRAX. Terrain Leads.',
     description: 'A culture of intentional progression, built around terrain, presence and earned stories. Romania.',
     url: 'https://ridetrax.eu',
+    siteName: 'TRAX',
+    locale: 'ro_RO',
+    images: [{ url: '/android-chrome-512x512.png', width: 512, height: 512, alt: 'TRAX' }],
   },
 };
 

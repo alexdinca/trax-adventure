@@ -54,6 +54,26 @@ const organizationSchema = {
     '@type': 'Country',
     name: 'Romania',
   },
+  foundingDate: '2025',
+  // Bucharest and Romania are stated across the site and are accurate. No
+  // street address is claimed here because none is published anywhere else,
+  // and structured data must not assert what the site cannot back up.
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Bucharest',
+    addressCountry: 'RO',
+  },
+  // The WhatsApp number already carried by every call to action on the site.
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      telephone: '+40721766484',
+      url: 'https://ridetrax.eu/contact',
+      areaServed: 'RO',
+      availableLanguage: ['ro', 'en'],
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

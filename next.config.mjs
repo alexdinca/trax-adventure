@@ -14,6 +14,24 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async headers() {
+    return [
+      {
+        // Every page can be served as HTML or as Markdown depending on Accept
+        // (see middleware.ts), so a cache keyed without Accept would hand an
+        // agent the HTML variant, or a browser the Markdown one, depending on
+        // which landed in the cache first.
+        //
+        // Declared here rather than in middleware: a header appended to
+        // NextResponse.next() is overwritten by the Vary that Next assembles
+        // for its own router cache. This emits a second Vary field instead,
+        // which HTTP treats as equivalent to a comma-joined list, so the RSC
+        // tokens survive intact.
+        source: '/:path*',
+        headers: [{ key: 'Vary', value: 'Accept' }],
+      },
+    ];
+  },
 };
 
 const withMDXConfig = withMDX(nextConfig);

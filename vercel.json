@@ -21,6 +21,10 @@
         {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Vary",
+          "value": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Accept, Accept-Encoding"
         }
       ]
     }
