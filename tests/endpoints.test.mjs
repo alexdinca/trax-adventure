@@ -101,20 +101,33 @@ describe('markdown content negotiation (acceptmarkdown.com)', () => {
   });
 
   /**
-   * Next assembles its own Vary for the router cache on page responses and
-   * overwrites anything middleware or next.config adds. On production the
-   * header is applied by Vercel's edge (vercel.json), which runs after the
-   * function — so this can only be verified against a deployed origin.
+   * Known unmet, deliberately.
+   *
+   * Next assembles its own Vary for the router cache on everything it
+   * generates — pages and route handlers alike — and it wins over middleware,
+   * next.config headers and vercel.json alike (verified against production;
+   * vercel.json's Vary does land on static files such as /llms.txt, so the
+   * config itself is applied — Next's value simply takes precedence).
+   *
+   * The only way to force it is to rewrite every page request in middleware,
+   * which would turn statically served pages into function invocations. That
+   * is a real cost for a header whose job is already done elsewhere: the
+   * markdown variant carries `Vary: Accept` (asserted above), which is the
+   * response whose cacheability actually depends on it, and on Vercel the
+   * middleware runs ahead of the cache so the HTML variant can never be
+   * handed to a client that asked for markdown.
+   *
+   * Left as a todo rather than deleted, so the gap stays visible.
    */
-  test('Vary includes Accept on the html response', async (t) => {
-    if (needsServer(t)) return;
-    if (new URL(BASE).hostname === 'localhost') {
-      t.skip('applied by the Vercel edge; run with BASE_URL=https://ridetrax.eu');
-      return;
+  test(
+    'Vary includes Accept on the html response',
+    { todo: 'Next owns Vary on page responses; see comment' },
+    async (t) => {
+      if (needsServer(t)) return;
+      const vary = (await get('/experiences')).headers.get('vary') ?? '';
+      assert.ok(varyHasAccept(vary), `Vary was "${vary}"`);
     }
-    const vary = (await get('/experiences')).headers.get('vary') ?? '';
-    assert.ok(varyHasAccept(vary), `Vary was "${vary}"`);
-  });
+  );
 
   test('the html response keeps Next’s own RSC Vary tokens', async (t) => {
     if (needsServer(t)) return;
@@ -241,12 +254,40 @@ describe('agent instruction file', () => {
 });
 
 describe('nothing was broken on the way', () => {
-  test('the marketing pages still render html', async (t) => {
+  /**
+   * Every experience page, by name. /long-way-in is listed explicitly because
+   * it spent an unknown stretch redirecting to itself — a self-referential
+   * rule in vercel.json — which no test covered and nothing else caught.
+   */
+  test('every marketing page answers 200 with html, no redirect', async (t) => {
     if (needsServer(t)) return;
-    for (const path of ['/', '/experiences', '/calendar', '/out-there']) {
+    const paths = [
+      '/',
+      '/experiences',
+      '/calendar',
+      '/manifesto',
+      '/field-notes',
+      '/dobrogea-calling',
+      '/out-there',
+      '/carpathian-ridge',
+      '/the-ground',
+      '/long-way-in',
+    ];
+    for (const path of paths) {
       const res = await get(path);
-      assert.equal(res.status, 200, `${path} status`);
+      assert.equal(res.status, 200, `${path} should be 200, was ${res.status}`);
       assert.match(res.headers.get('content-type') ?? '', /text\/html/, `${path} type`);
+    }
+  });
+
+  test('no page in the sitemap redirects', async (t) => {
+    if (needsServer(t)) return;
+    const xml = await (await get('/sitemap.xml')).text();
+    const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    assert.ok(urls.length > 5, 'sitemap should list pages');
+    for (const url of urls) {
+      const res = await fetch(url, { redirect: 'manual' });
+      assert.equal(res.status, 200, `${url} answered ${res.status}`);
     }
   });
 

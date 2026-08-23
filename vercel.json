@@ -1,11 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/long-way-in",
-      "destination": "/long-way-in",
-      "permanent": false
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
