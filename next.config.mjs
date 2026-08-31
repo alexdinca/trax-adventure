@@ -14,6 +14,16 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async rewrites() {
+    return [
+      {
+        // The show-and-tell deck is a single static file in /public. This is
+        // only so the URL reads as a path rather than a filename.
+        source: '/show-and-tell',
+        destination: '/show-and-tell.html',
+      },
+    ];
+  },
   async headers() {
     return [
       {
