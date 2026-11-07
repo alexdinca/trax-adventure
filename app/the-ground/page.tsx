@@ -117,7 +117,7 @@ export default function TheGroundPage() {
               { label: 'Date', value: '14 November 2026', sub: 'The next session' },
               { label: 'Location', value: 'TCS Racing Park', sub: 'Gorgota, Romania' },
               { label: 'Arrival', value: 'Free Flow', sub: 'Come and leave when it suits you' },
-              { label: 'Access', value: 'Circuit Fee', sub: 'Confirmed closer to the date' },
+              { label: 'Access', value: '100 lei', sub: 'TCS Racing Park circuit fee · full day' },
             ].map((item) => (
               <div key={item.label} className="space-y-2">
                 <p className="font-sans text-trax-red text-sm tracking-widest uppercase">{item.label}</p>
