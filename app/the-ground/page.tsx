@@ -7,11 +7,11 @@ import { whatsappLink } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
   title: 'The Ground · TRAX',
-  description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 14 November 2026.",
+  description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 21 November 2026.",
   alternates: { canonical: 'https://ridetrax.eu/the-ground' },
   openGraph: {
     title: 'The Ground · TRAX',
-    description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 14 November 2026.",
+    description: "TRAX's foundation experience. An open training day at TCS Racing Park. Fundamentals, shared practice, honest effort. Next session: 21 November 2026.",
     url: 'https://ridetrax.eu/the-ground',
     images: [{ url: '/assets/the-ground/IMG_3217.jpg' }],
   },
@@ -102,7 +102,7 @@ export default function TheGroundPage() {
           <MonoLabel className="mb-6 block">The Return</MonoLabel>
           <SubHeadline>One Year On</SubHeadline>
           <Spacer size="md" />
-          <Body className="text-xl md:text-2xl leading-relaxed mb-6">The next Ground falls on <span className="text-trax-red font-medium">14 November 2026.</span> One year since the first TRAX gathering, back on the terrain where the idea stopped being a thought and became movement.</Body>
+          <Body className="text-xl md:text-2xl leading-relaxed mb-6">The next Ground falls on <span className="text-trax-red font-medium">21 November 2026.</span> One year since the first TRAX gathering, back on the terrain where the idea stopped being a thought and became movement.</Body>
           <Body>We don&apos;t go back to celebrate. <span className="text-trax-red font-medium">We go back to practice.</span></Body>
         </div>
 
@@ -114,7 +114,7 @@ export default function TheGroundPage() {
           <SubHeadline>The Details</SubHeadline>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
             {[
-              { label: 'Date', value: '14 November 2026', sub: 'The next session' },
+              { label: 'Date', value: '21 November 2026', sub: 'Moved from 14 November, for the forecast' },
               { label: 'Location', value: 'TCS Racing Park', sub: 'Gorgota, Romania' },
               { label: 'Arrival', value: 'Free Flow', sub: 'Come and leave when it suits you' },
               { label: 'Access', value: '100 lei', sub: 'TCS Racing Park circuit fee · full day' },
@@ -168,7 +168,7 @@ export default function TheGroundPage() {
             <Spacer size="md" />
             <Body className="text-xl md:text-2xl leading-relaxed mb-6">This is not an anniversary party. It&apos;s a return.</Body>
             <Body className="mb-8">No funnel. No promises. Only an invitation. If this resonates, you&apos;ll know.</Body>
-            <WhatsAppCTA label="Show Up" source="the_ground_page" href={whatsappLink('Salut,\nVreau să particip la The Ground pe 14 noiembrie.\nÎmi dai te rog mai multe detalii?')} />
+            <WhatsAppCTA label="Show Up" source="the_ground_page" href={whatsappLink('Salut,\nVreau să particip la The Ground pe 21 noiembrie.\nÎmi dai te rog mai multe detalii?')} />
           </div>
         </div>
 

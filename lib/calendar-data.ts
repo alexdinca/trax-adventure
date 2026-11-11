@@ -94,7 +94,7 @@ export const calendar: MonthGroup[] = [
   {
     month: 'November',
     events: [
-      { date: '14 Nov', startDate: '2026-11-14', name: 'The Ground', location: 'TCS Racing Park, Bucharest', type: 'trax', href: '/the-ground' },
+      { date: '21 Nov', startDate: '2026-11-21', name: 'The Ground', location: 'TCS Racing Park, Bucharest', type: 'trax', href: '/the-ground' },
     ],
   },
 ];
