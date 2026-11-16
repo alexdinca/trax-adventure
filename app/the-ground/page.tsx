@@ -126,7 +126,6 @@ export default function TheGroundPage() {
               </div>
             ))}
           </div>
-          <p className="mt-8 max-w-2xl text-trax-grey text-sm">Declaration signed at reception upon arrival. Food and drinks available at the Food Court.</p>
         </div>
 
         <Spacer size="lg" />
